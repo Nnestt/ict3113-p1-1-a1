@@ -1,0 +1,19 @@
+{
+  "method": "sha256_rank_stratified_v1",
+  "quota_per_source_label": 25,
+  "rank_message_template": "ict3113-g1-fresh-v1:sample:{seed}:{source_label}:{row_id}",
+  "seed_hex": "f7dd3fe9d7bec37fbaa19e81b9b2cc3e",
+  "source_categories": [
+    "Credit reporting",
+    "Debt collection",
+    "Mortgage",
+    "Credit card",
+    "Bank account or service",
+    "Consumer loan",
+    "Money transfer or service"
+  ],
+  "team_row_range": [
+    1000,
+    1999
+  ]
+}

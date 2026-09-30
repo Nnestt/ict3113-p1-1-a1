@@ -1,0 +1,5 @@
+
+__pycache__/
+*.pyc
+docs/
+golden_set/ict3113_tickets.csv
