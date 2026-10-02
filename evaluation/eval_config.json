@@ -1,0 +1,28 @@
+{
+  "models": {
+    "llama3.2:1b": "baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878",
+    "qwen2.5:1.5b": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+    "phi3.5:3.8b": "61819fb370a3c1a9be6694869331e5f85f867a079e9271d66cb223acb81d04ba",
+    "qwen2.5:7b": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e"
+  },
+  "labels": [
+    "Credit reporting",
+    "Debt collection",
+    "Mortgage",
+    "Credit card",
+    "Bank account or service",
+    "Consumer loan",
+    "Money transfer or service"
+  ],
+  "invalid_label": "INVALID",
+  "prompt_file": "prompt_template.md",
+  "options": {
+    "temperature": 0,
+    "seed": 42,
+    "num_predict": 16,
+    "num_ctx": 4096
+  },
+  "keep_alive": "30m",
+  "request_timeout_seconds": 300,
+  "ollama_url": "http://localhost:11434"
+}
