@@ -20,12 +20,12 @@ This record states the team's predictions before accuracy, load, or stress testi
 
 ## Candidate Models
 
-| Model     | Parameter class | Exact Ollama tag | Ollama digest or ID            |
-|-----------|-----------------|------------------|--------------------------------|
-| Llama 3.2 | 1B              | `llama3.2:1b`    | **Record before benchmarking** |
-| Qwen 2.5  | 1.5B            | `qwen2.5:1.5b`   | **Record before benchmarking** |
-| Phi 3.5   | 3.8B            | `phi3.5:3.8b`    | **Record before benchmarking** |
-| Qwen 2.5  | 7B              | `qwen2.5:7b`     | **Record before benchmarking** |
+| Model     | Parameter class | Exact Ollama tag | Ollama digest or ID                                              | License                                    |
+|-----------|-----------------|------------------|------------------------------------------------------------------|--------------------------------------------|
+| Llama 3.2 | 1B              | `llama3.2:1b`    | baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878 | Llama 3.2 Community License Agreement      |
+| Qwen 2.5  | 1.5B            | `qwen2.5:1.5b`   | 65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b | Apache License, Version 2.0                |
+| Phi 3.5   | 3.8B            | `phi3.5:3.8b`    | 61819fb370a3c1a9be6694869331e5f85f867a079e9271d66cb223acb81d04ba | MIT License                                |
+| Qwen 2.5  | 7B              | `qwen2.5:7b`     | 845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e | Apache License, Version 2.0                |
 
 
 ## Predicted Accuracy and Single-Request Latency
