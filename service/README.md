@@ -2,6 +2,8 @@
 
 A small web service that classifies a financial complaint ticket into one of 7 categories by calling an Ollama model, stores the ticket, and lets you search and count tickets. It is a deliberately plain **baseline** for load testing: no cache, no queue, no background workers, no proxy.
 
+How it works and why (architecture, request flows, how to read the log for bottlenecks): [DESIGN.md](DESIGN.md).
+
 ## Scope
 
 | This service owns | Not this service |
