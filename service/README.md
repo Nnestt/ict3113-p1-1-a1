@@ -160,6 +160,21 @@ docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD":/repo -w /repo python:3.1
 docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "${PWD}:/repo" -w /repo python:3.12-slim sh -c "pip install -q -r service/requirements-dev.txt && pytest -p no:cacheprovider service/tests -v"
 ```
 
+**Quicker alternative, without launching Docker:** run the tests in a Python virtual environment. Set it up once from the repo root (checked with Python 3.10):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -r service/requirements-dev.txt
+```
+
+Then run the tests whenever you need them (about two seconds):
+
+```powershell
+.venv\Scripts\python -m pytest service/tests -v
+```
+
+In Git Bash write the path as `.venv/Scripts/python`; on Linux or macOS it is `.venv/bin/python`. `.venv/` is git-ignored. The Docker command runs the tests on Python 3.12, the version the service image uses, so run it once before a final hand-in.
+
 - **Unit tests** (`test_storage.py`, `test_request_log.py`, `test_app_unit.py`) check one module each. `storage` and `request_log` run on temp files, and the logging middleware runs on a bare app with dummy routes; the HTTP layer runs with `classifier.classify`, `classifier.ollama_get` and the storage functions all replaced, so no model, network or real database is touched. The classifier's own parser has its own `--self-test` and is not tested here.
 - **Copy check** (`test_classifier_copy.py`) fails if a classifier file in `service/` differs from its original in `evaluation/`.
 - **Integration tests** (`test_integration.py`) run the real app, storage, request log and classifier (real prompt and parser) together, with only the Ollama HTTP calls replaced. They check that post, search and stats agree, that failures store nothing, and that every request (200, 404, 405, 422, 500, 502) produces exactly one valid log line with the right ids, real durations and no narrative text.

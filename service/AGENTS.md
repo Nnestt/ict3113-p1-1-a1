@@ -44,6 +44,16 @@ docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD":/repo -w /repo python:3.1
   sh -c "pip install -q -r service/requirements-dev.txt && pytest -p no:cacheprovider service/tests -v"
 ```
 
+Quicker alternative, without launching Docker: a Python virtual environment in `.venv/` (git-ignored). Create it once, then reuse it. On Windows the interpreter is `.venv/Scripts/python`; on Linux or macOS it is `.venv/bin/python`.
+
+```bash
+python -m venv .venv
+.venv/Scripts/python -m pip install -r service/requirements-dev.txt
+.venv/Scripts/python -m pytest service/tests -v
+```
+
+The Docker command runs the tests on Python 3.12, the version the service image uses. Use it for a final check.
+
 Start the service with one pinned model, and reset its storage (needs Ollama running on the host with that model pulled):
 
 ```bash
