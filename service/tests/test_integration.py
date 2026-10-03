@@ -2,6 +2,7 @@
 # classifier (prompt building and parsing). Only the Ollama HTTP boundary is replaced.
 
 import sqlite3
+import time
 import urllib.error
 
 import pytest
@@ -14,15 +15,16 @@ SECRET = "ZX-SECRET-NARRATIVE-9431"
 REQUIRED = ["ts", "request_id", "run_id", "method", "route", "status", "total_ms", "model", "model_digest"]
 
 
-# Ollama stand-in at the HTTP boundary: the reply text can be changed per test
+# Ollama stand-in at the HTTP boundary: the reply text, delay and error can be changed per test
 @pytest.fixture
 def ollama(monkeypatch):
-    state = {"reply": "Credit card", "error": None, "prompts": []}
+    state = {"reply": "Credit card", "error": None, "delay": 0, "prompts": []}
 
     def fake_post(path, payload, timeout=None):
         if state["error"]:
             raise state["error"]
         state["prompts"].append(payload["prompt"])
+        time.sleep(state["delay"])
         return {"response": state["reply"], "load_duration": 1_000_000, "prompt_eval_duration": 2_000_000,
                 "eval_duration": 3_000_000, "prompt_eval_count": 50, "eval_count": 3}
 
@@ -114,13 +116,14 @@ def test_every_request_gets_exactly_one_valid_log_line(api, ollama, read_log):
     sent.append((api.get("/search", params={"q": "fine"}).status_code, "/search"))
     sent.append((api.get("/stats").status_code, "/stats"))
     sent.append((api.get("/no-such-route").status_code, "/no-such-route"))
+    sent.append((api.get("/tickets").status_code, "/tickets"))
     ollama["error"] = urllib.error.URLError(ConnectionRefusedError(111, "refused"))
     sent.append((post(api, "fails").status_code, "/tickets"))
 
     lines = read_log()
 
     assert [(line["status"], line["route"]) for line in lines] == sent
-    assert [s for s, _ in sent] == [200, 422, 422, 200, 200, 404, 502]
+    assert [s for s, _ in sent] == [200, 422, 422, 200, 200, 404, 405, 502]
     for line in lines:
         assert all(field in line for field in REQUIRED)
         assert line["model"] == "qwen2.5:1.5b" and line["model_digest"] == classifier.MODELS["qwen2.5:1.5b"]
@@ -139,6 +142,24 @@ def test_ticket_log_line_has_the_classifier_fields(api, read_log):
     assert line["model_ms"] <= line["total_ms"]
 
 
+def test_total_ms_and_model_ms_are_real_durations(api, ollama, read_log):
+    ollama["delay"] = 0.05
+
+    post(api, "slow model")
+
+    line = read_log()[0]
+    assert 50 <= line["model_ms"] <= line["total_ms"]
+
+
+def test_invalid_answer_keeps_the_raw_output_in_the_log(api, ollama, read_log):
+    ollama["reply"] = "I cannot determine this."
+
+    post(api, "odd ticket")
+
+    line = read_log()[0]
+    assert line["category"] == "INVALID" and line["raw_output"] == "I cannot determine this."
+
+
 def test_search_log_line_has_query_and_result_count(api, read_log):
     post(api, "alpha beta")
     api.get("/search", params={"q": "beta"})
@@ -155,6 +176,22 @@ def test_failed_ollama_call_is_logged_with_error_and_no_ticket_id(api, ollama, r
     line = read_log()[0]
     assert line["status"] == 502 and "ConnectionRefusedError" in line["error"]
     assert line["narrative_chars"] == 9 and "model_ms" in line and "ticket_id" not in line
+
+
+def test_storage_failure_after_classification_is_a_500_that_keeps_the_model_fields(app_mod, ollama, monkeypatch,
+                                                                                   read_log):
+    def failing_insert(*args):
+        raise sqlite3.OperationalError("database is locked")
+
+    monkeypatch.setattr(storage, "insert_ticket", failing_insert)
+    api = TestClient(app_mod.app, raise_server_exceptions=False)
+
+    response = post(api, "classified but not stored")
+
+    assert response.status_code == 500
+    (line,) = read_log()
+    assert line["status"] == 500 and "database is locked" in line["error"]
+    assert line["category"] == "Credit card" and "model_ms" in line and "ticket_id" not in line
 
 
 def test_narrative_text_never_appears_in_the_log(api, ollama, log_path):

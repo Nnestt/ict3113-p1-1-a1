@@ -1,8 +1,12 @@
-# Unit tests for request_log.py. No HTTP server: a fake request object and a temp file.
+# Unit tests for request_log.py. The writer and record builder use a fake request object and a temp file.
+# The middleware runs on a bare app with two dummy routes: no storage, no classifier, no real server.
 
 import json
 import time
 from types import SimpleNamespace
+
+from fastapi import FastAPI, Request
+from fastapi.testclient import TestClient
 
 import request_log
 
@@ -61,3 +65,62 @@ def test_build_record_appends_the_endpoint_extras():
     record = request_log.build_record(request, 200, time.perf_counter(), "m", "d")
 
     assert record["query"] == "bank" and record["result_count"] == 3
+
+
+# A bare app with only the logging middleware installed
+def logged_client(log_path):
+    app = FastAPI()
+    request_log.add_request_logging(app, lambda: (log_path, "m", "d"))
+
+    @app.get("/ok")
+    def ok(request: Request):
+        request.state.extra["note"] = "from the endpoint"
+        time.sleep(0.05)
+        return {}
+
+    @app.get("/boom")
+    def boom():
+        raise RuntimeError("kaput")
+
+    return TestClient(app, raise_server_exceptions=False)
+
+
+def test_middleware_logs_one_line_with_status_extras_and_duration(log_path, read_log):
+    response = logged_client(log_path).get("/ok")
+
+    assert response.status_code == 200
+    (line,) = read_log()
+    assert (line["status"], line["route"], line["note"]) == (200, "/ok", "from the endpoint")
+    assert line["total_ms"] >= 50  # the endpoint slept 50 ms
+
+
+def test_middleware_uses_and_echoes_the_client_request_id(log_path, read_log):
+    response = logged_client(log_path).get("/ok", headers={"X-Request-ID": "abc-1"})
+
+    assert response.headers["X-Request-ID"] == "abc-1"
+    assert read_log()[0]["request_id"] == "abc-1"
+
+
+def test_middleware_generates_a_request_id_when_none_is_sent(log_path, read_log):
+    response = logged_client(log_path).get("/ok")
+
+    generated = response.headers["X-Request-ID"]
+    assert len(generated) == 32 and read_log()[0]["request_id"] == generated
+
+
+def test_middleware_logs_an_unhandled_exception_as_500_with_the_error(log_path, read_log):
+    response = logged_client(log_path).get("/boom")
+
+    assert response.status_code == 500
+    (line,) = read_log()
+    assert line["status"] == 500 and "kaput" in line["error"]
+
+
+def test_middleware_logs_unknown_route_and_wrong_method(log_path, read_log):
+    client = logged_client(log_path)
+
+    client.get("/nope")
+    client.post("/ok")
+
+    assert [(line["status"], line["method"], line["route"]) for line in read_log()] == [
+        (404, "GET", "/nope"), (405, "POST", "/ok")]

@@ -36,7 +36,7 @@ curl -X POST localhost:8000/tickets -H "Content-Type: application/json" \
 # {"id":1,"category":"Bank account or service","request_id":"..."}
 ```
 
-Search stored tickets by a case-insensitive substring of the narrative (`%` and `_` are literal). `q` is required. All matches are returned, ordered by id, with no limit.
+Search stored tickets by a substring of the narrative, ignoring case for ASCII letters (`%` and `_` are literal; `café` does not match `CAFÉ`). `q` is required. All matches are returned, ordered by id, with no limit.
 
 ```bash
 curl "localhost:8000/search?q=paycheck"
@@ -82,19 +82,23 @@ Other settings (optional): `OLLAMA_URL` (compose sets `http://host.docker.intern
 Run one model at a time. Stored tickets belong to the model that classified them, so reset storage when you switch:
 
 ```bash
-docker compose down -v
+MODEL=qwen2.5:7b docker compose down -v
 MODEL=llama3.2:1b docker compose up -d --build
 ```
+
+In PowerShell, `$env:MODEL` stays set for the session, so `docker compose down -v` works as is; set the new value before `up`.
 
 Then send one warm-up request (the first call loads the model) before measuring.
 
 ## Reset storage
 
 ```bash
-docker compose down -v
+MODEL=qwen2.5:7b docker compose down -v
 ```
 
 This deletes the SQLite volume `tickets-data`. `docker compose restart` and `docker compose down` (without `-v`) keep the tickets. The log is not touched by either.
+
+Stop or reset the service only after the load generator has finished. `docker compose stop` and `down` wait 10 s and then kill the container; a request still in flight at that point gets no reply and no log line.
 
 ## Request log
 
@@ -107,7 +111,7 @@ This deletes the SQLite volume `tickets-data`. `docker compose restart` and `doc
 | `run_id` | `X-Run-ID` header, or `null` |
 | `method`, `route` | HTTP method and URL path |
 | `status` | HTTP status returned |
-| `total_ms` | Time inside the service for the whole request |
+| `total_ms` | Time inside the service: from the request reaching the logging middleware to the reply being ready. Includes any wait for a free thread, the Ollama call and the insert. Excludes writing the log line and sending the reply (a client sees about 5-20 ms more through Docker Desktop) |
 | `model`, `model_digest` | Selected model tag and its pinned digest |
 | `ticket_id`, `category`, `raw_output` | `/tickets` success: stored id, label, the model's raw answer |
 | `model_ms`, `load_ms`, `prompt_eval_ms`, `eval_ms` | `/tickets`: Ollama call time as the service saw it, then Ollama's own load, prompt and generation times |
@@ -116,14 +120,16 @@ This deletes the SQLite volume `tickets-data`. `docker compose restart` and `doc
 | `error` | `/tickets` Ollama failure, or an unhandled exception on any route |
 | `query`, `result_count` | `/search` |
 
-On an Ollama failure the `/tickets` line has `error`, `narrative_chars` and `model_ms` (time until the call failed) and no `ticket_id`.
+On an Ollama failure the `/tickets` line has `error`, `narrative_chars` and `model_ms` (time until the call failed) and no `ticket_id`. If storing the ticket fails after a successful classification, the reply is 500 and the line keeps the model fields plus `error`, with no `ticket_id`.
 
-Request headers (both optional): `X-Request-ID` is echoed back in the response header and in the JSON reply, and is stored with the ticket; `X-Run-ID` labels a test run and appears only in the log.
+Request headers (both optional): `X-Request-ID` is echoed back in the response header (and in the JSON reply of a successful `POST /tickets`) and is stored with the ticket; `X-Run-ID` labels a test run and appears only in the log.
+
+**Load tests must send a unique `X-Request-ID` on every request** (in JMeter, for example `${__UUID()}`). A request that times out on the client, or gets a 500, never receives a generated id, so it can only be matched to its log line by an id the client chose. The service does not reject a reused id.
 
 ## Baseline behaviour
 
 - Classification is synchronous: the request waits for Ollama and the reply comes back when it finishes.
-- One Uvicorn worker process. The endpoints are plain `def`, so they run on the default 40-thread pool; a slow classification does not block `/search` or `/stats`.
+- One Uvicorn worker process. The endpoints are plain `def`, so they run on the default 40-thread pool. A slow classification does not block `/search` or `/stats` while fewer than 40 classifications are in flight. Once 40 are in flight, every request, including `/search` and `/stats`, waits for a free thread (measured with a stand-in Ollama: with 45 concurrent 8 s classifications, a search waited about 6.5 s; with 20 it took about 5 ms).
 - No cache, no queue, no retries, no limit on `/search` results.
 - The Ollama call timeout is 300 s (`request_timeout_seconds` in `eval_config.json`). After that the request returns 504.
 - `OLLAMA_NUM_PARALLEL` is an environment variable of the Ollama process on the **host**, not of this service. The team runs Ollama with it set to 1 and must record the value used for each run.
@@ -137,16 +143,18 @@ Request headers (both optional): `X-Request-ID` is echoed back in the response h
 
 ## Tests
 
-The tests need no Docker service, Ollama, dataset or network. They run in a throwaway container so nothing is installed on your machine and nothing is written to the repo. From the repo root:
+The tests need no running service, Ollama or dataset. They run in a throwaway container so nothing is installed on your machine and nothing is written to the repo (the container needs network once, to `pip install`). From the repo root:
 
 ```bash
+# bash (in Git Bash on Windows, put MSYS_NO_PATHCONV=1 in front of the command)
 docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD":/repo -w /repo python:3.12-slim \
   sh -c "pip install -q -r service/requirements-dev.txt && pytest -p no:cacheprovider service/tests -v"
 ```
 
 ```powershell
+# PowerShell
 docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "${PWD}:/repo" -w /repo python:3.12-slim sh -c "pip install -q -r service/requirements-dev.txt && pytest -p no:cacheprovider service/tests -v"
 ```
 
-- **Unit tests** (`test_storage.py`, `test_request_log.py`, `test_app_unit.py`) check one module each. `storage` and `request_log` run on temp files; the HTTP layer runs with `classifier.classify`, `classifier.ollama_get` and the storage functions all replaced, so no model, network or real database is touched. The classifier's own parser has its own `--self-test` and is not tested here.
-- **Integration tests** (`test_integration.py`) run the real app, storage, request log and classifier (real prompt and parser) together, with only the Ollama HTTP calls replaced. They check that post, search and stats agree, that failures store nothing, and that every request produces exactly one valid log line with the right ids and no narrative text.
+- **Unit tests** (`test_storage.py`, `test_request_log.py`, `test_app_unit.py`) check one module each. `storage` and `request_log` run on temp files, and the logging middleware runs on a bare app with dummy routes; the HTTP layer runs with `classifier.classify`, `classifier.ollama_get` and the storage functions all replaced, so no model, network or real database is touched. The classifier's own parser has its own `--self-test` and is not tested here.
+- **Integration tests** (`test_integration.py`) run the real app, storage, request log and classifier (real prompt and parser) together, with only the Ollama HTTP calls replaced. They check that post, search and stats agree, that failures store nothing, and that every request (200, 404, 405, 422, 500, 502) produces exactly one valid log line with the right ids, real durations and no narrative text.

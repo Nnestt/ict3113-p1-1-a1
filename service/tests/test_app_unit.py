@@ -51,13 +51,13 @@ def test_post_tickets_returns_id_category_and_request_id(client, stubbed):
 
 
 def test_post_tickets_classifies_once_and_inserts_the_label_once(client, stubbed):
-    post(client, "my card was charged twice")
+    response = post(client, "my card was charged twice")
 
     assert stubbed.classify == [("my card was charged twice", "qwen2.5:1.5b")]
     assert len(stubbed.insert) == 1
     narrative, category, model, request_id = stubbed.insert[0]
     assert (narrative, category, model) == ("my card was charged twice", "Credit card", "qwen2.5:1.5b")
-    assert request_id  # the same id that the response and the log carry
+    assert request_id == response.json()["request_id"]
 
 
 def test_invalid_label_is_stored_and_returned(client, stubbed, classify_result):

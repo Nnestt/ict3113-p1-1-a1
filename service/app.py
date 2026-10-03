@@ -70,9 +70,8 @@ def create_ticket(body: TicketIn, request: Request):
         extra["model_ms"] = round((time.perf_counter() - started) * 1000, 1)
         timed_out = isinstance(exc, TimeoutError) or isinstance(getattr(exc, "reason", None), TimeoutError)
         raise HTTPException(504 if timed_out else 502, "Ollama call timed out" if timed_out else "Ollama call failed")
-    ticket_id = storage.insert_ticket(DB_PATH, body.narrative, result["label"], MODEL, request.state.request_id)
+    # logged before the insert so a storage failure still leaves the model's result and timings in the log
     extra.update({
-        "ticket_id": ticket_id,
         "category": result["label"],
         "raw_output": result["raw_output"],
         "model_ms": result["wall_ms"],
@@ -83,6 +82,8 @@ def create_ticket(body: TicketIn, request: Request):
         "output_tokens": result["output_tokens"],
         "possibly_truncated": result["possibly_truncated"],
     })
+    ticket_id = storage.insert_ticket(DB_PATH, body.narrative, result["label"], MODEL, request.state.request_id)
+    extra["ticket_id"] = ticket_id
     return {"id": ticket_id, "category": result["label"], "request_id": request.state.request_id}
 
 
