@@ -1,12 +1,12 @@
 # AGENTS.md
 
-Instructions for AI coding agents working on the triage service in this repository.
+Instructions for AI coding agents working on the triage service. Paths below are relative to the repository root.
 
 ## Scope
 
 These instructions cover the triage service only:
 
-- `service/`: the HTTP API, SQLite storage, request logging, Docker image and tests
+- `service/` (this folder): the HTTP API, SQLite storage, request logging, Docker image and tests
 - `docker-compose.yml`: how the service is run
 - `logs/`: the service's request log
 
