@@ -23,6 +23,7 @@ How it works and why (architecture, request flows, how to read the log for bottl
 | `request_log.py` | Request logging only: one JSON line per request |
 | `classifier.py`, `eval_config.json`, `prompt_template.md` | Unchanged copies of the frozen files in `evaluation/`, as its README asks. Never edit them here. If the originals change, copy them again; a test fails while a copy differs. `data.py` is not copied |
 | `Dockerfile` | Built from this folder alone: copies the three modules and the three classifier files into `/app` |
+| `.dockerignore` | Keeps `.venv`, `tests` and Python caches out of the Docker build |
 | `requirements.txt` | Pinned runtime packages (this is all the image installs) |
 | `requirements-dev.txt` | Pinned test packages, not installed in the image |
 | `tests/` | Unit and integration tests |
