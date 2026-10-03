@@ -26,7 +26,7 @@ How it works and why (architecture, request flows, how to read the log for bottl
 | `.dockerignore` | Keeps `.venv`, `tests` and Python caches out of the Docker build |
 | `requirements.txt` | Pinned runtime packages (this is all the image installs) |
 | `requirements-dev.txt` | Pinned test packages, not installed in the image |
-| `tests/` | Unit and integration tests |
+| `tests/` | Unit and integration tests. Every test case, and the system checks run by hand, are recorded in [tests/README.md](tests/README.md) |
 
 The service never reads the dataset CSV.
 
@@ -175,6 +175,8 @@ Then run the tests whenever you need them (about two seconds):
 ```
 
 In Git Bash write the path as `.venv/Scripts/python`; on Linux or macOS it is `.venv/bin/python`. `.venv/` is git-ignored. The Docker command runs the tests on Python 3.12, the version the service image uses, so run it once before a final hand-in.
+
+Every test case is listed in [tests/README.md](tests/README.md). In short:
 
 - **Unit tests** (`test_storage.py`, `test_request_log.py`, `test_app_unit.py`) check one module each. `storage` and `request_log` run on temp files, and the logging middleware runs on a bare app with dummy routes; the HTTP layer runs with `classifier.classify`, `classifier.ollama_get` and the storage functions all replaced, so no model, network or real database is touched. The classifier's own parser has its own `--self-test` and is not tested here.
 - **Copy check** (`test_classifier_copy.py`) fails if a classifier file in `service/` differs from its original in `evaluation/`.

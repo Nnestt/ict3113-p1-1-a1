@@ -68,6 +68,7 @@ MODEL=qwen2.5:7b docker compose down -v
 - Unit tests check one module and replace every external dependency with a stub. Integration tests run the real modules together and stub only the Ollama HTTP calls. Tests write only to temporary directories.
 - Run the tests before saying a change works, and report failures as they are.
 - When behaviour changes, update `service/README.md` and `service/DESIGN.md` in the same change.
+- When a test is added, changed or removed, update the test case record in `service/tests/README.md` in the same change.
 
 ## Git
 

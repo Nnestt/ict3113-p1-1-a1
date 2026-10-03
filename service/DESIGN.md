@@ -506,7 +506,7 @@ These are deliberately not done. This section lists them and what a tester shoul
 
 ## 10. Test strategy
 
-For the command to run the automated tests, see the Tests section of [README.md](README.md).
+For the command to run the automated tests, see the Tests section of [README.md](README.md). Every test case and every system check, with its result, is recorded in [tests/README.md](tests/README.md).
 
 | Level | Covers | Real | Replaced by a stub | Where |
 | --- | --- | --- | --- | --- |
