@@ -8,7 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path[:0] = [str(ROOT / "service"), str(ROOT / "evaluation")]
+sys.path.insert(0, str(ROOT / "service"))
 
 import app as app_module  # noqa: E402  (importing app has no side effects)
 

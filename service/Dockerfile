@@ -1,8 +1,8 @@
-# Build context is the repo root (see docker-compose.yml) so the frozen classifier is reused, not copied into service/.
+# Build context is service/ (see docker-compose.yml). classifier.py, eval_config.json and prompt_template.md
+# are unchanged copies of the frozen files in evaluation/.
 FROM python:3.12-slim
 WORKDIR /app
-COPY service/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY evaluation/classifier.py evaluation/eval_config.json evaluation/prompt_template.md ./
-COPY service/app.py service/storage.py service/request_log.py ./
+COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

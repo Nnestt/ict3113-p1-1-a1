@@ -10,7 +10,7 @@ It is a deliberately plain baseline: synchronous, no cache, no queue, no retries
 
 | This service owns | Not this service |
 | --- | --- |
-| The HTTP API (`POST /tickets`, `GET /search`, `GET /stats`) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen, imported unchanged) |
+| The HTTP API (`POST /tickets`, `GET /search`, `GET /stats`) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen; the service holds unchanged copies) |
 | Ticket storage (SQLite) | The golden set and labels (`golden_set/`, Ernest) |
 | Request logging | JMeter plans, `.jtl` files and load analysis (Lutfi) |
 | The Docker image and `docker-compose.yml` | Workload model, requirements and prediction record (Mikhail) |
@@ -58,7 +58,7 @@ flowchart TB
         RL["request_log.py<br/>logging middleware"]
         ST["storage.py<br/>SQLite access"]
     end
-    subgraph FZ["evaluation/ (frozen, imported unchanged)"]
+    subgraph FZ["Unchanged copies of the frozen files in evaluation/"]
         CL["classifier.py"]
         CFG["eval_config.json"]
         PT["prompt_template.md"]
@@ -73,7 +73,7 @@ flowchart TB
     CL -->|"HTTP"| OLL
 ```
 
-`request_log.py` never imports `app.py` or the classifier. `app.py` hands it a callback that returns `(LOG_PATH, MODEL, model digest)` when a request ends. The Dockerfile copies all modules flat into `/app`, so `import classifier` works in the container.
+`request_log.py` never imports `app.py` or the classifier. `app.py` hands it a callback that returns `(LOG_PATH, MODEL, model digest)` when a request ends. `classifier.py`, `eval_config.json` and `prompt_template.md` sit in `service/` as unchanged copies of the frozen files in `evaluation/`, as `evaluation/README.md` asks. The Dockerfile builds from `service/` alone and copies the modules and these three files into `/app`. `test_classifier_copy.py` fails if a copy differs from its original.
 
 | Module | Single responsibility | Public functions | Must not know about |
 | --- | --- | --- | --- |
@@ -463,7 +463,7 @@ The first includes waiting for a worker thread, body validation, the insert (inc
 | One Uvicorn worker process | Keeps the baseline plain: one event loop, one pool, one place where log lines are written. Multi-process tuning belongs to the optimisation assignment | `--workers N`, Gunicorn |
 | SQLite on a named volume | Tickets are few (tens per hour in the workload model) and the service needs no separate server. The volume lives in Docker, apart from the log, so `docker compose down -v` resets tickets only | A database container (more moving parts to deploy and measure) |
 | JSON Lines log on a bind mount | One JSON object per line is easy to load into an analysis tool. On the host it can be read while the service runs and survives `down -v` | Container stdout; a log table in SQLite |
-| Import the frozen classifier through the Docker build context | One source of truth: `evaluation/` stays unchanged and nothing is copied into `service/`. `.dockerignore` keeps `golden_set`, `logs` and `.git` out of the context, and `data.py` is not copied | Copy `classifier.py` into `service/` (as `evaluation/README.md` suggests) |
+| Copy the frozen classifier files into `service/` | It is what `evaluation/README.md` asks for, and the service folder then builds on its own. The build context is `service/`, which holds no dataset; `data.py` is not copied. A test fails if a copy differs from its original, so the copies cannot drift unnoticed | Build from the repo root and copy the files from `evaluation/` at build time (a single copy, but the service folder cannot be built alone and it departs from the hand-off instruction) |
 | Ollama on the host | Ollama and its settings are outside this service's scope and owned by the team. The pinned models are already pulled there | Ollama as a second container |
 | Fail-fast digest check at startup | A load result is only valid for the pinned model. Refusing to start is better than serving a different model silently | Warn and continue; check on every request (extra latency) |
 | Store `INVALID` answers | Every submitted ticket is kept and counted. Unparseable replies stay visible in `/stats` and `raw_output` is logged | Return an error and store nothing; retry the model (not in the baseline) |
@@ -498,7 +498,7 @@ These are deliberately not done. This section lists them and what a tester shoul
 | `POST /tickets` accepts one narrative, classifies via the model backend, stores, returns the category | `app.create_ticket` -> `classifier.classify` -> `storage.insert_ticket` | `test_app_unit.py` (id, category and request_id returned; classify and insert called once; `INVALID` stored; 422 cases; 502 and 504), `test_integration.py` (post then search then stats agree; real prompt built; failures store nothing) |
 | `GET /search` returns stored tickets matching a text query | `app.search` -> `storage.search_tickets` | `test_storage.py` (substring, case, `%` and `_` literal, order, empty), `test_app_unit.py` (422 without `q`; reply shape), `test_integration.py` |
 | `GET /stats` returns counts by category | `app.stats` -> `storage.count_by_category` | `test_storage.py` (zeros, correct counts), `test_app_unit.py` (8 keys), `test_integration.py` |
-| Service starts empty, no bulk import | `storage.init_db` only creates the table (`CREATE TABLE IF NOT EXISTS`); no import code; the Dockerfile does not copy `data.py` and `.dockerignore` excludes `golden_set` | `test_storage.py` (`init_db` creates the table and keeps existing tickets), `test_integration.py` (`/stats` total 0 after startup) |
+| Service starts empty, no bulk import | `storage.init_db` only creates the table (`CREATE TABLE IF NOT EXISTS`); no import code; the build context is `service/`, which holds no dataset, and `data.py` is not copied | `test_storage.py` (`init_db` creates the table and keeps existing tickets), `test_integration.py` (`/stats` total 0 after startup) |
 | Classification is synchronous, no caching or queuing | `app.create_ticket` calls `classifier.classify` directly; no cache or queue code exists | Absence is checked by reading the code, not by a test. `test_app_unit.py` checks one `classify` call per POST |
 | Ollama model pinned by tag and digest | `eval_config.json` `models`; `app.check_model` and `app.lifespan`; `model` and `model_digest` in every log line | `test_app_unit.py` (`check_model` pass, unknown model, not pulled, digest mismatch, unreachable; startup exit and table creation), `test_integration.py` (startup check) |
 | Every handled request is logged | `request_log.add_request_logging`, `build_record`, `write_log_line` | `test_request_log.py` (writer, record builder, and the middleware on a bare app: 200, 404, 405, 500), `test_integration.py` (one valid line per request for 200, 422, 404, 405, 502 and a 500 from a failed insert; fields; real durations; no narrative text) |

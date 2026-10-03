@@ -2,5 +2,6 @@
 __pycache__/
 *.pyc
 docs/
+.idea/
 golden_set/ict3113_tickets.csv
 .pytest_cache/

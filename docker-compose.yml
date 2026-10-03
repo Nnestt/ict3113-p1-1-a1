@@ -1,8 +1,6 @@
 services:
   triage:
-    build:
-      context: .
-      dockerfile: service/Dockerfile
+    build: ./service
     environment:
       MODEL: ${MODEL:?Set MODEL to a pinned model, e.g. MODEL=qwen2.5:7b docker compose up -d --build}
       OLLAMA_URL: http://host.docker.internal:11434

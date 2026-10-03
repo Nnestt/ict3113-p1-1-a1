@@ -8,7 +8,7 @@ How it works and why (architecture, request flows, how to read the log for bottl
 
 | This service owns | Not this service |
 | --- | --- |
-| The HTTP API (three endpoints) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen, imported unchanged) |
+| The HTTP API (three endpoints) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen; the service holds unchanged copies) |
 | Ticket storage (SQLite) | The golden set and labels (`golden_set/`, Ernest) |
 | Request logging | The JMeter test plans, `.jtl` files and load/stress analysis (Lutfi) |
 | The Docker image and Compose file | The workload model, requirements and prediction record (Mikhail) |
@@ -21,7 +21,8 @@ How it works and why (architecture, request flows, how to read the log for bottl
 | `app.py` | HTTP layer: config from env, startup check, the three endpoints, error mapping (422, 502, 504) |
 | `storage.py` | SQLite only: create table, insert, search, count |
 | `request_log.py` | Request logging only: one JSON line per request |
-| `Dockerfile` | Copies the three modules plus the frozen `evaluation/classifier.py`, `eval_config.json` and `prompt_template.md` flat into `/app` (one source of truth, nothing is copied into `service/`) |
+| `classifier.py`, `eval_config.json`, `prompt_template.md` | Unchanged copies of the frozen files in `evaluation/`, as its README asks. Never edit them here. If the originals change, copy them again; a test fails while a copy differs. `data.py` is not copied |
+| `Dockerfile` | Built from this folder alone: copies the three modules and the three classifier files into `/app` |
 | `requirements.txt` | Pinned runtime packages (this is all the image installs) |
 | `requirements-dev.txt` | Pinned test packages, not installed in the image |
 | `tests/` | Unit and integration tests |
@@ -58,7 +59,8 @@ curl localhost:8000/stats
 - Ollama running on the host with the four pinned models pulled. Check from the repo root:
 
   ```bash
-  python evaluation/classifier.py --self-test
+  cd evaluation
+  python classifier.py --self-test
   ```
 
 ## Start
@@ -159,4 +161,5 @@ docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "${PWD}:/repo" -w /repo python:3
 ```
 
 - **Unit tests** (`test_storage.py`, `test_request_log.py`, `test_app_unit.py`) check one module each. `storage` and `request_log` run on temp files, and the logging middleware runs on a bare app with dummy routes; the HTTP layer runs with `classifier.classify`, `classifier.ollama_get` and the storage functions all replaced, so no model, network or real database is touched. The classifier's own parser has its own `--self-test` and is not tested here.
+- **Copy check** (`test_classifier_copy.py`) fails if a classifier file in `service/` differs from its original in `evaluation/`.
 - **Integration tests** (`test_integration.py`) run the real app, storage, request log and classifier (real prompt and parser) together, with only the Ollama HTTP calls replaced. They check that post, search and stats agree, that failures store nothing, and that every request (200, 404, 405, 422, 500, 502) produces exactly one valid log line with the right ids, real durations and no narrative text.

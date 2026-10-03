@@ -1,7 +1,7 @@
 # Ticket triage service: HTTP layer. Classifies a complaint with one Ollama model and stores it in SQLite.
 # Deliberately plain baseline: synchronous classification, no cache, no queue, one process.
-# Storage is in storage.py, request logging in request_log.py, the classifier is evaluation/classifier.py.
-# service/Dockerfile copies all of them flat into /app.
+# Storage is in storage.py and request logging in request_log.py. classifier.py, eval_config.json and
+# prompt_template.md are unchanged copies of the frozen files in evaluation/ (do not edit them here).
 #
 # Run (see service/README.md):  MODEL=qwen2.5:7b docker compose up -d --build
 # Env vars: MODEL (required), OLLAMA_URL, DB_PATH, LOG_PATH
