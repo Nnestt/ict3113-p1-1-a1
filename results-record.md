@@ -7,16 +7,17 @@
 
 | | System under test (PC 1) | Load generator (PC 2) |
 |---|---|---|
-| Processor | TODO | Intel(R) Core(TM) Ultra 7 155H |
-| System memory | TODO | 31.37 GB |
-| Operating system | TODO | Microsoft Windows 11 Home 10.0.26200 |
+| Processor | AMD Ryzen 5 7600 (6-core) | Intel(R) Core(TM) Ultra 7 155H |
+| System memory | 31.1 GB | 31.37 GB |
+| Operating system | Microsoft Windows 11 | Microsoft Windows 11 Home 10.0.26200 |
 | Role | Docker (triage service) + Ollama, CPU only | Apache JMeter 5.6.3 (Java: Microsoft JDK 21) |
 | Address | 192.168.68.64 | 192.168.68.69 |
 
 - **Network:** Wi-Fi (not wired), same router. Latency jitter from Wi-Fi may appear in p95/p99; this is a factor that could make measurements unrepresentative.
 - **Inference device:** CPU only, confirmed with `ollama ps` (PROCESSOR = `100% CPU`) before the real runs.
 - **Load generator separate from the SUT:** yes, separate physical machines.
-- **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) is a teammate's machine with the same specification as PC 2. Fill in PC 1's own specification above; if PC 1 is the same model, say so, since the predictions were made for that hardware.
+- **PC 1 also has a discrete GPU** (AMD Radeon RX 7800 XT, 16 GB VRAM) that Ollama would use by default. It is explicitly hidden (`ROCR_VISIBLE_DEVICES=-1`, `HIP_VISIBLE_DEVICES=-1`, `GGML_VK_VISIBLE_DEVICES=-1`) so inference runs on CPU only, matching the assignment's constraint. Confirmed via `ollama ps` showing `100% CPU` and the Ollama server log showing `inference compute id=cpu library=cpu`.
+- **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) matches PC 2 (the load generator), not PC 1 (the system under test, AMD Ryzen 5 7600). The predictions were therefore made assuming different hardware than what actually ran the models; note this when comparing predicted vs. measured latency.
 
 ## Load Test Protocol
 
@@ -95,7 +96,8 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 
 - [ ] Every `.jtl` is in `load_test/results/` and committed.
 - [ ] `logs/requests.jsonl` committed after each model.
-- [ ] Per run: JMeter request count equals the log line count for that `X-Run-ID` (excluding `warmup-` lines).
+- [x] `qwen7b-run1`: JMeter request count (70: 23 POST + 46 GET /search + 1 GET /stats) equals the PC 1 log line count for that exact `X-Run-ID` (excluding the separate `warmup-qwen7b-run1` line) — confirmed. p50/p95/p99 independently recomputed from the raw `.jtl` and match the table above exactly (POST p50=2044, p95=4632, p99=5073; search p95=17).
+- [ ] Repeat the above check for runs 2 and 3, and for every other model.
 - [ ] Every number in the slides appears in this file.
 
 ## Deviations and Limitations
