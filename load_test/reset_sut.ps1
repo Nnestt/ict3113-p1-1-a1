@@ -14,6 +14,18 @@ New-Item -ItemType Directory -Force logs | Out-Null
 
 function Fail($msg) { Write-Host "RESET FAILED: $msg"; exit 1 }
 
+# Over SSH there is no interactive logon session, so Docker Desktop's credential helper
+# ("credsStore": "desktop") fails with "A specified logon session does not exist".
+# Use a private Docker config with no credential store (public base image, anonymous pull),
+# the Docker Desktop engine pipe, and the Compose plugin directory. The user's own config is untouched.
+$cfg = Join-Path $env:USERPROFILE '.docker-ssh'
+New-Item -ItemType Directory -Force $cfg | Out-Null
+$plugins = Join-Path (Split-Path $Docker -Parent) '..\cli-plugins'
+$plugins = (Resolve-Path $plugins).Path.Replace('\', '\\')
+'{"cliPluginsExtraDirs":["' + $plugins + '"]}' | Set-Content (Join-Path $cfg 'config.json') -Encoding ascii
+$env:DOCKER_CONFIG = $cfg
+$env:DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+
 # Ollama server must already be up (started by the OllamaCpuOnly logon task).
 try { Invoke-RestMethod 'http://127.0.0.1:11434' -TimeoutSec 5 | Out-Null } catch { Fail 'Ollama is not answering on 127.0.0.1:11434' }
 
