@@ -78,15 +78,33 @@ fails but step 1's ping worked, the problem is the firewall on the SUT
 machine (port 8000 inbound) or the service isn't actually running — not
 this machine.
 
-## 7. Run the real test
+## 7. Run the tests
 
-From `load_test/`, one model/run at a time. Change `RUN_ID` and the
-output filename every run — never reuse one, so `.jtl` files and the
-SUT's `logs/requests.jsonl` stay matchable by `X-Run-ID`.
+From `load_test/`, one model at a time. `run_model.ps1` runs the three
+60-minute runs for a model, uses a new `RUN_ID`/`.jtl` per run (never reused,
+so `.jtl` files and the SUT's `logs/requests.jsonl` stay matchable by
+`X-Run-ID`), waits until the SUT has been reset (`/stats` total = 0), warms the
+model up, and prints p50/p95/p99 and error rate after each run.
+
+Smoke test first (2 minutes, one run, accelerated rates; a pipeline check, not
+a result). Reset the SUT afterwards so the real runs start empty:
+
+```powershell
+.\run_model.ps1 -Label qwen7b -Smoke
+```
+
+Real runs:
+
+```powershell
+.\run_model.ps1 -Label qwen7b
+```
+
+If you run JMeter by hand instead, quote every `-J` argument. Windows
+PowerShell 5.1 otherwise splits `-JHOST=192.168.68.64` at the dots:
 
 ```powershell
 & "C:\tools\apache-jmeter-5.6.3\bin\jmeter.bat" -n -t peak_mixed_load.jmx `
-  -JHOST=192.168.68.64 -JPORT=8000 -JRUN_ID=qwen7b-run1 -JDURATION_SEC=3600 `
+  '-JHOST=192.168.68.64' '-JPORT=8000' '-JRUN_ID=qwen7b-run1' '-JDURATION_SEC=3600' `
   -l results\qwen7b_run1.jtl -j logs\qwen7b_run1_jmeter.log
 ```
 
