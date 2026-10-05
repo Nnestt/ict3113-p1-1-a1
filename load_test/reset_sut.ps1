@@ -24,6 +24,9 @@ $plugins = Join-Path (Split-Path $Docker -Parent) '..\cli-plugins'
 $plugins = (Resolve-Path $plugins).Path.Replace('\', '\\')
 '{"cliPluginsExtraDirs":["' + $plugins + '"]}' | Set-Content (Join-Path $cfg 'config.json') -Encoding ascii
 $env:DOCKER_CONFIG = $cfg
+# With no credsStore, Docker auto-detects docker-credential-wincred on PATH (same folder as docker.exe),
+# which needs a logon session. Hide that folder; $Docker is called by full path so it still runs.
+$env:Path = ($env:Path -split ';' | Where-Object { $_ -and $_ -notmatch 'Docker\\Docker\\resources\\bin' }) -join ';'
 $env:DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
 
 # Ollama server must already be up (started by the OllamaCpuOnly logon task).
