@@ -1,0 +1,20 @@
+2026-10-05 20:37:46,038 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-10-05 20:37:46,071 INFO o.a.j.JMeter: Loading user properties from: C:\tools\apache-jmeter-5.6.3\bin\user.properties
+2026-10-05 20:37:46,071 INFO o.a.j.JMeter: Loading system properties from: C:\tools\apache-jmeter-5.6.3\bin\system.properties
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: Version 5.6.3
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: java.version=17.0.20.1
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: os.name=Windows 11
+2026-10-05 20:37:46,075 INFO o.a.j.JMeter: os.arch=amd64
+2026-10-05 20:37:46,076 INFO o.a.j.JMeter: os.version=10.0
+2026-10-05 20:37:46,076 INFO o.a.j.JMeter: file.encoding=Cp1252
+2026-10-05 20:37:46,076 INFO o.a.j.JMeter: java.awt.headless=true
+2026-10-05 20:37:46,076 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-10-05 20:37:46,076 INFO o.a.j.JMeter: Available Processors =12
+2026-10-05 20:37:46,080 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-10-05 20:37:46,080 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-10-05 20:37:46,080 INFO o.a.j.JMeter: JMeterHome=C:\tools\apache-jmeter-5.6.3
+2026-10-05 20:37:46,080 INFO o.a.j.JMeter: user.dir  =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-05 20:37:46,081 INFO o.a.j.JMeter: PWD       =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-05 20:37:46,081 INFO o.a.j.JMeter: IP: 192.168.68.64 Name: DESKTOP-8AEB6T7 FullName: host.docker.internal
