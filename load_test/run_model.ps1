@@ -9,7 +9,7 @@ param(
     [Parameter(Mandatory)][string]$Label,
     [int]$Runs = 3,
     [int]$DurationSec = 3600,
-    [string]$Target = '192.168.68.64',
+    [string]$Target = '192.168.68.69',
     [int]$Port = 8000,
     [int]$TicketRate = 23,
     [int]$SearchRate = 46,
@@ -23,7 +23,7 @@ if ($Smoke) {
     if ($Label -notlike 'smoke*') { $Label = "smoke-$Label" }
 }
 Set-Location $PSScriptRoot
-$env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot'
+if (-not $env:JAVA_HOME) { $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot' }   # fallback if the shell has none
 $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 $jmeter = 'C:\tools\apache-jmeter-5.6.3\bin\jmeter.bat'
 $base = "http://${Target}:$Port"

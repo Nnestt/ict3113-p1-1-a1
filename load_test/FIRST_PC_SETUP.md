@@ -5,8 +5,8 @@ models on CPU only. The load generator (JMeter) runs on a **separate** machine,
 see `SECOND_PC_SETUP.md`.
 
 IP addresses for this test setup:
-- This machine (system under test): `192.168.68.64`
-- Load generator (JMeter): `192.168.68.69`
+- This machine (system under test): `192.168.68.69`
+- Load generator (JMeter): `192.168.68.64`
 
 Both machines are on the same Wi-Fi network (a wired LAN would be better; Wi-Fi
 jitter can show up in the p95/p99 numbers, so note it in the test-environment
@@ -82,7 +82,7 @@ Ping is blocked by default on Windows and is not needed; only TCP 8000 matters.
 ipconfig
 ```
 
-The Wi-Fi IPv4 address must be `192.168.68.64`. If it differs, tell the user:
+The Wi-Fi IPv4 address must be `192.168.68.69`. If it differs, tell the user:
 the JMeter machine needs the new address (`-Target` in `run_model.ps1`). To
 keep it stable, reserve the address for this machine in the router (DHCP
 reservation).
@@ -100,7 +100,7 @@ last line before `Application startup failed` in `docker compose logs`
 (Ollama not running, model not pulled, or digest mismatch).
 
 Check it is reachable from the network side: the JMeter machine runs
-`curl http://192.168.68.64:8000/stats` and must get the same JSON.
+`curl http://192.168.68.69:8000/stats` and must get the same JSON.
 
 ## 8. Reset between runs (and when switching model)
 
