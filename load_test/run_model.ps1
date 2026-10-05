@@ -29,7 +29,12 @@ if ($Smoke) {
     if ($Label -notlike 'smoke*') { $Label = "smoke-$Label" }
 }
 Set-Location $PSScriptRoot
-if (-not $env:JAVA_HOME) { $env:JAVA_HOME = 'C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot' }   # fallback if the shell has none
+if (-not $env:JAVA_HOME -or -not (Test-Path "$env:JAVA_HOME\bin\java.exe")) {   # find an installed JDK if the shell has none
+    $jdk = Get-ChildItem 'C:\Program Files\Eclipse Adoptium', 'C:\Program Files\Microsoft', 'C:\Program Files\Java' -Directory -Filter 'jdk*' -ErrorAction SilentlyContinue |
+        Where-Object { Test-Path "$($_.FullName)\bin\java.exe" } | Sort-Object Name -Descending | Select-Object -First 1
+    if (-not $jdk) { throw 'No JDK found. Install one (see SECOND_PC_SETUP.md step 2) or set JAVA_HOME.' }
+    $env:JAVA_HOME = $jdk.FullName
+}
 $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 $jmeter = 'C:\tools\apache-jmeter-5.6.3\bin\jmeter.bat'
 $base = "http://${Target}:$Port"
