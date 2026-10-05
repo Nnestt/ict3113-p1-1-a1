@@ -1,0 +1,8 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1791209233301,2713,POST /tickets,200,OK,Tickets (POST /tickets) 1-5,text,true,,267,1144,2,7,http://192.168.68.64:8000/tickets,2712,0,38
+1791209243269,19,GET /stats,200,OK,Stats (GET /stats) 3-1,text,true,,363,209,1,6,http://192.168.68.64:8000/stats,19,0,12
+1791209263344,21,GET /search,200,OK,Search (GET /search) 2-1,text,true,,1376,220,4,5,http://192.168.68.64:8000/search?q=account,21,0,13
+1791209272879,19,GET /search,200,OK,Search (GET /search) 2-2,text,true,,219,220,3,4,http://192.168.68.64:8000/search?q=payment,19,0,11
+1791209283580,26,GET /search,200,OK,Search (GET /search) 2-3,text,true,,389,217,2,3,http://192.168.68.64:8000/search?q=bank,26,0,12
+1791209309434,2961,POST /tickets,200,OK,Tickets (POST /tickets) 1-10,text,true,,276,1146,1,2,http://192.168.68.64:8000/tickets,2961,0,10
+1791209323660,8,GET /search,200,OK,Search (GET /search) 2-4,text,true,,216,217,1,1,http://192.168.68.64:8000/search?q=card,8,0,3
