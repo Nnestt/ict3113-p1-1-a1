@@ -17,6 +17,9 @@ function Fail($msg) { Write-Host "RESET FAILED: $msg"; exit 1 }
 # Ollama server must already be up (started by the OllamaCpuOnly logon task).
 try { Invoke-RestMethod 'http://127.0.0.1:11434' -TimeoutSec 5 | Out-Null } catch { Fail 'Ollama is not answering on 127.0.0.1:11434' }
 
+# docker-compose.yml requires MODEL for every compose command, including 'down'.
+$env:MODEL = $Model
+
 # Tear down the service and its volume.
 & $Docker compose down -v 2>&1 | Out-Host
 if ($LASTEXITCODE -ne 0) { Fail 'docker compose down -v' }
@@ -28,7 +31,6 @@ Start-Sleep 3
 if (@(& $Ollama ps | Select-Object -Skip 1 | Where-Object { $_.Trim() }).Count -gt 0) { Fail 'a model is still loaded after ollama stop' }
 
 # Bring the service up pinned to the requested model.
-$env:MODEL = $Model
 & $Docker compose up -d --build 2>&1 | Out-Host
 if ($LASTEXITCODE -ne 0) { Fail 'docker compose up -d --build' }
 
