@@ -1,0 +1,31 @@
+{
+  "run_id": "acc_qwen2.5_1.5b_20261005T161551Z",
+  "model": "qwen2.5:1.5b",
+  "model_digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+  "dev_check": false,
+  "started_utc": "2026-10-05T16:15:51+00:00",
+  "finished_utc": "2026-10-05T16:22:45+00:00",
+  "git_head": "df879e6",
+  "freeze_commit": "c51e33c",
+  "ollama_version": "0.35.0",
+  "size_vram": 0,
+  "tickets": 175,
+  "correct": 92,
+  "http_errors": 0,
+  "invalid": 0,
+  "stats_after": {
+    "total": 175,
+    "by_category": {
+      "Credit reporting": 50,
+      "Debt collection": 13,
+      "Mortgage": 14,
+      "Credit card": 47,
+      "Bank account or service": 8,
+      "Consumer loan": 35,
+      "Money transfer or service": 8,
+      "INVALID": 0
+    }
+  },
+  "log_lines_for_run": 175,
+  "reconciliation_problems": []
+}

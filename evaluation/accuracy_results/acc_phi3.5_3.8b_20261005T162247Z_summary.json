@@ -1,0 +1,31 @@
+{
+  "run_id": "acc_phi3.5_3.8b_20261005T162247Z",
+  "model": "phi3.5:3.8b",
+  "model_digest": "61819fb370a3c1a9be6694869331e5f85f867a079e9271d66cb223acb81d04ba",
+  "dev_check": false,
+  "started_utc": "2026-10-05T16:22:47+00:00",
+  "finished_utc": "2026-10-05T16:37:47+00:00",
+  "git_head": "df879e6",
+  "freeze_commit": "c51e33c",
+  "ollama_version": "0.35.0",
+  "size_vram": 0,
+  "tickets": 175,
+  "correct": 133,
+  "http_errors": 0,
+  "invalid": 0,
+  "stats_after": {
+    "total": 175,
+    "by_category": {
+      "Credit reporting": 31,
+      "Debt collection": 23,
+      "Mortgage": 19,
+      "Credit card": 22,
+      "Bank account or service": 38,
+      "Consumer loan": 27,
+      "Money transfer or service": 15,
+      "INVALID": 0
+    }
+  },
+  "log_lines_for_run": 175,
+  "reconciliation_problems": []
+}

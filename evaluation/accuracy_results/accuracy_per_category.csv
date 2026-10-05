@@ -1,0 +1,29 @@
+model,gold_label,correct,total,accuracy
+llama3.2:1b,Credit reporting,32,36,0.8889
+llama3.2:1b,Debt collection,3,24,0.125
+llama3.2:1b,Mortgage,0,22,0.0
+llama3.2:1b,Credit card,0,21,0.0
+llama3.2:1b,Bank account or service,3,33,0.0909
+llama3.2:1b,Consumer loan,0,23,0.0
+llama3.2:1b,Money transfer or service,0,16,0.0
+qwen2.5:1.5b,Credit reporting,31,36,0.8611
+qwen2.5:1.5b,Debt collection,10,24,0.4167
+qwen2.5:1.5b,Mortgage,10,22,0.4545
+qwen2.5:1.5b,Credit card,12,21,0.5714
+qwen2.5:1.5b,Bank account or service,8,33,0.2424
+qwen2.5:1.5b,Consumer loan,15,23,0.6522
+qwen2.5:1.5b,Money transfer or service,6,16,0.375
+phi3.5:3.8b,Credit reporting,27,36,0.75
+phi3.5:3.8b,Debt collection,18,24,0.75
+phi3.5:3.8b,Mortgage,18,22,0.8182
+phi3.5:3.8b,Credit card,13,21,0.619
+phi3.5:3.8b,Bank account or service,27,33,0.8182
+phi3.5:3.8b,Consumer loan,18,23,0.7826
+phi3.5:3.8b,Money transfer or service,12,16,0.75
+qwen2.5:7b,Credit reporting,33,36,0.9167
+qwen2.5:7b,Debt collection,19,24,0.7917
+qwen2.5:7b,Mortgage,16,22,0.7273
+qwen2.5:7b,Credit card,16,21,0.7619
+qwen2.5:7b,Bank account or service,25,33,0.7576
+qwen2.5:7b,Consumer loan,17,23,0.7391
+qwen2.5:7b,Money transfer or service,9,16,0.5625

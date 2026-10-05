@@ -14,6 +14,22 @@ The classifier every candidate model uses: **one prompt, one set of settings, on
 | `smoke_test.py` | Checks every model runs on CPU only and gives a valid label on non-golden rows |
 | `setup_and_smoke_test.ipynb` | Runs all the checks above in one notebook |
 | `smoke_results/` | Smoke-test output, one CSV per model |
+| `run_accuracy.py` | The accuracy experiment: posts all 175 golden tickets to the service, once per model |
+| `accuracy.py` | Accuracy maths: overall, per category, confusion matrix, R5/R6 checks |
+| `accuracy_analysis.ipynb` | Shows the accuracy results and exports CSVs for the slides |
+| `accuracy_results/` | One CSV and one summary JSON per run, plus the exported result tables |
+
+## Accuracy experiment
+
+With Docker Desktop and Ollama running, from the repo root:
+
+```bash
+python evaluation/run_accuracy.py
+```
+
+For each model it resets storage (`docker compose down -v`), starts the service with that model, checks storage is empty, warms the model up, posts the 175 golden tickets one at a time (each with its own `X-Request-ID` and the run's `X-Run-ID`), then checks `/stats` and `logs/requests.jsonl` agree with the results. About an hour for all four models. Then open `accuracy_analysis.ipynb` and run it top to bottom.
+
+`--dev-check 3` runs the same pipeline on 3 non-golden rows, to test the setup without touching the golden set.
 
 ## Rule
 
