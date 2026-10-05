@@ -52,7 +52,19 @@ were removed; this table starts fresh on the new SUT (Intel Core Ultra 7 155H).
 | Mean | | | | | | | | | | |
 | Spread | | | | | | | | | | |
 
-### `phi3.5:3.8b`, `qwen2.5:1.5b`, `llama3.2:1b`
+### `llama3.2:1b`
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `llama1b-run1` | 23 | 0 | 971 | 2274 | 2381 | 46 | 11 | 1 | 0% (0/70) |
+| 2 | `llama1b-run2` | 23 | 0 | 1040 | 2000 | 2316 | 46 | 12 | 1 | 0% (0/70) |
+| 3 | `llama1b-run3` | 23 | 0 | 991 | 1973 | 2345 | 46 | 12 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 1001 | 2082 | 2347 | 46 | 11.7 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 971–1040 | 1973–2274 | 2316–2381 | 46–46 | 11–12 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 35.5 ms, p95 166.5 ms, p99 32.6 ms, search p95 0.6 ms.
+
+### `phi3.5:3.8b`, `qwen2.5:1.5b`
 
 Same table, one per model. TODO.
 
