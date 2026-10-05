@@ -15,7 +15,13 @@ param(
     [int]$SearchRate = 46,
     [int]$StatsRate = 1,
     [int]$StartRun = 1,
-    [switch]$Smoke   # 1 run, 2 minutes, accelerated rates - checks the whole pipeline, not a result
+    [switch]$Smoke,  # 1 run, 2 minutes, accelerated rates - checks the whole pipeline, not a result
+    # Automation: when -Model is given the script resets the SUT itself over SSH (no manual reset).
+    [string]$Model,                  # pinned tag, e.g. qwen2.5:7b
+    [string]$SutUser = 'admin',
+    [string]$SutRepo = 'C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1',   # repo path ON THE SUT - check it
+    [string]$SutOllama = 'C:\Users\admin\AppData\Local\Programs\Ollama\ollama.exe',
+    [int]$CooldownSec = 300          # idle gap after each run (laptop SUT thermals)
 )
 $ErrorActionPreference = 'Stop'
 if ($Smoke) {
@@ -32,6 +38,11 @@ New-Item -ItemType Directory -Force results, logs | Out-Null
 function Get-Total {
     try { (Invoke-RestMethod "$base/stats" -TimeoutSec 10).total } catch { $null }
 }
+function Invoke-Sut([string]$cmd) {
+    $out = & ssh -o BatchMode=yes "$SutUser@$Target" $cmd 2>&1
+    if ($LASTEXITCODE -ne 0) { $out | Out-Host; throw "SSH command failed (exit $LASTEXITCODE): $cmd" }
+    $out
+}
 function Pct($sorted, $p) {
     if ($sorted.Count -eq 0) { return 0 }
     $sorted[[math]::Min($sorted.Count - 1, [math]::Ceiling($p / 100 * $sorted.Count) - 1)]
@@ -47,6 +58,12 @@ function Summarise($jtl) {
 for ($i = $StartRun; $i -lt $StartRun + $Runs; $i++) {
     $runId = "$Label-run$i"
     if (Test-Path "results\$($runId.Replace('-run','_run')).jtl") { throw "results for $runId already exist - never reuse a RUN_ID" }
+
+    # Automated reset of the SUT (down -v, unload models, up -d --build with MODEL pinned)
+    if ($Model) {
+        Write-Host "[$runId] resetting SUT for $Model over SSH..."
+        Invoke-Sut "powershell -NoProfile -File $SutRepo\load_test\reset_sut.ps1 -Model $Model" | Out-Host
+    }
 
     # Pre-flight: SUT reachable and freshly reset
     $waited = 0
@@ -66,12 +83,34 @@ for ($i = $StartRun; $i -lt $StartRun + $Runs; $i++) {
         -Headers @{ 'X-Run-ID' = "warmup-$runId" } -TimeoutSec 600 | Out-Null
 
     $file = $runId.Replace('-run', '_run')
+
+    # CPU-only evidence while the model is loaded; abort the segment if it is not 100% CPU
+    if ($Model) {
+        $ps = (Invoke-Sut "$SutOllama ps") -join "`n"
+        $ps | Set-Content "results\${file}_ollama_ps.txt"
+        if ($ps -notmatch '100% CPU' -or $ps -notmatch [regex]::Escape($Model)) {
+            throw "[$runId] ollama ps does not show $Model on 100% CPU - aborting:`n$ps"
+        }
+    }
+
     Write-Host "[$runId] starting $(Get-Date -Format s) for $DurationSec s"
     & $jmeter -n -t peak_mixed_load.jmx "-JHOST=$Target" "-JPORT=$Port" "-JRUN_ID=$runId" `
         "-JDURATION_SEC=$DurationSec" "-JTICKET_RATE=$TicketRate" "-JSEARCH_RATE=$SearchRate" "-JSTATS_RATE=$StatsRate" `
         -l "results\$file.jtl" -j "logs\${file}_jmeter.log" | Select-Object -Last 3
     Write-Host "[$runId] finished $(Get-Date -Format s)"
     Summarise "results\$file.jtl"
+
+    # Pull the SUT's request log for this run (cumulative file; match lines by X-Run-ID)
+    if ($Model) {
+        & scp -o BatchMode=yes "$SutUser@${Target}:$($SutRepo.Replace('\','/'))/logs/requests.jsonl" "logs\${file}_requests.jsonl"
+        if ($LASTEXITCODE -ne 0) { throw "[$runId] could not copy requests.jsonl from the SUT" }
+        $cnt = @(Select-String -Path "logs\${file}_requests.jsonl" -Pattern "`"$runId`"" -SimpleMatch).Count
+        $jtl = @(Import-Csv "results\$file.jtl")
+        Write-Host "[$runId] JMeter requests: $($jtl.Count)   SUT log lines for this run id: $cnt"
+        $errs = @($jtl | Where-Object { $_.success -ne 'true' }).Count
+        if ($errs -gt 0) { Write-Host "[$runId] WARNING: $errs failed requests - check for Wi-Fi/connection errors" }
+        if ($i -lt $StartRun + $Runs - 1) { Write-Host "[$runId] cooling down $CooldownSec s"; Start-Sleep $CooldownSec }
+    }
     Write-Host ''
 }
 Write-Host "Done: $Label x $Runs. Check results before switching model."
