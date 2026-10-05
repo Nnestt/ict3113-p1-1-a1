@@ -39,8 +39,12 @@ function Get-Total {
     try { (Invoke-RestMethod "$base/stats" -TimeoutSec 10).total } catch { $null }
 }
 function Invoke-Sut([string]$cmd) {
-    $out = & ssh -o BatchMode=yes "$SutUser@$Target" $cmd 2>&1
-    if ($LASTEXITCODE -ne 0) { $out | Out-Host; throw "SSH command failed (exit $LASTEXITCODE): $cmd" }
+    # PS 5.1 turns native stderr (Docker progress) into terminating errors under 'Stop'; judge by exit code instead.
+    $old = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    $out = & ssh -o BatchMode=yes "$SutUser@$Target" $cmd 2>&1 | ForEach-Object { "$_" }
+    $code = $LASTEXITCODE
+    $ErrorActionPreference = $old
+    if ($code -ne 0) { $out | Out-Host; throw "SSH command failed (exit $code): $cmd" }
     $out
 }
 function Pct($sorted, $p) {
