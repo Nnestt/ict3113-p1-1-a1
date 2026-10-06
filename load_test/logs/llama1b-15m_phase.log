@@ -1,0 +1,316 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261006172815
+Username: DESKTOP-8AEB6T7\admin
+RunAs User: DESKTOP-8AEB6T7\admin
+Configuration Name: 
+Machine: DESKTOP-8AEB6T7 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command $__claudeCodeScript = $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT; $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT = $null; Invoke-Expression -Command $__claudeCodeScript
+Process ID: 13964
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== Phase 1 : llama3.2:1b as llama1b-15m, runs 1..3, 900 s each, started 2026-10-06T17:28:15 ===
+[llama1b-15m-run1] resetting SUT for llama3.2:1b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25hdocker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [3/5] COPY requirements.txt .
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:6fd9fa178a8ea82e420d6b5176a3ddd8abce84c7f5b4f51ba3516897dfbfdf6e done
+#11 exporting manifest list sha256:ae6e777cc4d5ee107cba8cb7ae253ef8ff659b5bb46517314acd86293ed07331 done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=llama3.2:1b total=0 2026-10-06T17:28:22
+[llama1b-15m-run1] warming up model...
+[llama1b-15m-run1] starting 2026-10-06T17:28:27 for 900 s
+summary =     19 in 00:14:40 =    0.0/s Avg:   340 Min:     9 Max:  1897 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 6 17:43:07 SGT (1791279787875)
+... end of run
+[llama1b-15m-run1] finished 2026-10-06T17:43:09
+GET /search    n=12   err=0   (0.0%)  p50=11ms p95=25ms p99=25ms
+POST /tickets  n=6    err=0   (0.0%)  p50=846ms p95=1897ms p99=1897ms
+GET /stats     n=1    err=0   (0.0%)  p50=13ms p95=13ms p99=13ms
+
+[llama1b-15m-run1] JMeter requests: 19   SUT log lines for this run id: 19
+[llama1b-15m-run1] cooling down 300 s
+
+[llama1b-15m-run2] resetting SUT for llama3.2:1b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25hdocker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:e59d5a014340094d0d0768bb64cf82b7e0e5d6a8703c92776c56bccf00faa127 0.0s done
+#11 exporting manifest list sha256:20e7cc155f2ea427a755769ce50c51bc34a42824ae860e0b7780e455c62ce662 done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=llama3.2:1b total=0 2026-10-06T17:48:16
+[llama1b-15m-run2] warming up model...
+[llama1b-15m-run2] starting 2026-10-06T17:48:21 for 900 s
+summary =     19 in 00:14:59 =    0.0/s Avg:   333 Min:     8 Max:  1558 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 6 18:03:20 SGT (1791281000854)
+... end of run
+[llama1b-15m-run2] finished 2026-10-06T18:03:22
+GET /search    n=12   err=0   (0.0%)  p50=11ms p95=24ms p99=24ms
+POST /tickets  n=6    err=0   (0.0%)  p50=917ms p95=1558ms p99=1558ms
+GET /stats     n=1    err=0   (0.0%)  p50=14ms p95=14ms p99=14ms
+
+[llama1b-15m-run2] JMeter requests: 19   SUT log lines for this run id: 19
+[llama1b-15m-run2] cooling down 300 s
+
+[llama1b-15m-run3] resetting SUT for llama3.2:1b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25hdocker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [3/5] COPY requirements.txt .
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:7775440c8c61deb007abdee441e266dab6fd476aa53a5e2962aa144d199f46e7 0.0s done
+#11 exporting manifest list sha256:dd29743300128b9e10e0f43f74ad6d698f5fd33f219f23e4d99db38fd8d4d82c done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=llama3.2:1b total=0 2026-10-06T18:08:29
+[llama1b-15m-run3] warming up model...
+[llama1b-15m-run3] starting 2026-10-06T18:08:34 for 900 s
+summary =     19 in 00:14:24 =    0.0/s Avg:   332 Min:     8 Max:  1670 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 6 18:22:59 SGT (1791282179072)
+... end of run
+[llama1b-15m-run3] finished 2026-10-06T18:23:00
+POST /tickets  n=6    err=0   (0.0%)  p50=862ms p95=1670ms p99=1670ms
+GET /stats     n=1    err=0   (0.0%)  p50=9ms p95=9ms p99=9ms
+GET /search    n=12   err=0   (0.0%)  p50=9ms p95=14ms p99=14ms
+
+[llama1b-15m-run3] JMeter requests: 19   SUT log lines for this run id: 19
+
+Done: llama1b-15m x 3. Check results before switching model.
+=== Phase 1 runs finished 2026-10-06T18:23:00 ===
+
+=== Phase 1 complete. Summary: results\llama1b-15m_summary.md ===
+**********************
+Windows PowerShell transcript end
+End time: 20261006182300
+**********************

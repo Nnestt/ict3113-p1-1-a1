@@ -1,7 +1,9 @@
 # Results Record
 
-**Status:** In progress. Fill each section from the `.jtl` files in `load_test/results/` and the service log `logs/requests.jsonl`. Every number here must be traceable to one of those two sources (match by `X-Run-ID`).
+**Status:** In progress. Every number here must be traceable to the raw files in `load_test/results/` (JMeter `.jtl`) and `load_test/logs/` (SUT request log per run), matched by `X-Run-ID`.
 **Companion to:** [prediction-record.md](prediction-record.md), which is frozen and is not edited. Differences are analysed in the comparison section below.
+
+**Which numbers to use:** the peak-load results are the **15-minute runs** in the "Peak Mixed Load Results" section. The earlier 60-minute runs are kept for evidence in the [appendix at the bottom](#appendix-superseded-60-minute-runs) and are **not** used for the slides or the recommendation.
 
 ## Test Environment (measured)
 
@@ -16,7 +18,7 @@
 | Address | 192.168.68.69 | 192.168.68.64 |
 
 - **Network:** Wi-Fi (not wired), same router. Latency jitter from Wi-Fi may appear in p95/p99; this is a factor that could make measurements unrepresentative.
-- **Inference device:** CPU only, confirmed with `ollama ps` (PROCESSOR = `100% CPU`) before the real runs.
+- **Inference device:** CPU only. Before every run the script checks that `ollama ps` shows the pinned model at `100% CPU` and aborts otherwise. The output is saved per run as `load_test/results/<label>_run<N>_ollama_ps.txt`.
 - **Load generator separate from the SUT:** yes, separate physical machines.
 - **The AMD Ryzen 5 7600 machine (now the load generator) has a discrete GPU** (AMD Radeon RX 7800 XT, 16 GB VRAM). This no longer matters for CPU-only compliance since Ollama does not run on this machine anymore (it is not the SUT), but is noted for completeness. When it was briefly the SUT, the GPU was explicitly hidden (`ROCR_VISIBLE_DEVICES=-1`, `HIP_VISIBLE_DEVICES=-1`, `GGML_VK_VISIBLE_DEVICES=-1`) so inference ran on CPU only, confirmed via `ollama ps` (`100% CPU`) and the Ollama server log (`inference compute id=cpu library=cpu`).
 - **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) now matches the system under test, since the swap put that machine in the SUT role. Confirm whether this machine also has a GPU that needs hiding before trusting further CPU-only runs on it (not yet checked as of this note).
@@ -24,72 +26,113 @@
 ## Load Test Protocol
 
 - **Plan:** `load_test/peak_mixed_load.jmx`, open-loop (Precise Throughput Timer), peak mixed load: 23 `POST /tickets`, 46 `GET /search`, 1 `GET /stats` per hour.
-- **Duration:** 3,600 s per run. **Runs:** three per model. Script: `load_test/run_model.ps1`.
-- **Between runs:** service reset (`docker compose down -v; up -d --build`), `/stats` total = 0 checked by the script, one warm-up request tagged `warmup-<RUN_ID>`.
+- **Duration:** 900 s (15 minutes) per run. **Runs:** three per model.
+- **Expected requests per run:** about 6 `POST /tickets`, about 11 to 12 `GET /search`, and 0 or 1 `GET /stats`. The rates are per hour, so a 15-minute run sends a quarter of an hour's traffic.
+- **Automation:** `load_test/run_phase.ps1 -Phase <1-4>` on the load generator. It calls `load_test/run_model.ps1`, which before each run resets the SUT over SSH with `load_test/reset_sut.ps1` (`docker compose down -v`, empty `logs/requests.jsonl`, unload all models, `docker compose up -d --build` with `MODEL` pinned), waits for `/stats` total = 0, sends one warm-up request tagged `warmup-<RUN_ID>`, checks `ollama ps`, runs JMeter, then copies the SUT request log back. 300 s cooldown between runs.
 - **Narratives:** 825 team rows from `load_test/data/dev_tickets.csv`. **Search terms:** `load_test/data/search_terms.csv`.
-- **Run IDs and files:** `<label>-run<N>` -> `load_test/results/<label>_run<N>.jtl`, `load_test/logs/<label>_run<N>_jmeter.log`.
-- **Smoke tests** (`smoke1`, `smoke-qwen7b-run1`) were pipeline checks, not results, and are excluded below.
+- **Files per run:** `load_test/results/<label>_run<N>.jtl`, `load_test/logs/<label>_run<N>_jmeter.log`, `load_test/logs/<label>_run<N>_requests.jsonl`, `load_test/results/<label>_run<N>_ollama_ps.txt`. Phase transcript: `load_test/logs/<label>_phase.log`.
+- **Smoke tests** (`smoke1`, `smoke-qwen7b-run1`, `smoke-llama1b-15m-run1`) were pipeline checks, not results, and are excluded.
+
+| Phase | Model | Label | Run IDs |
+|---|---|---|---|
+| 1 | `llama3.2:1b` | `llama1b-15m` | `llama1b-15m-run1` to `-run3` |
+| 2 | `qwen2.5:1.5b` | `qwen1_5b-15m` | `qwen1_5b-15m-run1` to `-run3` |
+| 3 | `phi3.5:3.8b` | `phi3_8b-15m` | `phi3_8b-15m-run1` to `-run3` |
+| 4 | `qwen2.5:7b` | `qwen7b-15m` | `qwen7b-15m-run1` to `-run3` |
+
+- **Metric definitions:** latencies are JMeter `elapsed` in milliseconds. Percentiles use the nearest-rank method. A failed request stays in the count and in the percentiles. "Successful POST/hr" is successful `POST /tickets` × 3600 / 900. It is the achieved rate at this offered load, not the service's capacity.
 
 ## Peak Mixed Load Results
 
-p-values in milliseconds. Fill one row per run, then mean and spread (min–max or standard deviation) across the three runs.
+Each table below is generated by `load_test/summarise_runs.py` from the raw files, not typed by hand. It includes the per-run rows, mean, spread, standard deviation, and the JMeter-vs-SUT-log reconciliation.
 
-### `qwen2.5:7b`
+### Phase 1: `llama3.2:1b`
 
-**Note:** an earlier run 1 (and a partial, aborted run 2) were measured before
-the hardware swap below, on the AMD Ryzen 5 7600 acting as the SUT. Run 1's
-POST p50 (2044 ms) was far faster than predicted (12 s) for a 7B model on
-CPU, raising concern that machine was not representative of the client's
-"commodity CPU server" constraint. Testing was stopped and machine roles were
-swapped (see Deviations and Limitations). Those runs' raw `.jtl`/log files
-were removed; this table starts fresh on the new SUT (Intel Core Ultra 7 155H).
+<!-- BEGIN llama1b-15m -->
+<!-- generated by load_test/summarise_runs.py llama1b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `llama1b-15m-run1` | 6 | 0 | 846 | 1897 | 1897 | 24 | 12 | 25 | 1 | 0.0% (0/19) |
+| 2 | `llama1b-15m-run2` | 6 | 0 | 917 | 1558 | 1558 | 24 | 12 | 24 | 1 | 0.0% (0/19) |
+| 3 | `llama1b-15m-run3` | 6 | 0 | 862 | 1670 | 1670 | 24 | 12 | 14 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 875 | 1708.3 | 1708.3 | 24 | 12 | 21 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 846–917 | 1558–1897 | 1558–1897 | 24–24 | 12–12 | 14–25 | 1–1 | 0.0%–0.0% |
 
-| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | `qwen7b-run1` | TODO | | | | | | | | |
-| 2 | `qwen7b-run2` | TODO | | | | | | | | |
-| 3 | `qwen7b-run3` | TODO | | | | | | | | |
-| Mean | | | | | | | | | | |
-| Spread | | | | | | | | | | |
+Sample standard deviation across the 3 runs: p50 37.2 ms, p95 172.7 ms, p99 172.7 ms, search p95 6.1 ms.
 
-### `llama3.2:1b`
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
 
-| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | `llama1b-run1` | 23 | 0 | 971 | 2274 | 2381 | 46 | 11 | 1 | 0% (0/70) |
-| 2 | `llama1b-run2` | 23 | 0 | 1040 | 2000 | 2316 | 46 | 12 | 1 | 0% (0/70) |
-| 3 | `llama1b-run3` | 23 | 0 | 991 | 1973 | 2345 | 46 | 12 | 1 | 0% (0/70) |
-| Mean | | 23 | 0 | 1001 | 2082 | 2347 | 46 | 11.7 | 1 | 0% |
-| Spread (min–max) | | 23–23 | 0–0 | 971–1040 | 1973–2274 | 2316–2381 | 46–46 | 11–12 | 1–1 | 0%–0% |
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `llama1b-15m-run1` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+| `llama1b-15m-run2` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+| `llama1b-15m-run3` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+<!-- END llama1b-15m -->
 
-Sample standard deviation across the three runs: p50 35.5 ms, p95 166.5 ms, p99 32.6 ms, search p95 0.6 ms.
+### Phase 2: `qwen2.5:1.5b`
 
-### `qwen2.5:1.5b`
+<!-- BEGIN qwen1_5b-15m -->
+<!-- generated by load_test/summarise_runs.py qwen1_5b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen1_5b-15m-run1` | 6 | 0 | 512 | 1018 | 1018 | 24 | 12 | 24 | 1 | 0.0% (0/19) |
+| 2 | `qwen1_5b-15m-run2` | 6 | 0 | 487 | 1032 | 1032 | 24 | 12 | 29 | 1 | 0.0% (0/19) |
+| 3 | `qwen1_5b-15m-run3` | 6 | 0 | 463 | 1022 | 1022 | 24 | 12 | 25 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 487.3 | 1024 | 1024 | 24 | 12 | 26 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 463–512 | 1018–1032 | 1018–1032 | 24–24 | 12–12 | 24–29 | 1–1 | 0.0%–0.0% |
 
-| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | `qwen1_5b-run1` | 23 | 0 | 675 | 1503 | 1630 | 46 | 31 | 1 | 0% (0/70) |
-| 2 | `qwen1_5b-run2` | 23 | 0 | 689 | 1470 | 1624 | 46 | 11 | 1 | 0% (0/70) |
-| 3 | `qwen1_5b-run3` | 23 | 0 | 671 | 1505 | 1764 | 46 | 13 | 1 | 0% (0/70) |
-| Mean | | 23 | 0 | 678 | 1493 | 1673 | 46 | 18.3 | 1 | 0% |
-| Spread (min–max) | | 23–23 | 0–0 | 671–689 | 1470–1505 | 1624–1764 | 46–46 | 11–31 | 1–1 | 0%–0% |
+Sample standard deviation across the 3 runs: p50 24.5 ms, p95 7.2 ms, p99 7.2 ms, search p95 2.6 ms.
 
-Sample standard deviation across the three runs: p50 9.5 ms, p95 19.7 ms, p99 79.2 ms, search p95 11.0 ms.
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
 
-### `phi3.5:3.8b`
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `qwen1_5b-15m-run1` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+| `qwen1_5b-15m-run2` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+| `qwen1_5b-15m-run3` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+<!-- END qwen1_5b-15m -->
 
-Same table. TODO.
+### Phase 3: `phi3.5:3.8b`
+
+<!-- BEGIN phi3_8b-15m -->
+<!-- generated by load_test/summarise_runs.py phi3_8b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `phi3_8b-15m-run1` | 6 | 0 | 1502 | 3030 | 3030 | 24 | 12 | 28 | 1 | 0.0% (0/19) |
+| 2 | `phi3_8b-15m-run2` | 6 | 0 | 1368 | 3055 | 3055 | 24 | 12 | 28 | 1 | 0.0% (0/19) |
+| 3 | `phi3_8b-15m-run3` | 6 | 0 | 1424 | 3210 | 3210 | 24 | 12 | 13 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 1431.3 | 3098.3 | 3098.3 | 24 | 12 | 23 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 1368–1502 | 3030–3210 | 3030–3210 | 24–24 | 12–12 | 13–28 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 67.3 ms, p95 97.5 ms, p99 97.5 ms, search p95 8.7 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `phi3_8b-15m-run1` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-15m-run2` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-15m-run3` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+<!-- END phi3_8b-15m -->
+
+### Phase 4: `qwen2.5:7b`
+
+<!-- BEGIN qwen7b-15m -->
+TODO: not run yet.
+<!-- END qwen7b-15m -->
 
 ## Requirement Outcomes (load)
 
-| ID | Requirement | `qwen2.5:7b` | `phi3.5:3.8b` | `qwen2.5:1.5b` | `llama3.2:1b` |
-|---|---|---|---|---|---|
-| R1 | POST p95 ≤ 60 s at peak | TODO (old-SUT run 1 discarded, see note above) | TODO | TODO | TODO |
-| R2 | Search p95 ≤ 2 s at peak | TODO (old-SUT run 1 discarded, see note above) | TODO | TODO | TODO |
-| R3 | ≥ 46 successful classifications/hour for 60 min | TODO (needs a higher-rate run; see stress test) | TODO | TODO | TODO |
-| R4 | Error rate < 1% at peak | TODO (old-SUT run 1 discarded, see note above) | TODO | TODO | TODO |
+R1, R2 and R4 are judged on the 15-minute runs above, on the mean across the three runs. Any single run that fails is also stated.
 
-R3 is not tested by the peak-load run (23 tickets/hour is below 46); it needs a sustained run at 46/hour or more.
+| ID | Requirement | `llama3.2:1b` | `qwen2.5:1.5b` | `phi3.5:3.8b` | `qwen2.5:7b` |
+|---|---|---|---|---|---|
+| R1 | POST p95 ≤ 60 s at peak | Pass (mean 1708 ms; worst run 1897 ms) | Pass (mean 1024 ms; worst run 1032 ms) | Pass (mean 3098 ms; worst run 3210 ms) | TODO |
+| R2 | Search p95 ≤ 2 s at peak | Pass (mean 21 ms; worst run 25 ms) | Pass (mean 26 ms; worst run 29 ms) | Pass (mean 23 ms; worst run 28 ms) | TODO |
+| R3 | ≥ 46 successful classifications/hour for 60 min | TODO | TODO | TODO | TODO |
+| R4 | Error rate < 1% at peak | Pass (0/57 across 3 runs) | Pass (0/57 across 3 runs) | Pass (0/57 across 3 runs) | TODO |
+
+R3 is not tested by the peak-load runs: they offer only 23 tickets/hour, below 46. It needs separate runs at 46 tickets/hour or more. Run length and which models to test are still to be agreed with Mikhail.
 
 ## Stress Test
 
@@ -119,7 +162,7 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 | 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | TODO | TODO |
 | 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | TODO | TODO |
 | 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | TODO | TODO |
-| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | TODO (old-SUT run 1 showed POST p50 about 2.0 s, which drove the machine-role swap; being re-measured on the new SUT) | TODO |
+| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | TODO | TODO |
 | 5 | `qwen2.5:7b` most accurate and slowest | TODO | TODO |
 | 6 | `llama3.2:1b` fastest and least accurate | TODO | TODO |
 | 7 | CPU inference is the primary bottleneck as load rises | TODO | TODO |
@@ -128,14 +171,62 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 
 ## Reconciliation Checklist
 
-- [ ] Every `.jtl` is in `load_test/results/` and committed.
-- [ ] `logs/requests.jsonl` committed after each model.
-- [x] `qwen7b-run1`: JMeter request count (70: 23 POST + 46 GET /search + 1 GET /stats) equals the PC 1 log line count for that exact `X-Run-ID` (excluding the separate `warmup-qwen7b-run1` line) — confirmed. p50/p95/p99 independently recomputed from the raw `.jtl` and match the table above exactly (POST p50=2044, p95=4632, p99=5073; search p95=17).
-- [ ] Repeat the above check for runs 2 and 3, and for every other model.
+- [ ] Phase 1 (`llama1b-15m`): every run reconciles (19/19 requests per run, done 2026-10-06); files not yet committed.
+- [ ] Phase 2 (`qwen1_5b-15m`): every run reconciles (19/19 requests per run, done 2026-10-06); files not yet committed.
+- [ ] Phase 3 (`phi3_8b-15m`): every run reconciles (19/19 requests per run, done 2026-10-06); files not yet committed.
+- [ ] Phase 4 (`qwen7b-15m`): every run reconciles, files committed.
 - [ ] Every number in the slides appears in this file.
 
 ## Deviations and Limitations
 
 - Wi-Fi used between the two machines.
-- **Mid-study SUT hardware change.** `qwen2.5:7b` run 1 (23 POST requests, 0 errors, p50 2044 ms, p95 4632 ms, p99 5073 ms) and a partial, aborted run 2 were measured with the AMD Ryzen 5 7600 (6-core) as the system under test. The p50 was far faster than predicted (12 s) for a 7B model on CPU, raising concern that this machine does not represent the client's "commodity CPU server" constraint. The team stopped testing and swapped machine roles: the system under test is now the Intel Core Ultra 7 155H machine (previously the load generator), and the AMD Ryzen 5 7600 machine is now the load generator. The raw `.jtl` and log files from the discarded runs were deleted from the repository rather than kept; this note is the only remaining record of that data and the reason it is not used. All three runs for every model are being measured fresh on the new SUT.
+- **Run length changed from 60 to 15 minutes.** On the course instructor's advice that 60-minute runs were too long, the team re-ran all four models with 900 s runs so every model has the same run length. The earlier 60-minute runs are **kept in the repository, not deleted**, and are listed in the appendix below. They are superseded for reporting, not discarded. They used the same plan, rates, SUT and load generator.
+- **Small samples per run.** A 15-minute run has about 6 `POST /tickets`. With 6 samples, p95 and p99 are both the slowest request in that run. Per-run p95/p99 should be read as "worst of about 6", and the spread across the three runs as the main indication of stability.
+- **Every run sends the same tickets.** The JMeter CSV Data Set reads `load_test/data/dev_tickets.csv` from the top in every run, so each 15-minute run, for every model, sends the same first 6 narratives (rows 1000 to 1005) in a different order. The 60-minute runs likewise all sent the first 23. These 6 average 621 characters, against 896 for all 825 rows (median 791, 90th percentile 1,633), and the first 23 average 814. Effects: (1) POST latency is understated relative to the full ticket-length distribution, because shorter narratives classify faster; this is the main reason the 15-minute numbers are lower than the 60-minute ones; (2) the three runs per model repeat the same inputs, so the spread across runs reflects run-to-run noise in the system, not variation in ticket mix; (3) every model received identical input, so the comparison between models is controlled. The team chose to keep this protocol for all four models and report the limitation rather than re-run. A fix for Assignment 2 is a per-run shuffled ticket file seeded by run number.
+- **`GET /stats` may not be exercised.** At 1 per hour, a 900 s run sends 0 or 1 stats requests.
+- **Mid-study SUT hardware change.** `qwen2.5:7b` run 1 (23 POST requests, 0 errors, p50 2044 ms, p95 4632 ms, p99 5073 ms) and a partial, aborted run 2 were measured with the AMD Ryzen 5 7600 (6-core) as the system under test. The p50 was far faster than predicted (12 s) for a 7B model on CPU, raising concern that this machine does not represent the client's "commodity CPU server" constraint. The team stopped testing and swapped machine roles: the system under test is now the Intel Core Ultra 7 155H machine (previously the load generator), and the AMD Ryzen 5 7600 machine is now the load generator. The raw `.jtl` and log files from the discarded runs were deleted from the repository rather than kept; this note is the only remaining record of that data and the reason it is not used. All runs for every model were then measured fresh on the new SUT.
 - TODO: anything else that could make the measurements unrepresentative (restarts, interruptions, runs repeated).
+
+---
+
+## Appendix: superseded 60-minute runs
+
+**Not used for the slides or the recommendation.** These are the original 3,600 s peak-load runs, measured on the current SUT (Intel Core Ultra 7 155H) before the switch to 15-minute runs. Same plan, rates and machines. Kept as evidence because the brief requires every run's raw files to stay in the repository. Raw files: `load_test/results/<label>_run<N>.jtl` and `load_test/logs/<label>_run<N>_*` with labels `llama1b`, `qwen1_5b` and `phi3_8b`. `qwen2.5:7b` was not run at 60 minutes on this SUT, and `phi3.5:3.8b` has only run 1.
+
+p-values in milliseconds.
+
+### `llama3.2:1b` (60-minute runs)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `llama1b-run1` | 23 | 0 | 971 | 2274 | 2381 | 46 | 11 | 1 | 0% (0/70) |
+| 2 | `llama1b-run2` | 23 | 0 | 1040 | 2000 | 2316 | 46 | 12 | 1 | 0% (0/70) |
+| 3 | `llama1b-run3` | 23 | 0 | 991 | 1973 | 2345 | 46 | 12 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 1001 | 2082 | 2347 | 46 | 11.7 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 971–1040 | 1973–2274 | 2316–2381 | 46–46 | 11–12 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 35.5 ms, p95 166.5 ms, p99 32.6 ms, search p95 0.6 ms.
+
+### `qwen2.5:1.5b` (60-minute runs)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen1_5b-run1` | 23 | 0 | 675 | 1503 | 1630 | 46 | 31 | 1 | 0% (0/70) |
+| 2 | `qwen1_5b-run2` | 23 | 0 | 689 | 1470 | 1624 | 46 | 11 | 1 | 0% (0/70) |
+| 3 | `qwen1_5b-run3` | 23 | 0 | 671 | 1505 | 1764 | 46 | 13 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 678 | 1493 | 1673 | 46 | 18.3 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 671–689 | 1470–1505 | 1624–1764 | 46–46 | 11–31 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 9.5 ms, p95 19.7 ms, p99 79.2 ms, search p95 11.0 ms.
+
+### `phi3.5:3.8b` (60-minute run, run 1 only)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `phi3_8b-run1` | 23 | 0 | 1990 | 4320 | 4814 | 46 | 14 | 1 | 0% (0/70) |
+
+Runs 2 and 3 were not made at 60 minutes. The model was re-tested with three 15-minute runs instead (Phase 3).
+
+### Old-SUT `qwen2.5:7b` run (discarded)
+
+`qwen7b-run1` measured on the AMD Ryzen 5 7600 before the machine-role swap: 23 POST, 0 errors, POST p50 2044 ms, p95 4632 ms, p99 5073 ms, search p95 17 ms. At the time, its JMeter request count (70) was checked against the SUT log for that `X-Run-ID` and matched. Its raw files were deleted, so these numbers cannot be reconciled now and must not be used. See Deviations and Limitations.
