@@ -64,9 +64,21 @@ were removed; this table starts fresh on the new SUT (Intel Core Ultra 7 155H).
 
 Sample standard deviation across the three runs: p50 35.5 ms, p95 166.5 ms, p99 32.6 ms, search p95 0.6 ms.
 
-### `phi3.5:3.8b`, `qwen2.5:1.5b`
+### `qwen2.5:1.5b`
 
-Same table, one per model. TODO.
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen1_5b-run1` | 23 | 0 | 675 | 1503 | 1630 | 46 | 31 | 1 | 0% (0/70) |
+| 2 | `qwen1_5b-run2` | 23 | 0 | 689 | 1470 | 1624 | 46 | 11 | 1 | 0% (0/70) |
+| 3 | `qwen1_5b-run3` | 23 | 0 | 671 | 1505 | 1764 | 46 | 13 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 678 | 1493 | 1673 | 46 | 18.3 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 671–689 | 1470–1505 | 1624–1764 | 46–46 | 11–31 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 9.5 ms, p95 19.7 ms, p99 79.2 ms, search p95 11.0 ms.
+
+### `phi3.5:3.8b`
+
+Same table. TODO.
 
 ## Requirement Outcomes (load)
 
