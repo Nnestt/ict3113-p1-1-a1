@@ -39,6 +39,11 @@ $env:MODEL = $Model
 & $Docker compose down -v 2>&1 | Out-Host
 if ($LASTEXITCODE -ne 0) { Fail 'docker compose down -v' }
 
+# The service appends to logs/requests.jsonl through a bind mount, so 'down -v' does not clear it.
+# Empty it (the container is gone, so nothing holds it open) so each run's log starts clean.
+Set-Content -Path (Join-Path $repo 'logs\requests.jsonl') -Value $null -NoNewline
+if ((Get-Item (Join-Path $repo 'logs\requests.jsonl')).Length -ne 0) { Fail 'could not empty logs\requests.jsonl' }
+
 # Unload every model so the next run starts cold-then-warmed-up the same way each time.
 $loaded = & $Ollama ps | Select-Object -Skip 1 | Where-Object { $_.Trim() } | ForEach-Object { ($_ -split '\s+')[0] }
 foreach ($m in $loaded) { & $Ollama stop $m | Out-Null }
