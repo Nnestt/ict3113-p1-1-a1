@@ -1,0 +1,26 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1791313232199,17,GET /search,200,OK,Search (GET /search) 2-1,text,true,,392,217,10,21,http://192.168.68.69:8000/search?q=account,17,0,2
+1791313231100,1526,POST /tickets,200,OK,Tickets (POST /tickets) 1-2,text,true,,274,499,10,21,http://192.168.68.69:8000/tickets,1526,0,15
+1791313283510,11,GET /search,200,OK,Search (GET /search) 2-2,text,true,,219,217,10,21,http://192.168.68.69:8000/search?q=payment,11,0,2
+1791313284309,10,GET /stats,200,OK,Stats (GET /stats) 3-1,text,true,,363,206,1,21,http://192.168.68.69:8000/stats,10,0,2
+1791313297636,14,GET /search,200,OK,Search (GET /search) 2-3,text,true,,737,214,10,20,http://192.168.68.69:8000/search?q=bank,14,0,6
+1791313310934,3437,POST /tickets,200,OK,Tickets (POST /tickets) 1-1,text,true,,274,1148,10,19,http://192.168.68.69:8000/tickets,3437,0,2
+1791313326312,1775,POST /tickets,200,OK,Tickets (POST /tickets) 1-4,text,true,,264,735,10,19,http://192.168.68.69:8000/tickets,1775,0,3
+1791313401410,4189,POST /tickets,200,OK,Tickets (POST /tickets) 1-3,text,true,,267,1330,9,18,http://192.168.68.69:8000/tickets,4189,0,3
+1791313464482,4309,POST /tickets,200,OK,Tickets (POST /tickets) 1-5,text,true,,267,1141,8,17,http://192.168.68.69:8000/tickets,4309,0,3
+1791313528969,8,GET /search,200,OK,Search (GET /search) 2-4,text,true,,216,214,9,16,http://192.168.68.69:8000/search?q=card,8,0,2
+1791313654743,14,GET /search,200,OK,Search (GET /search) 2-5,text,true,,215,213,8,15,http://192.168.68.69:8000/search?q=fee,14,0,3
+1791313655301,11,GET /search,200,OK,Search (GET /search) 2-6,text,true,,1217,217,7,14,http://192.168.68.69:8000/search?q=dispute,11,0,2
+1791313661783,9,GET /search,200,OK,Search (GET /search) 2-7,text,true,,790,214,6,13,http://192.168.68.69:8000/search?q=loan,9,0,2
+1791313677605,11,GET /search,200,OK,Search (GET /search) 2-8,text,true,,220,218,5,12,http://192.168.68.69:8000/search?q=mortgage,11,0,3
+1791313702320,2044,POST /tickets,200,OK,Tickets (POST /tickets) 1-6,text,true,,266,571,7,11,http://192.168.68.69:8000/tickets,2044,0,2
+1791313732027,9,GET /search,200,OK,Search (GET /search) 2-9,text,true,,1218,218,4,10,http://192.168.68.69:8000/search?q=transfer,9,0,2
+1791313756454,16,GET /search,200,OK,Search (GET /search) 2-10,text,true,,2150,216,3,9,http://192.168.68.69:8000/search?q=credit,16,0,3
+1791313754699,6234,POST /tickets,200,OK,Tickets (POST /tickets) 1-7,text,true,,259,1894,6,8,http://192.168.68.69:8000/tickets,6234,0,2
+1791313838255,5617,POST /tickets,200,OK,Tickets (POST /tickets) 1-8,text,true,,266,1599,5,7,http://192.168.68.69:8000/tickets,5617,0,3
+1791313841795,4615,POST /tickets,200,OK,Tickets (POST /tickets) 1-9,text,true,,278,890,4,6,http://192.168.68.69:8000/tickets,4615,0,5
+1791313854030,4934,POST /tickets,200,OK,Tickets (POST /tickets) 1-10,text,true,,278,1143,3,5,http://192.168.68.69:8000/tickets,4934,0,2
+1791313855814,8533,POST /tickets,200,OK,Tickets (POST /tickets) 1-2,text,true,,265,1308,2,4,http://192.168.68.69:8000/tickets,8533,0,2
+1791313889733,13,GET /search,200,OK,Search (GET /search) 2-1,text,true,,3400,219,2,3,http://192.168.68.69:8000/search?q=complaint,13,0,2
+1791313907938,2786,POST /tickets,200,OK,Tickets (POST /tickets) 1-1,text,true,,267,779,1,2,http://192.168.68.69:8000/tickets,2786,0,2
+1791314032895,10,GET /search,200,OK,Search (GET /search) 2-2,text,true,,218,216,1,1,http://192.168.68.69:8000/search?q=charge,10,0,2

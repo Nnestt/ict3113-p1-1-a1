@@ -1,0 +1,173 @@
+2026-10-07 02:24:32,902 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Loading user properties from: C:\tools\apache-jmeter-5.6.3\bin\user.properties
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Loading system properties from: C:\tools\apache-jmeter-5.6.3\bin\system.properties
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: HOST=192.168.68.69
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: PORT=8000
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: RUN_ID=phi3_8b-r3-run3
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: DURATION_SEC=900
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: TICKET_RATE=46
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: SEARCH_RATE=46
+2026-10-07 02:24:32,913 INFO o.a.j.JMeter: Setting JMeter property: STATS_RATE=1
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: Version 5.6.3
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: java.version=17.0.20.1
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: os.name=Windows 11
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: os.arch=amd64
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: os.version=10.0
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: file.encoding=Cp1252
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: java.awt.headless=true
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-10-07 02:24:32,918 INFO o.a.j.JMeter: Available Processors =12
+2026-10-07 02:24:32,923 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-10-07 02:24:32,923 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-10-07 02:24:32,923 INFO o.a.j.JMeter: JMeterHome=C:\tools\apache-jmeter-5.6.3
+2026-10-07 02:24:32,923 INFO o.a.j.JMeter: user.dir  =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-07 02:24:32,923 INFO o.a.j.JMeter: PWD       =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-07 02:24:32,924 INFO o.a.j.JMeter: IP: 192.168.68.64 Name: DESKTOP-8AEB6T7 FullName: host.docker.internal
+2026-10-07 02:24:32,933 INFO o.a.j.s.FileServer: Default base='C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test'
+2026-10-07 02:24:32,934 INFO o.a.j.s.FileServer: Set new base='C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test'
+2026-10-07 02:24:33,038 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-10-07 02:24:33,056 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-10-07 02:24:33,057 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-10-07 02:24:33,059 INFO o.a.j.s.SaveService: Loading file: peak_mixed_load.jmx
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-10-07 02:24:33,108 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-10-07 02:24:33,118 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-10-07 02:24:33,129 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-10-07 02:24:33,129 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-10-07 02:24:33,129 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-10-07 02:24:33,133 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-10-07 02:24:33,133 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-10-07 02:24:33,270 INFO o.a.j.JMeter: Running test (1791311073270)
+2026-10-07 02:24:33,277 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Tickets (POST /tickets)
+2026-10-07 02:24:33,277 INFO o.a.j.e.StandardJMeterEngine: Starting 10 threads for group Tickets (POST /tickets).
+2026-10-07 02:24:33,277 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-10-07 02:24:33,277 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=10 ramp-up=1 delayedStart=false
+2026-10-07 02:24:33,284 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-10-07 02:24:33,284 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : Search (GET /search)
+2026-10-07 02:24:33,284 INFO o.a.j.e.StandardJMeterEngine: Starting 10 threads for group Search (GET /search).
+2026-10-07 02:24:33,284 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-10-07 02:24:33,284 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=10 ramp-up=1 delayedStart=false
+2026-10-07 02:24:33,287 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-1
+2026-10-07 02:24:33,288 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-1
+2026-10-07 02:24:33,288 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2026-10-07 02:24:33,288 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 3 : Stats (GET /stats)
+2026-10-07 02:24:33,288 INFO o.a.j.e.StandardJMeterEngine: Starting 2 threads for group Stats (GET /stats).
+2026-10-07 02:24:33,288 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-10-07 02:24:33,288 INFO o.a.j.t.ThreadGroup: Starting thread group... number=3 threads=2 ramp-up=1 delayedStart=false
+2026-10-07 02:24:33,289 INFO o.a.j.t.ThreadGroup: Started thread group number 3
+2026-10-07 02:24:33,289 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-10-07 02:24:33,289 INFO o.a.j.t.JMeterThread: Thread started: Stats (GET /stats) 3-1
+2026-10-07 02:24:33,290 INFO o.a.j.s.FileServer: Stored: data/dev_tickets.csv
+2026-10-07 02:24:33,302 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 1 timings (1/hr open-loop arrivals 1 required, rate 2.777777777777778E-4, duration 900) in 0 ms. First 15 events will be fired at: 333.68644593163293 (+333.68644593163293)
+2026-10-07 02:24:33,307 INFO o.a.j.s.FileServer: Stored: data/search_terms.csv
+2026-10-07 02:24:33,308 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 12 timings (46/hr open-loop arrivals 12 required, rate 0.012777777777777779, duration 900) in 0 ms. First 15 events will be fired at: 38.53621772808912 (+38.53621772808912), 83.48479175952221 (+44.94857403143309), 108.64313918660605 (+25.15834742708384), 113.19188482848531 (+4.548745641879265), 122.60683813480172 (+9.414953306316406), 286.96732603990773 (+164.36048790510603), 474.12584863984017 (+187.15852259993244), 492.40164544934396 (+18.275796809503788), 538.8124000530605 (+46.410754603716555), 673.5494067437685 (+134.73700669070797), 715.2989754658943 (+41.74956872212579), 896.202102615024 (+180.90312714912977)
+2026-10-07 02:24:33,386 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-2
+2026-10-07 02:24:33,387 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-2
+2026-10-07 02:24:33,483 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-3
+2026-10-07 02:24:33,486 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-3
+2026-10-07 02:24:33,584 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-4
+2026-10-07 02:24:33,587 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-4
+2026-10-07 02:24:33,632 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 12 timings (23/hr open-loop arrivals 12 required, rate 0.012777777777777779, duration 900) in 0 ms. First 15 events will be fired at: 16.630763281171703 (+16.630763281171703), 46.298883489733726 (+29.668120208562023), 97.8266458641993 (+51.52776237446558), 114.16994279615899 (+16.343296931959685), 246.67840110083557 (+132.5084583046766), 452.7135637403295 (+206.03516263949393), 455.3404092776317 (+2.626845537302188), 610.4062956389015 (+155.0658863612698), 612.3709700496368 (+1.964674410735256), 635.7316637083696 (+23.360693658732885), 851.3390410379291 (+215.60737732955943), 874.8718093134016 (+23.532768275472563)
+2026-10-07 02:24:33,685 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-5
+2026-10-07 02:24:33,685 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-5
+2026-10-07 02:24:33,784 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-6
+2026-10-07 02:24:33,788 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-6
+2026-10-07 02:24:33,791 INFO o.a.j.t.JMeterThread: Thread started: Stats (GET /stats) 3-2
+2026-10-07 02:24:33,791 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 1 timings (1/hr open-loop arrivals 1 required, rate 2.777777777777778E-4, duration 900) in 0 ms. First 15 events will be fired at: 1390.1612283603974 (+1390.1612283603974)
+2026-10-07 02:24:33,791 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 899497 ms and the throughput timer generates a delay of 1389500. Terminating the thread manually.
+2026-10-07 02:24:33,791 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Stats (GET /stats) 3-2
+2026-10-07 02:24:33,791 INFO o.a.j.t.JMeterThread: Thread finished: Stats (GET /stats) 3-2
+2026-10-07 02:24:33,882 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-7
+2026-10-07 02:24:33,886 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-7
+2026-10-07 02:24:33,982 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-8
+2026-10-07 02:24:33,986 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-8
+2026-10-07 02:24:34,082 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-9
+2026-10-07 02:24:34,087 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-9
+2026-10-07 02:24:34,181 INFO o.a.j.t.JMeterThread: Thread started: Tickets (POST /tickets) 1-10
+2026-10-07 02:24:34,188 INFO o.a.j.t.JMeterThread: Thread started: Search (GET /search) 2-10
+2026-10-07 02:24:49,767 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = DESKTOP-8AEB6T7
+2026-10-07 02:24:49,769 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-10-07 02:24:49,770 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-10-07 02:24:49,770 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-10-07 02:24:49,770 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-10-07 02:24:49,770 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-10-07 02:26:13,467 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 12 timings (23/hr open-loop arrivals 12 required, rate 0.012777777777777779, duration 900) in 0 ms. First 15 events will be fired at: 969.1761054220506 (+969.1761054220506), 1015.9087338872691 (+46.73262846521857), 1168.3217853071706 (+152.41305141990142), 1190.1795820644036 (+21.857796757233018), 1211.2846041837442 (+21.105022119340674), 1256.660934427344 (+45.376330243599796), 1329.5299501269528 (+72.86901569960878), 1347.5522383116295 (+18.022288184676654), 1433.3876543368792 (+85.83541602524974), 1488.8150157002747 (+55.42736136339545), 1534.3233406512527 (+45.50832495097802), 1658.437543235772 (+124.11420258451926)
+2026-10-07 02:26:13,467 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 799810 ms and the throughput timer generates a delay of 868839. Terminating the thread manually.
+2026-10-07 02:26:13,467 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-1
+2026-10-07 02:26:13,468 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-1
+2026-10-07 02:26:21,785 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 12 timings (46/hr open-loop arrivals 12 required, rate 0.012777777777777779, duration 900) in 0 ms. First 15 events will be fired at: 929.8964603385043 (+929.8964603385043), 1088.0949532199884 (+158.19849288148407), 1088.8452836177541 (+0.7503303977657652), 1118.4097660007426 (+29.564482382988444), 1375.3077457509257 (+256.89797975018314), 1378.9374655572567 (+3.629719806330968), 1390.2512536614286 (+11.313788104171863), 1663.06210231572 (+272.8108486542915), 1699.4527837970475 (+36.39068148132742), 1751.7454404529208 (+52.292656655873316), 1755.4388746718137 (+3.6934342188928895), 1757.816965503369 (+2.378090831555255)
+2026-10-07 02:26:21,785 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 791500 ms and the throughput timer generates a delay of 821241. Terminating the thread manually.
+2026-10-07 02:26:21,785 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-3
+2026-10-07 02:26:21,785 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-3
+2026-10-07 02:26:29,359 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 783926 ms and the throughput timer generates a delay of 971865. Terminating the thread manually.
+2026-10-07 02:26:29,359 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-4
+2026-10-07 02:26:29,360 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-4
+2026-10-07 02:26:31,055 INFO o.a.j.r.Summariser: summary +      8 in 00:01:58 =    0.1/s Avg:  1470 Min:     9 Max:  3755 Err:     0 (0.00%) Active: 18 Started: 22 Finished: 4
+2026-10-07 02:26:31,056 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 782225 ms and the throughput timer generates a delay of 897982. Terminating the thread manually.
+2026-10-07 02:26:31,056 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-3
+2026-10-07 02:26:31,056 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-3
+2026-10-07 02:26:35,760 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 777526 ms and the throughput timer generates a delay of 966215. Terminating the thread manually.
+2026-10-07 02:26:35,760 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-5
+2026-10-07 02:26:35,760 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-5
+2026-10-07 02:28:42,919 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 650362 ms and the throughput timer generates a delay of 918532. Terminating the thread manually.
+2026-10-07 02:28:42,919 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-5
+2026-10-07 02:28:42,920 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-5
+2026-10-07 02:29:20,121 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 613165 ms and the throughput timer generates a delay of 831418. Terminating the thread manually.
+2026-10-07 02:29:20,121 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-6
+2026-10-07 02:29:20,121 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-6
+2026-10-07 02:30:06,835 INFO o.a.j.t.p.ConstantPoissonProcessGenerator: Generated 1 timings (1/hr open-loop arrivals 1 required, rate 2.777777777777778E-4, duration 900) in 0 ms. First 15 events will be fired at: 2289.4846217669674 (+2289.4846217669674)
+2026-10-07 02:30:06,835 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 566453 ms and the throughput timer generates a delay of 1955779. Terminating the thread manually.
+2026-10-07 02:30:06,835 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Stats (GET /stats) 3-1
+2026-10-07 02:30:06,835 INFO o.a.j.t.JMeterThread: Thread finished: Stats (GET /stats) 3-1
+2026-10-07 02:32:06,998 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 446283 ms and the throughput timer generates a delay of 736311. Terminating the thread manually.
+2026-10-07 02:32:06,998 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-6
+2026-10-07 02:32:06,998 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-6
+2026-10-07 02:32:12,707 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 440575 ms and the throughput timer generates a delay of 751707. Terminating the thread manually.
+2026-10-07 02:32:12,707 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-7
+2026-10-07 02:32:12,708 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-7
+2026-10-07 02:32:27,268 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 426019 ms and the throughput timer generates a delay of 901170. Terminating the thread manually.
+2026-10-07 02:32:27,268 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-7
+2026-10-07 02:32:27,268 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-7
+2026-10-07 02:32:45,543 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 407744 ms and the throughput timer generates a delay of 886524. Terminating the thread manually.
+2026-10-07 02:32:45,543 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-8
+2026-10-07 02:32:45,543 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-8
+2026-10-07 02:33:31,952 INFO o.a.j.r.Summariser: summary +      9 in 00:07:01 =    0.0/s Avg:   953 Min:     9 Max:  4236 Err:     0 (0.00%) Active: 9 Started: 22 Finished: 13
+2026-10-07 02:33:31,952 INFO o.a.j.r.Summariser: summary =     17 in 00:08:59 =    0.0/s Avg:  1196 Min:     9 Max:  4236 Err:     0 (0.00%)
+2026-10-07 02:33:31,952 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 361335 ms and the throughput timer generates a delay of 851429. Terminating the thread manually.
+2026-10-07 02:33:31,952 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-9
+2026-10-07 02:33:31,952 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-9
+2026-10-07 02:34:47,777 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 285505 ms and the throughput timer generates a delay of 642013. Terminating the thread manually.
+2026-10-07 02:34:47,777 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-8
+2026-10-07 02:34:47,777 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-8
+2026-10-07 02:34:49,737 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 283545 ms and the throughput timer generates a delay of 712922. Terminating the thread manually.
+2026-10-07 02:34:49,737 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-9
+2026-10-07 02:34:49,737 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-9
+2026-10-07 02:35:11,663 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 261620 ms and the throughput timer generates a delay of 709019. Terminating the thread manually.
+2026-10-07 02:35:11,663 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-10
+2026-10-07 02:35:11,663 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-10
+2026-10-07 02:35:46,695 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 226593 ms and the throughput timer generates a delay of 989498. Terminating the thread manually.
+2026-10-07 02:35:46,695 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-10
+2026-10-07 02:35:46,695 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-10
+2026-10-07 02:36:28,440 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 184844 ms and the throughput timer generates a delay of 984142. Terminating the thread manually.
+2026-10-07 02:36:28,440 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-1
+2026-10-07 02:36:28,440 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-1
+2026-10-07 02:38:47,466 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 45816 ms and the throughput timer generates a delay of 579052. Terminating the thread manually.
+2026-10-07 02:38:47,466 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-4
+2026-10-07 02:38:47,466 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-4
+2026-10-07 02:39:09,751 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 23529 ms and the throughput timer generates a delay of 612194. Terminating the thread manually.
+2026-10-07 02:39:09,751 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Tickets (POST /tickets) 1-2
+2026-10-07 02:39:09,751 INFO o.a.j.t.JMeterThread: Thread finished: Tickets (POST /tickets) 1-2
+2026-10-07 02:39:29,343 INFO o.a.j.t.JMeterThread: Stopping Thread: org.apache.jorphan.util.JMeterStopThreadException: The thread is scheduled to stop in 3941 ms and the throughput timer generates a delay of 855532. Terminating the thread manually.
+2026-10-07 02:39:29,343 INFO o.a.j.t.JMeterThread: Stop Thread detected by thread: Search (GET /search) 2-2
+2026-10-07 02:39:29,343 INFO o.a.j.t.JMeterThread: Thread finished: Search (GET /search) 2-2
+2026-10-07 02:39:29,343 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-10-07 02:39:29,343 INFO o.a.j.s.FileServer: Close: data/search_terms.csv
+2026-10-07 02:39:29,343 INFO o.a.j.s.FileServer: Close: data/dev_tickets.csv
+2026-10-07 02:39:29,345 INFO o.a.j.r.Summariser: summary +      8 in 00:05:57 =    0.0/s Avg:  2006 Min:     9 Max:  4239 Err:     0 (0.00%) Active: 0 Started: 22 Finished: 22
+2026-10-07 02:39:29,345 INFO o.a.j.r.Summariser: summary =     25 in 00:14:56 =    0.0/s Avg:  1455 Min:     9 Max:  4239 Err:     0 (0.00%)

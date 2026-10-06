@@ -1,0 +1,408 @@
+# Results Record
+
+**Status:** In progress. Every number here must be traceable to the raw files in `load_test/results/` (JMeter `.jtl`) and `load_test/logs/` (SUT request log per run), matched by `X-Run-ID`.
+**Companion to:** [prediction-record.md](prediction-record.md), which is frozen and is not edited. Differences are analysed in the comparison section below.
+
+**Which numbers to use:** the peak-load results are the **15-minute runs** in the "Peak Mixed Load Results" section. The earlier 60-minute runs are kept for evidence in the [appendix at the bottom](#appendix-superseded-60-minute-runs) and are **not** used for the slides or the recommendation.
+
+## Test Environment (measured)
+
+**Current roles (after the 2026-10-06 swap — see Deviations and Limitations):**
+
+| | System under test | Load generator |
+|---|---|---|
+| Processor | Intel(R) Core(TM) Ultra 7 155H | AMD Ryzen 5 7600 (6-core) |
+| System memory | 31.37 GB | 31.1 GB |
+| Operating system | Microsoft Windows 11 Home 10.0.26200 | Microsoft Windows 11 |
+| Role | Docker (triage service) + Ollama, CPU only | Apache JMeter 5.6.3 |
+| Address | 192.168.68.69 | 192.168.68.64 |
+
+- **Software on the SUT:** Ollama 0.35.1 started by `load_test/start-ollama-cpu.ps1` (logon task `OllamaCpuOnly`) with all GPU back ends disabled, `OLLAMA_NUM_PARALLEL=1` (one generation at a time), `OLLAMA_KEEP_ALIVE=5m`; Docker Engine 29.8.2 (Docker Desktop, WSL 2) running the triage service from `docker-compose.yml`. The SUT's repository was at commit `d72b036` (branch `load_test`) for every reported run; `service/` and `docker-compose.yml` are identical between that commit and the current one, so the service tested is the committed baseline. Model pins as in `service/eval_config.json`.
+- **Software on the load generator:** Apache JMeter 5.6.3 on Eclipse Temurin JDK 17.0.20.1, Python 3.13 for the summary scripts, OpenSSH client with key-based login to the SUT (`admin@192.168.68.69`, the SUT's OpenSSH Server, default shell `cmd.exe`) so the scripts can reset the SUT and copy its logs.
+- **Accuracy run hardware:** the accuracy experiment (`evaluation/`) ran on 2026-10-05 with Ollama 0.35.0, before the machine-role swap and on different hardware. Accuracy does not depend on hardware; only its latency figures do, and those are not used here.
+- **Network:** Wi-Fi (not wired), same router. Latency jitter from Wi-Fi may appear in p95/p99; this is a factor that could make measurements unrepresentative.
+- **Inference device:** CPU only. Before every run the script checks that `ollama ps` shows the pinned model at `100% CPU` and aborts otherwise. The output is saved per run as `load_test/results/<label>_run<N>_ollama_ps.txt`.
+- **Load generator separate from the SUT:** yes, separate physical machines.
+- **The AMD Ryzen 5 7600 machine (now the load generator) has a discrete GPU** (AMD Radeon RX 7800 XT, 16 GB VRAM). This no longer matters for CPU-only compliance since Ollama does not run on this machine anymore (it is not the SUT), but is noted for completeness. When it was briefly the SUT, the GPU was explicitly hidden (`ROCR_VISIBLE_DEVICES=-1`, `HIP_VISIBLE_DEVICES=-1`, `GGML_VK_VISIBLE_DEVICES=-1`) so inference ran on CPU only, confirmed via `ollama ps` (`100% CPU`) and the Ollama server log (`inference compute id=cpu library=cpu`).
+- **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) now matches the system under test, since the swap put that machine in the SUT role. CPU-only inference on it is confirmed for every reported run: `ollama ps` showed the pinned model at `100% CPU` before each run (saved as `load_test/results/<label>_run<N>_ollama_ps.txt`), and the scripts abort otherwise.
+
+## Load Test Protocol
+
+- **Plan:** `load_test/peak_mixed_load.jmx`, open-loop (Precise Throughput Timer), peak mixed load: 23 `POST /tickets`, 46 `GET /search`, 1 `GET /stats` per hour.
+- **Duration:** 900 s (15 minutes) per run. **Runs:** three per model.
+- **Expected requests per run:** about 6 `POST /tickets`, about 11 to 12 `GET /search`, and 0 or 1 `GET /stats`. The rates are per hour, so a 15-minute run sends a quarter of an hour's traffic.
+- **Automation:** `load_test/run_phase.ps1 -Phase <1-4>` on the load generator. It calls `load_test/run_model.ps1`, which before each run resets the SUT over SSH with `load_test/reset_sut.ps1` (`docker compose down -v`, empty `logs/requests.jsonl`, unload all models, `docker compose up -d --build` with `MODEL` pinned), waits for `/stats` total = 0, sends one warm-up request tagged `warmup-<RUN_ID>`, checks `ollama ps`, runs JMeter, then copies the SUT request log back. 300 s cooldown between runs.
+- **Narratives:** 825 team rows from `load_test/data/dev_tickets.csv`. **Search terms:** `load_test/data/search_terms.csv`.
+- **Files per run:** `load_test/results/<label>_run<N>.jtl`, `load_test/logs/<label>_run<N>_jmeter.log`, `load_test/logs/<label>_run<N>_requests.jsonl`, `load_test/results/<label>_run<N>_ollama_ps.txt`. Phase transcript: `load_test/logs/<label>_phase.log`.
+- **Smoke tests** (`smoke1`, `smoke-qwen7b-run1`, `smoke-llama1b-15m-run1`, `smoke-phi3_8b-r3-run1`, `smoke-qwen7b-stress-run1` (aborted at setup), `smoke-qwen7b-stress-run2` (showed the end-of-schedule `Socket closed` artefact that led to the drain period), `smoke-qwen7b-stress-run3`) were pipeline checks, not results, and are excluded.
+
+| Phase | Model | Label | Run IDs |
+|---|---|---|---|
+| 1 | `llama3.2:1b` | `llama1b-15m` | `llama1b-15m-run1` to `-run3` |
+| 2 | `qwen2.5:1.5b` | `qwen1_5b-15m` | `qwen1_5b-15m-run1` to `-run3` |
+| 3 | `phi3.5:3.8b` | `phi3_8b-15m` | `phi3_8b-15m-run1` to `-run3` |
+| 4 | `qwen2.5:7b` | `qwen7b-15m` | `qwen7b-15m-run1` to `-run3` |
+
+- **Open-loop check:** the Precise Throughput Timer decides arrival times; the ticket thread group has 10 threads to carry them. Computed from the `.jtl` start and end times, at most **2** `POST /tickets` were ever in flight at once in any peak or R3 run (1 in every peak run), so the thread pool never ran out and never delayed an arrival: the load was open-loop as the brief requires. The stress test uses an Open Model Thread Group, which starts a new thread per arrival with no cap.
+- **Metric definitions:** latencies are JMeter `elapsed` in milliseconds. Percentiles use the nearest-rank method. A failed request stays in the count and in the percentiles. "Successful POST/hr" is successful `POST /tickets` × 3600 / 900. It is the achieved rate at this offered load, not the service's capacity.
+
+## Peak Mixed Load Results
+
+Each table below is generated by `load_test/summarise_runs.py` from the raw files, not typed by hand. It includes the per-run rows, mean, spread, standard deviation, and the JMeter-vs-SUT-log reconciliation.
+
+### Phase 1: `llama3.2:1b`
+
+<!-- BEGIN llama1b-15m -->
+<!-- generated by load_test/summarise_runs.py llama1b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `llama1b-15m-run1` | 6 | 0 | 846 | 1897 | 1897 | 24 | 12 | 25 | 1 | 0.0% (0/19) |
+| 2 | `llama1b-15m-run2` | 6 | 0 | 917 | 1558 | 1558 | 24 | 12 | 24 | 1 | 0.0% (0/19) |
+| 3 | `llama1b-15m-run3` | 6 | 0 | 862 | 1670 | 1670 | 24 | 12 | 14 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 875 | 1708.3 | 1708.3 | 24 | 12 | 21 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 846–917 | 1558–1897 | 1558–1897 | 24–24 | 12–12 | 14–25 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 37.2 ms, p95 172.7 ms, p99 172.7 ms, search p95 6.1 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `llama1b-15m-run1` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+| `llama1b-15m-run2` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+| `llama1b-15m-run3` | 19 | 19 | 6 | 6 | llama3.2:1b (baf6a787fdff) | yes |
+<!-- END llama1b-15m -->
+
+### Phase 2: `qwen2.5:1.5b`
+
+<!-- BEGIN qwen1_5b-15m -->
+<!-- generated by load_test/summarise_runs.py qwen1_5b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen1_5b-15m-run1` | 6 | 0 | 512 | 1018 | 1018 | 24 | 12 | 24 | 1 | 0.0% (0/19) |
+| 2 | `qwen1_5b-15m-run2` | 6 | 0 | 487 | 1032 | 1032 | 24 | 12 | 29 | 1 | 0.0% (0/19) |
+| 3 | `qwen1_5b-15m-run3` | 6 | 0 | 463 | 1022 | 1022 | 24 | 12 | 25 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 487.3 | 1024 | 1024 | 24 | 12 | 26 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 463–512 | 1018–1032 | 1018–1032 | 24–24 | 12–12 | 24–29 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 24.5 ms, p95 7.2 ms, p99 7.2 ms, search p95 2.6 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `qwen1_5b-15m-run1` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+| `qwen1_5b-15m-run2` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+| `qwen1_5b-15m-run3` | 19 | 19 | 6 | 6 | qwen2.5:1.5b (65ec06548149) | yes |
+<!-- END qwen1_5b-15m -->
+
+### Phase 3: `phi3.5:3.8b`
+
+<!-- BEGIN phi3_8b-15m -->
+<!-- generated by load_test/summarise_runs.py phi3_8b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `phi3_8b-15m-run1` | 6 | 0 | 1502 | 3030 | 3030 | 24 | 12 | 28 | 1 | 0.0% (0/19) |
+| 2 | `phi3_8b-15m-run2` | 6 | 0 | 1368 | 3055 | 3055 | 24 | 12 | 28 | 1 | 0.0% (0/19) |
+| 3 | `phi3_8b-15m-run3` | 6 | 0 | 1424 | 3210 | 3210 | 24 | 12 | 13 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 1431.3 | 3098.3 | 3098.3 | 24 | 12 | 23 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 1368–1502 | 3030–3210 | 3030–3210 | 24–24 | 12–12 | 13–28 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 67.3 ms, p95 97.5 ms, p99 97.5 ms, search p95 8.7 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `phi3_8b-15m-run1` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-15m-run2` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-15m-run3` | 19 | 19 | 6 | 6 | phi3.5:3.8b (61819fb370a3) | yes |
+<!-- END phi3_8b-15m -->
+
+### Phase 4: `qwen2.5:7b`
+
+<!-- BEGIN qwen7b-15m -->
+<!-- generated by load_test/summarise_runs.py qwen7b-15m --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen7b-15m-run1` | 6 | 0 | 2115 | 4327 | 4327 | 24 | 12 | 24 | 1 | 0.0% (0/19) |
+| 2 | `qwen7b-15m-run2` | 6 | 0 | 2144 | 4506 | 4506 | 24 | 12 | 29 | 1 | 0.0% (0/19) |
+| 3 | `qwen7b-15m-run3` | 6 | 0 | 2068 | 4420 | 4420 | 24 | 12 | 26 | 1 | 0.0% (0/19) |
+| Mean | | 6 | 0 | 2109 | 4417.7 | 4417.7 | 24 | 12 | 26.3 | 1 | 0.0% |
+| Spread (min–max) | | 6–6 | 0–0 | 2068–2144 | 4327–4506 | 4327–4506 | 24–24 | 12–12 | 24–29 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 38.4 ms, p95 89.5 ms, p99 89.5 ms, search p95 2.5 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `qwen7b-15m-run1` | 19 | 19 | 6 | 6 | qwen2.5:7b (845dbda0ea48) | yes |
+| `qwen7b-15m-run2` | 19 | 19 | 6 | 6 | qwen2.5:7b (845dbda0ea48) | yes |
+| `qwen7b-15m-run3` | 19 | 19 | 6 | 6 | qwen2.5:7b (845dbda0ea48) | yes |
+<!-- END qwen7b-15m -->
+
+## Requirement Outcomes (load)
+
+R1, R2 and R4 are judged on the 15-minute runs above, on the mean across the three runs. Any single run that fails is also stated.
+
+| ID | Requirement | `llama3.2:1b` | `qwen2.5:1.5b` | `phi3.5:3.8b` | `qwen2.5:7b` |
+|---|---|---|---|---|---|
+| R1 | POST p95 ≤ 60 s at peak | Pass (mean 1708 ms; worst run 1897 ms) | Pass (mean 1024 ms; worst run 1032 ms) | Pass (mean 3098 ms; worst run 3210 ms) | Pass (mean 4418 ms; worst run 4506 ms) |
+| R2 | Search p95 ≤ 2 s at peak | Pass (mean 21 ms; worst run 25 ms) | Pass (mean 26 ms; worst run 29 ms) | Pass (mean 23 ms; worst run 28 ms) | Pass (mean 26 ms; worst run 29 ms) |
+| R3 | ≥ 46 successful classifications/hour, sustained (15-min runs, see below) | Not tested (fails R5/R6) | Not tested (fails R5/R6) | Pass (48/hr in every run, 0/36 POST errors) | Pass (48/hr in every run, 0/36 POST errors) |
+| R4 | Error rate < 1% at peak | Pass (0/57 across 3 runs) | Pass (0/57 across 3 runs) | Pass (0/57 across 3 runs) | Pass (0/57 across 3 runs) |
+
+R3 is not tested by the peak-load runs: they offer only 23 tickets/hour, below 46. It is tested separately below (Phase 5).
+
+## R3 Throughput Results (Phase 5)
+
+- **Load:** 46 `POST /tickets`, 46 `GET /search` and 1 `GET /stats` per hour, open-loop, same plan (`load_test/peak_mixed_load.jmx`) and same reset, warm-up and CPU check as the peak runs. 900 s per run, three runs per model. Run with `load_test/run_phase.ps1 -Phase 5`.
+- **Models:** `phi3.5:3.8b` and `qwen2.5:7b` only. `llama3.2:1b` (21.7% overall) and `qwen2.5:1.5b` (52.6% overall) fail the accuracy requirements R5 and R6 by a wide margin, so their throughput cannot change the recommendation. TODO: confirm this scope with Mikhail.
+- **Run length:** 15 minutes, agreed with Mikhail on 2026-10-06 to match the peak runs. The requirement text in `performance-requirements.md` still says 60 minutes and is to be updated by Mikhail.
+- **Pass condition:** every offered `POST /tickets` succeeds (0 errors) and "Successful POST/hr" is at least 46. A 15-minute run at 46/hour offers about 11 to 12 tickets.
+
+### `phi3.5:3.8b` at 46 tickets/hour
+
+<!-- BEGIN phi3_8b-r3 -->
+<!-- generated by load_test/summarise_runs.py phi3_8b-r3 --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `phi3_8b-r3-run1` | 12 | 0 | 2587 | 4353 | 4353 | 48 | 12 | 13 | 1 | 0.0% (0/25) |
+| 2 | `phi3_8b-r3-run2` | 12 | 0 | 2511 | 4250 | 4250 | 48 | 12 | 26 | 1 | 0.0% (0/25) |
+| 3 | `phi3_8b-r3-run3` | 12 | 0 | 2800 | 4239 | 4239 | 48 | 12 | 3036 | 1 | 0.0% (0/25) |
+| Mean | | 12 | 0 | 2632.7 | 4280.7 | 4280.7 | 48 | 12 | 1025 | 1 | 0.0% |
+| Spread (min–max) | | 12–12 | 0–0 | 2511–2800 | 4239–4353 | 4239–4353 | 48–48 | 12–12 | 13–3036 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 149.8 ms, p95 62.9 ms, p99 62.9 ms, search p95 1741.6 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `phi3_8b-r3-run1` | 25 | 25 | 12 | 12 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-r3-run2` | 25 | 25 | 12 | 12 | phi3.5:3.8b (61819fb370a3) | yes |
+| `phi3_8b-r3-run3` | 25 | 25 | 12 | 12 | phi3.5:3.8b (61819fb370a3) | yes |
+<!-- END phi3_8b-r3 -->
+
+### `qwen2.5:7b` at 46 tickets/hour
+
+<!-- BEGIN qwen7b-r3 -->
+<!-- generated by load_test/summarise_runs.py qwen7b-r3 --duration 900 -->
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Successful POST/hr | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen7b-r3-run1` | 12 | 0 | 3397 | 8442 | 8442 | 48 | 12 | 33 | 1 | 0.0% (0/25) |
+| 2 | `qwen7b-r3-run2` | 12 | 0 | 4189 | 8533 | 8533 | 48 | 12 | 17 | 1 | 0.0% (0/25) |
+| 3 | `qwen7b-r3-run3` | 12 | 0 | 3481 | 6290 | 6290 | 48 | 12 | 45 | 1 | 0.0% (0/25) |
+| Mean | | 12 | 0 | 3689 | 7755 | 7755 | 48 | 12 | 31.7 | 1 | 0.0% |
+| Spread (min–max) | | 12–12 | 0–0 | 3397–4189 | 6290–8533 | 6290–8533 | 48–48 | 12–12 | 17–45 | 1–1 | 0.0%–0.0% |
+
+Sample standard deviation across the 3 runs: p50 435.0 ms, p95 1269.5 ms, p99 1269.5 ms, search p95 14.0 ms.
+
+Reconciliation (JMeter `.jtl` vs SUT `requests.jsonl`, matched by exact `X-Run-ID`; the separate `warmup-` line is excluded):
+
+| Run ID | JMeter requests | SUT log lines | JMeter POST | SUT log POST | Model (digest) | Match |
+|---|---:|---:|---:|---:|---|---|
+| `qwen7b-r3-run1` | 25 | 25 | 12 | 12 | qwen2.5:7b (845dbda0ea48) | yes |
+| `qwen7b-r3-run2` | 25 | 25 | 12 | 12 | qwen2.5:7b (845dbda0ea48) | yes |
+| `qwen7b-r3-run3` | 25 | 25 | 12 | 12 | qwen2.5:7b (845dbda0ea48) | yes |
+<!-- END qwen7b-r3 -->
+
+## Stress Test
+
+- **Limit under test:** the maximum ticket arrival rate the service sustains before latency grows without bound, and where that crosses R1 (POST p95 > 60 s) and R4 (errors).
+- **Model:** `qwen2.5:7b`, the slowest candidate, so it reaches its limit first.
+- **Playbook:** `load_test/run_phase.ps1 -Phase 6`, which calls `load_test/run_stress.ps1` with `load_test/stress_ramp.jmx`.
+  1. Reset the SUT over SSH (same reset as the load tests) and wait for `/stats` total = 0.
+  2. One warm-up request tagged `warmup-<RUN_ID>`; save `ollama ps` and abort unless it shows 100% CPU.
+  3. Start a CPU and memory sampler on the SUT over SSH (a PowerShell `Get-Counter` loop, about every 5 s: total CPU, available RAM, CPU of Ollama including its `llama-server` inference process, and CPU of the Docker WSL VM; process CPU is expressed as % of the whole machine).
+  4. JMeter Open Model Thread Group: tickets arrive at random (Poisson) times, with the rate rising linearly from 0 to the end rate over 15 minutes. JMeter starts a new thread per arrival, so a slow server cannot hold back the offered load. A constant 4 searches/minute runs alongside to show how search behaves when classification is saturated. No `/stats`. HTTP response timeout 300 s, the same as the service's Ollama timeout.
+  5. Then a 10-minute drain with no new tickets (searches continue), so queued tickets can finish. Without it, JMeter's Open Model Thread Group interrupts requests still in flight when its schedule ends, which a smoke test showed as client-side `Socket closed` errors that the service never saw.
+  6. Stop the sampler and copy the SUT request log and the CPU log back.
+  7. `load_test/stress_summary.py` bins the run per minute (offered vs completed rate, POST p50/p95, queue wait = `total_ms − model_ms`, errors, search p95, CPU, RAM).
+- **End rate: 24 tickets/minute (1,440/hour), ramp 0 → 24 over 15 minutes, then 10-minute drain.** Chosen before the real run from the smoke test `smoke-qwen7b-stress-run3` (ramp 0 → 20/min over 2 min), in which `qwen2.5:7b` completed only about 11 tickets/minute once requests overlapped (queueing inside Ollama, mean model time 15.6 s at 14/min offered), far below the 20/min suggested by Phase 4's single-request time of about 3 s. 24/min is about twice that measured capacity, enough to push past the limit while letting the backlog clear within the drain. The same smoke test peaked at only 54–62% total SUT CPU while saturated, so whether CPU or Ollama's one-at-a-time scheduling is the bottleneck is to be read from the real run.
+- **Limit criteria, fixed before the run:** measured capacity = best 3-minute rolling mean of successful completions; saturation = first minute the offered rate exceeds it; R1 breach = first minute whose POST p95 exceeds 60 s; error onset = first minute with ≥ 1% POST errors. If the offered rate never exceeds capacity, the ramp missed the limit and is repeated with a higher end rate.
+- **Raw files:** `load_test/results/qwen7b-stress_run1.jtl`, `load_test/results/qwen7b-stress_run1_cpu.csv`, `load_test/results/qwen7b-stress_run1_ollama_ps.txt`, `load_test/logs/qwen7b-stress_run1_requests.jsonl`, `load_test/logs/qwen7b-stress_run1_jmeter.log`.
+
+<!-- BEGIN qwen7b-stress -->
+<!-- generated by load_test/stress_summary.py qwen7b-stress --run 1 -->
+Run `qwen7b-stress-run1`: 180 POST /tickets offered, 148 succeeded, 32 failed; 100 GET /search. JMeter requests 280, SUT log lines for this run ID 280 (match). CPU log: 312 samples on the SUT, peak total CPU 68%.
+
+| Minute | POST offered (/hr) | POST succeeded (/hr) | POST p50 (ms) | POST p95 (ms) | POST errors | Mean queue wait (ms) | Mean model time (ms) | Search p95 (ms) | SUT CPU mean (%) | Ollama CPU mean (%) | SUT free RAM min (MB) |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0 | 180 | 120 | 3,435 | 4,158 | 0 | 8 | 3,012 | 23 | 18 | 12 | 16,288 |
+| 1 | 120 | 180 | 2,203 | 4,278 | 0 | 8 | 3,222 | 24 | 10 | 4 | 16,287 |
+| 2 | 360 | 360 | 4,907 | 10,678 | 0 | 9 | 5,843 | 23 | 43 | 30 | 16,198 |
+| 3 | 240 | 240 | 2,630 | 3,500 | 0 | 8 | 2,607 | 27 | 12 | 6 | 16,208 |
+| 4 | 420 | 360 | 3,562 | 9,506 | 0 | 9 | 4,895 | 25 | 23 | 19 | 16,415 |
+| 5 | 660 | 480 | 15,771 | 21,805 | 0 | 8 | 12,930 | 26 | 57 | 48 | 16,293 |
+| 6 | 720 | 660 | 25,118 | 33,370 | 0 | 10 | 21,864 | 30 | 59 | 48 | 16,282 |
+| 7 | 660 | 540 | 31,032 | 40,677 | 0 | 9 | 31,008 | 37 | 58 | 48 | 16,244 |
+| 8 | 840 | 600 | 54,680 | 69,644 | 0 | 10 | 55,988 | 32 | 56 | 49 | 16,233 |
+| 9 | 960 | 600 | 91,235 | 107,533 | 0 | 12 | 92,092 | 40 | 55 | 49 | 16,172 |
+| 10 | 780 | 540 | 120,527 | 127,331 | 0 | 10 | 116,957 | 28 | 54 | 49 | 16,123 |
+| 11 | 1380 | 600 | 168,100 | 206,857 | 0 | 11 | 175,087 | 42 | 58 | 48 | 16,105 |
+| 12 | 1740 | 600 | 258,447 | 300,010 | 3 | 29,924 | 232,352 | 76,441 | 57 | 49 | 16,036 |
+| 13 | 900 | 540 | 300,004 | 300,013 | 15 | 93,166 | 232,592 | 119,087 | 54 | 49 | 15,946 |
+| 14 | 840 | 600 | 300,005 | 300,019 | 14 | 131,429 | 241,167 | 166,318 | 57 | 48 | 15,974 |
+| 15 | 0 | 600 | - | - | 0 | - | - | 101,840 | 59 | 48 | 15,928 |
+| 16 | 0 | 720 | - | - | 0 | - | - | 62,725 | 56 | 49 | 15,942 |
+| 17 | 0 | 540 | - | - | 0 | - | - | 5,060 | 57 | 48 | 16,038 |
+| 18 | 0 | 0 | - | - | 0 | - | - | 55 | 59 | 48 | 15,980 |
+| 19 | 0 | 0 | - | - | 0 | - | - | 58 | 56 | 48 | 15,960 |
+| 20 | 0 | 0 | - | - | 0 | - | - | 57 | 55 | 49 | 15,885 |
+| 21 | 0 | 0 | - | - | 0 | - | - | 36 | 14 | 11 | 15,960 |
+| 22 | 0 | 0 | - | - | 0 | - | - | 18 | 3 | 0 | 15,958 |
+| 23 | 0 | 0 | - | - | 0 | - | - | 20 | 5 | 0 | 16,092 |
+| 24 | 0 | 0 | - | - | 0 | - | - | 20 | 2 | 0 | 16,144 |
+
+Minutes count from the first request. Rates are per-minute counts × 60. Offered and latency columns use each request's start minute; succeeded uses its finish minute.
+
+**Limit findings (criteria fixed before the run):**
+
+- **Measured capacity:** 640 successful classifications/hour (best 3-minute rolling mean, minutes 14–16).
+- **Saturation:** offered rate first exceeded that capacity in minute 5 (660 /hr offered).
+- **R1 breach (POST p95 > 60 s):** minute 8, at 840 /hr offered.
+- **Error onset (≥ 1% POST errors):** minute 12, at 1,740 /hr offered.
+<!-- END qwen7b-stress -->
+
+**What the 32 POST errors are:** all 32 are JMeter `Read timed out` at its 300 s response timeout, on tickets that started in minutes 12–14. The SUT log shows the service completed all 180 tickets with HTTP 200 (slowest 402 s end to end), so the service never returned an error; the client gave up first. Under R4's definition a timeout counts as a failed request.
+
+**Limit:** `qwen2.5:7b` on this SUT sustains about **600–640 successful classifications/hour** (10–11 per minute; completions held at 540–720/hour from minute 6 to the end of the backlog). Once the offered rate passes that (minute 5, about 660/hour), latency grows without bound: POST p95 rises from 4 s to 22 s, 41 s, then **breaches R1 (60 s) in minute 8 at 840/hour offered**, and reaches the 300 s timeout from minute 12. The service stays error-free, but from minute 12 clients see timeouts. The peak load (23/hour) and the R3 load (46/hour) are about 4% and 7% of this capacity.
+
+**Diagnosed bottleneck: Ollama model inference, one request at a time.** Evidence:
+- The SUT has `OLLAMA_NUM_PARALLEL=1` (user environment variable), so Ollama runs one generation at a time and queues the rest. Waiting in that queue is inside `model_ms`: mean model time grows from 3 s to 232–241 s while queue wait outside Ollama stays at 8–12 ms until minute 12.
+- Per-ticket compute (`prompt_eval_ms + eval_ms` from the SUT log) averages 5.8 s (median 5.4 s) over the 180 tickets. One-at-a-time processing therefore caps throughput at 3,600 / 5.8 ≈ 620 tickets/hour, matching the measured 600–640.
+- CPU is busy but **not** at 100%: total SUT CPU plateaus at 54–59% (peak 68%) and Ollama's processes at about 48–49% of the machine while saturated. The SUT has 16 cores / 22 logical processors (Intel Core Ultra 7 155H); llama.cpp runs a fixed number of threads, so the machine has idle capacity that a single generation stream does not use.
+- Memory is not a constraint: free RAM stays about 15.9–16.4 GB throughout.
+- Not the service or the network: search requests that start before minute 12 complete in 23–42 ms (p95) even while tickets queue for 2–3 minutes.
+
+**Secondary effect: search is starved once 40 tickets are in flight.** The service runs its endpoints on a 40-thread worker pool (see `service/DESIGN.md`). From minute 12, more than 40 tickets are waiting on Ollama, every worker thread is blocked, and new requests wait for a thread: queue wait outside Ollama jumps to 30–131 s and **search p95 jumps from about 40 ms to 76–166 s**, breaching R2 although search needs no model call. It recovers once the backlog clears (minute 18). This comes from the synchronous baseline design (no queue, shared thread pool) and is noted for Assignment 2, not fixed here.
+
+**Why capacity is lower than Phase 4 suggested:** Phase 4's single-request latency (about 2–3 s) came from the same six short tickets every run. The stress run sends 180 tickets from across the dataset, which average longer and need about 5.8 s of compute each (see the "Every run sends the same tickets" limitation).
+
+## Accuracy Results
+
+Every golden-set ticket through `POST /tickets` per model. Overall and per-category accuracy against `golden_set/gold_labels.csv`, with a confusion matrix.
+
+| Model | Overall | Min category | Meets R5 (≥ 80%) | Meets R6 (every category ≥ 65%) |
+|---|---:|---:|---|---|
+| `llama3.2:1b` | 21.7% (38/175) | 0% (Mortgage, Credit card, Consumer loan, Money transfer) | No | No |
+| `qwen2.5:1.5b` | 52.6% (92/175) | 24.2% (Bank account or service, 8/33) | No | No |
+| `phi3.5:3.8b` | 76.0% (133/175) | 61.9% (Credit card, 13/21) | No | No |
+| `qwen2.5:7b` | 77.1% (135/175) | 56.3% (Money transfer or service, 9/16) | No | No |
+
+**No candidate meets R5 or R6.** The two larger models are close to each other (two tickets apart overall) and 3–4 points short of 80%. `llama3.2:1b` also returned 2 `INVALID` answers; no model had HTTP errors.
+
+**Source (Izzul's accuracy experiment, copied here unchanged):** `evaluation/accuracy_results/accuracy_summary.csv`, `accuracy_per_category.csv`, `confusion_<model>.csv`, and the per-run files `acc_<model>_20261005T*.csv` with their `_summary.json` (each reconciles 175/175 with the service log; `size_vram` 0, so CPU only). Run IDs: `acc_llama3.2_1b_20261005T160744Z`, `acc_qwen2.5_1.5b_20261005T161551Z`, `acc_phi3.5_3.8b_20261005T162247Z`, `acc_qwen2.5_7b_20261005T163749Z`. The `devcheck_` file is a pipeline check, not a result.
+
+**Per-category accuracy:**
+
+| Category (n) | `llama3.2:1b` | `qwen2.5:1.5b` | `phi3.5:3.8b` | `qwen2.5:7b` |
+|---|---:|---:|---:|---:|
+| Credit reporting (36) | 89% | 86% | 75% | 92% |
+| Debt collection (24) | 12% | 42% | 75% | 79% |
+| Mortgage (22) | 0% | 45% | 82% | 73% |
+| Credit card (21) | 0% | 57% | **62%** | 76% |
+| Bank account or service (33) | 9% | 24% | 82% | 76% |
+| Consumer loan (23) | 0% | 65% | 78% | 74% |
+| Money transfer or service (16) | 0% | 38% | 75% | **56%** |
+
+Bold: the category that fails R6 (< 65%) for the two models that come closest.
+
+**Where each model goes wrong (largest off-diagonal cells of the confusion matrix, gold → predicted):**
+- `llama3.2:1b`: labels almost everything Credit reporting. Bank account → Credit reporting 24, Debt collection → Credit reporting 20, Credit card → Credit reporting 17, Mortgage → Credit reporting 16.
+- `qwen2.5:1.5b`: over-uses Credit card. Bank account → Credit card 16, Debt collection → Credit card 6, Mortgage → Consumer loan 5.
+- `phi3.5:3.8b`: errors are spread thin. Credit reporting → Debt collection 5, Credit card → Bank account 5, Mortgage → Consumer loan 4, Money transfer → Bank account 3.
+- `qwen2.5:7b`: Money transfer → Bank account 5, Mortgage → Consumer loan 3, Debt collection ↔ Credit reporting 3 each way.
+- Across the stronger models the recurring confusions are Money transfer / Credit card → Bank account, Mortgage → Consumer loan, and Debt collection ↔ Credit reporting.
+
+**Latency in the accuracy files is not used for performance results.** The accuracy run (2026-10-05) predates the 2026-10-06 machine-role swap, and its client times do not match the current SUT (for example `llama3.2:1b` median 2,552 ms there against 846–917 ms POST p50 in the load tests), so it ran on different hardware. Accuracy does not depend on hardware; latency does. All latency figures in this record come from the load tests on the current SUT.
+
+## Predictions vs Measurements
+
+Predictions are copied from [prediction-record.md](prediction-record.md) without change; only the measured column and the verdict are filled here. Incorrect predictions stay in the record.
+
+"Warm latency" is measured as POST `/tickets` p50 in the 15-minute peak-load runs on the current SUT, where requests arrive minutes apart and do not overlap. These runs reuse the same six short tickets, so they likely understate latency for typical tickets (see Deviations and Limitations). Verdicts are left for Mikhail.
+
+| # | Prediction | Measured | Verdict |
+|---|---|---|---|
+| 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | 21.7% accuracy (38/175). Warm latency: POST p50 875 ms at peak load (mean of 3 runs, 846–917 ms). | TODO |
+| 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | 52.6% accuracy (92/175). Warm latency: POST p50 487 ms (463–512 ms). | TODO |
+| 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | 76.0% accuracy (133/175). Warm latency: POST p50 1,431 ms (1,368–1,502 ms). | TODO |
+| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | 77.1% accuracy (135/175). Warm latency: POST p50 2,109 ms (2,068–2,144 ms); 3,689 ms mean p50 over the 12-ticket R3 runs; 5.8 s mean compute per ticket over 180 dataset tickets in the stress test. | TODO |
+| 5 | `qwen2.5:7b` most accurate and slowest | Most accurate: 77.1%, just ahead of `phi3.5:3.8b` at 76.0% (two tickets). Slowest: POST p50 2,109 ms against 1,431 ms for `phi3.5:3.8b`. | TODO |
+| 6 | `llama3.2:1b` fastest and least accurate | Least accurate: 21.7%. Not fastest: `qwen2.5:1.5b` is faster (POST p50 487 ms against 875 ms; also faster in the superseded 60-minute runs, 678 ms against 1,001 ms). | TODO |
+| 7 | CPU inference is the primary bottleneck as load rises | Stress test: Ollama inference is the bottleneck (capacity ≈ 620/hr = 3,600 / 5.8 s compute per ticket, one request at a time), but total CPU plateaus at 54–59%, not 100%; memory, service and network are not limiting. See Stress Test. | TODO |
+| 8 | Hardest categories: consumer loan, debt collection, credit card, bank account or service, money transfer or service | Lowest categories for the two strongest models: Money transfer 56% and Mortgage 73% (`qwen2.5:7b`); Credit card 62% and Credit reporting 75% (`phi3.5:3.8b`). Recurring confusions: Money transfer / Credit card → Bank account, Mortgage → Consumer loan, Debt collection ↔ Credit reporting. Mortgage, predicted to be easy, is confused with Consumer loan by three of four models; Credit reporting, predicted easy, is the best category for three models but `phi3.5:3.8b` gets only 75%. | TODO |
+| 9 | All four models exceed 46 classifications/hour | `phi3.5:3.8b` and `qwen2.5:7b` sustained 46/hr offered with 0 errors (48/hr achieved, 3 runs each); `qwen2.5:7b` capacity ≈ 600–640/hr in the stress test. `llama3.2:1b` and `qwen2.5:1.5b` were not run at 46/hr (excluded on accuracy), but are faster than both at peak load. | TODO |
+
+## Reconciliation Checklist
+
+- [x] Phase 1 (`llama1b-15m`): every run reconciles (19/19 requests per run); files committed in `f043075`.
+- [x] Phase 2 (`qwen1_5b-15m`): every run reconciles (19/19 requests per run); files committed in `f043075`.
+- [x] Phase 3 (`phi3_8b-15m`): every run reconciles (19/19 requests per run); files committed in `f043075`.
+- [x] Phase 4 (`qwen7b-15m`): every run reconciles (19/19 requests per run); files committed with this record.
+- [x] Phase 5 (`phi3_8b-r3`, `qwen7b-r3`): every run reconciles (25/25 requests per run); files committed.
+- [x] Phase 6 (`qwen7b-stress`): JMeter count matches the SUT log (280/280), CPU log present (312 samples), files committed.
+- [ ] Every number in the slides appears in this file.
+
+## Deviations and Limitations
+
+- Wi-Fi used between the two machines. **Observed effect:** in `phi3_8b-r3-run3` one `GET /search` (`q=card`, 96 s into the run) took 3,036 ms in JMeter, of which 3,017 ms was the TCP connect time; the SUT log shows the service handled it in at most 2.3 ms. A connect time just over 3 s is Windows' TCP SYN retransmission interval, so the first connection attempt was lost on the network. This single sample sets that run's search p95 (the run has only 12 searches). It is a network artefact, not service latency, and the peak-load runs that judge R2 are unaffected. A wired connection would avoid it.
+- **Run length changed from 60 to 15 minutes.** On the course instructor's advice that 60-minute runs were too long, the team re-ran all four models with 900 s runs so every model has the same run length. The earlier 60-minute runs are **kept in the repository, not deleted**, and are listed in the appendix below. They are superseded for reporting, not discarded. They used the same plan, rates, SUT and load generator.
+- **R3 measured over 15 minutes, not 60.** Agreed with Mikhail to keep every run the same length. A 15-minute run shows the service keeps up with 46 tickets/hour without errors or a growing queue, but not that it does so for a full hour (for example under thermal throttling on the laptop SUT).
+- **Stress test is one 15-minute ramp.** It finds the arrival-rate limit, not long-duration endurance.
+- **Phase 4 paused between runs 2 and 3.** The team paused the phase during the cooldown after `qwen7b-15m-run2` (ended 2026-10-06 23:56) and resumed with run 3 at 2026-10-07 01:13. Run 3 started from a full reset like every other run, so the gap does not change its conditions; its results are in line with runs 1 and 2.
+- **Branch switch during `qwen7b-15m-run1`.** The repository on the load generator was briefly switched to `main` and back while run 1 was in progress. JMeter had already loaded the plan and opened both data files, the run's output files stayed in place, and run 1 sent the same six tickets as every other run and reconciles 19/19 with the SUT log, so the run is kept.
+- **Screensaver running on the SUT.** During the stress smoke test the SUT was running `OLED Care Screensaver.scr` (about 750 MB of memory). It was most likely active during every unattended run, since nobody used the machine, so it affects all models alike. It takes some CPU, GPU and memory away from the service. TODO: disable it on the SUT if any run is repeated.
+- **Small samples per run.** A 15-minute run has about 6 `POST /tickets`. With 6 samples, p95 and p99 are both the slowest request in that run. Per-run p95/p99 should be read as "worst of about 6", and the spread across the three runs as the main indication of stability.
+- **Every run sends the same tickets.** The JMeter CSV Data Set reads `load_test/data/dev_tickets.csv` from the top in every run, so each 15-minute run, for every model, sends the same first 6 narratives (rows 1000 to 1005) in a different order. The 60-minute runs likewise all sent the first 23. These 6 average 621 characters, against 896 for all 825 rows (median 791, 90th percentile 1,633), and the first 23 average 814. Effects: (1) POST latency is understated relative to the full ticket-length distribution, because shorter narratives classify faster; this is the main reason the 15-minute numbers are lower than the 60-minute ones; (2) the three runs per model repeat the same inputs, so the spread across runs reflects run-to-run noise in the system, not variation in ticket mix; (3) every model received identical input, so the comparison between models is controlled. The team chose to keep this protocol for all four models and report the limitation rather than re-run. A fix for Assignment 2 is a per-run shuffled ticket file seeded by run number.
+- **`GET /stats` may not be exercised.** At 1 per hour, a 900 s run sends 0 or 1 stats requests.
+- **Mid-study SUT hardware change.** `qwen2.5:7b` run 1 (23 POST requests, 0 errors, p50 2044 ms, p95 4632 ms, p99 5073 ms) and a partial, aborted run 2 were measured with the AMD Ryzen 5 7600 (6-core) as the system under test. The p50 was far faster than predicted (12 s) for a 7B model on CPU, raising concern that this machine does not represent the client's "commodity CPU server" constraint. The team stopped testing and swapped machine roles: the system under test is now the Intel Core Ultra 7 155H machine (previously the load generator), and the AMD Ryzen 5 7600 machine is now the load generator. The raw `.jtl` and log files from the discarded runs were deleted from the repository rather than kept; this note is the only remaining record of that data and the reason it is not used. All runs for every model were then measured fresh on the new SUT.
+- **No non-peak (normal load, 12 tickets/hour) runs.** The workplan asked for non-peak, peak and above-peak conditions where feasible. Peak (23/hour) and above-peak (46/hour for R3, and the stress ramp to 1,440/hour) were run. Normal load was not: every model passes R1, R2 and R4 at peak with p95 below 5 s against a 60 s limit, and the stress test shows the service is far from its limit below about 600/hour, so a lighter load cannot change any requirement outcome.
+- **Interruptions and repeats:** none beyond those listed above (the Phase 4 pause, the branch switch during `qwen7b-15m-run1`, and the smoke runs that are excluded). No reported run was repeated or discarded.
+
+---
+
+## Appendix: superseded 60-minute runs
+
+**Not used for the slides or the recommendation.** These are the original 3,600 s peak-load runs, measured on the current SUT (Intel Core Ultra 7 155H) before the switch to 15-minute runs. Same plan, rates and machines. Kept as evidence because the brief requires every run's raw files to stay in the repository. Raw files: `load_test/results/<label>_run<N>.jtl` and `load_test/logs/<label>_run<N>_*` with labels `llama1b`, `qwen1_5b` and `phi3_8b`. `qwen2.5:7b` was not run at 60 minutes on this SUT, and `phi3.5:3.8b` has only run 1.
+
+p-values in milliseconds.
+
+### `llama3.2:1b` (60-minute runs)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `llama1b-run1` | 23 | 0 | 971 | 2274 | 2381 | 46 | 11 | 1 | 0% (0/70) |
+| 2 | `llama1b-run2` | 23 | 0 | 1040 | 2000 | 2316 | 46 | 12 | 1 | 0% (0/70) |
+| 3 | `llama1b-run3` | 23 | 0 | 991 | 1973 | 2345 | 46 | 12 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 1001 | 2082 | 2347 | 46 | 11.7 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 971–1040 | 1973–2274 | 2316–2381 | 46–46 | 11–12 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 35.5 ms, p95 166.5 ms, p99 32.6 ms, search p95 0.6 ms.
+
+### `qwen2.5:1.5b` (60-minute runs)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `qwen1_5b-run1` | 23 | 0 | 675 | 1503 | 1630 | 46 | 31 | 1 | 0% (0/70) |
+| 2 | `qwen1_5b-run2` | 23 | 0 | 689 | 1470 | 1624 | 46 | 11 | 1 | 0% (0/70) |
+| 3 | `qwen1_5b-run3` | 23 | 0 | 671 | 1505 | 1764 | 46 | 13 | 1 | 0% (0/70) |
+| Mean | | 23 | 0 | 678 | 1493 | 1673 | 46 | 18.3 | 1 | 0% |
+| Spread (min–max) | | 23–23 | 0–0 | 671–689 | 1470–1505 | 1624–1764 | 46–46 | 11–31 | 1–1 | 0%–0% |
+
+Sample standard deviation across the three runs: p50 9.5 ms, p95 19.7 ms, p99 79.2 ms, search p95 11.0 ms.
+
+### `phi3.5:3.8b` (60-minute run, run 1 only)
+
+| Run | Run ID | POST n | POST err | POST p50 | POST p95 | POST p99 | Search n | Search p95 | Stats n | Overall error rate |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | `phi3_8b-run1` | 23 | 0 | 1990 | 4320 | 4814 | 46 | 14 | 1 | 0% (0/70) |
+
+Runs 2 and 3 were not made at 60 minutes. The model was re-tested with three 15-minute runs instead (Phase 3).
+
+### Old-SUT `qwen2.5:7b` run (discarded)
+
+`qwen7b-run1` measured on the AMD Ryzen 5 7600 before the machine-role swap: 23 POST, 0 errors, POST p50 2044 ms, p95 4632 ms, p99 5073 ms, search p95 17 ms. At the time, its JMeter request count (70) was checked against the SUT log for that `X-Run-ID` and matched. Its raw files were deleted, so these numbers cannot be reconciled now and must not be used. See Deviations and Limitations.
