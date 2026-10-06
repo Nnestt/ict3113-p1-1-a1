@@ -22,21 +22,34 @@ have admin rights.
 
 ## 1. Prerequisites
 
-- Docker Desktop installed and running (`docker version` shows a Server).
-- Ollama installed and running on the host (`curl http://localhost:11434`
-  returns "Ollama is running").
+Versions used for every reported run are in `results-record.md` (Test Environment).
+
+- Docker Desktop installed and running (`docker version` shows a Server; reported runs: Docker
+  Engine 29.8.2 on WSL 2).
+- Ollama installed (reported runs: 0.35.1), started as in step 2.
 - Python 3 (for the pre-flight self-test).
+- A clone of this repository at `C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1` (the path the
+  load generator's scripts assume; see `SECOND_PC_SETUP.md` step 4).
+- Power plan: sleep set to Never, charger connected, and **no screensaver** (one was found
+  running during the reported runs; see `results-record.md`).
 
-## 2. Ollama must be CPU only
+## 2. Start Ollama CPU-only with the test settings
 
-No GPU inference is allowed. If the machine has a GPU, hide it before starting
-Ollama, for example:
+No GPU inference is allowed. Quit any running Ollama (tray icon → Quit), then start it with
+`load_test/start-ollama-cpu.ps1`, which hides every GPU back end and sets
+`OLLAMA_NUM_PARALLEL=1` (one generation at a time) and `OLLAMA_KEEP_ALIVE=5m`. To start it
+automatically at logon, copy it to `C:\Users\admin\start-ollama-cpu.ps1` and create a
+scheduled task (this is how the reported SUT was set up, task name `OllamaCpuOnly`):
 
 ```powershell
-$env:CUDA_VISIBLE_DEVICES = "-1"   # then restart Ollama from this shell
+$a = New-ScheduledTaskAction -Execute powershell.exe -Argument '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\admin\start-ollama-cpu.ps1"'
+Register-ScheduledTask -TaskName OllamaCpuOnly -Action $a -Trigger (New-ScheduledTaskTrigger -AtLogOn)
 ```
 
-Confirm later with `ollama ps`: the PROCESSOR column must say `100% CPU`.
+`OLLAMA_NUM_PARALLEL=1` matters for the results: the stress test found that Ollama processing
+one request at a time is the bottleneck. Confirm CPU-only later with `ollama ps`: the
+PROCESSOR column must say `100% CPU` (the test scripts check this before every run and abort
+otherwise).
 
 ## 3. Pull the four pinned models
 
@@ -68,13 +81,20 @@ cd ..
 
 All four models must pass. Fix this before going further.
 
-## 5. Open port 8000 for the load generator (Administrator PowerShell)
+## 5. Open port 8000 and SSH for the load generator (Administrator PowerShell)
 
 ```powershell
 New-NetFirewallRule -DisplayName "Triage 8000" -Direction Inbound -Protocol TCP -LocalPort 8000 -Action Allow -Profile Any
+
+# OpenSSH Server: the load generator resets this machine and copies its logs over SSH
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic
 ```
 
-Ping is blocked by default on Windows and is not needed; only TCP 8000 matters.
+Ping is blocked by default on Windows and is not needed; only TCP 8000 and 22 matter. Add the
+load generator's public key to `C:\ProgramData\ssh\administrators_authorized_keys` (see
+`SECOND_PC_SETUP.md` step 5). The default SSH shell stays `cmd.exe`; the scripts expect that.
 
 ## 6. Confirm the address
 
@@ -102,39 +122,28 @@ last line before `Application startup failed` in `docker compose logs`
 Check it is reachable from the network side: the JMeter machine runs
 `curl http://192.168.68.69:8000/stats` and must get the same JSON.
 
-## 8. Reset between runs (and when switching model)
+## 8. Reset between runs (automatic)
 
-Each run must start from an empty service, and stored tickets belong to the
-model that classified them. The JMeter script waits until `/stats` shows
-`total = 0`, so just reset:
+Each run must start from an empty service, and stored tickets belong to the model that
+classified them. The load generator does this itself before every run by calling
+`load_test/reset_sut.ps1 -Model <tag>` on this machine over SSH: `docker compose down -v`,
+empty `logs/requests.jsonl`, unload every Ollama model, `docker compose up -d --build` with
+`MODEL` pinned, and wait for `/stats` total = 0. The load generator then copies
+`logs/requests.jsonl` back as `load_test/logs/<label>_run<N>_requests.jsonl`, so each run's
+SUT log is kept in the repository from that machine. Nothing needs to be done here between
+runs.
+
+To reset by hand (for example after an aborted run):
 
 ```powershell
-# same model, next run
-docker compose down -v
-docker compose up -d --build
-
-# switching model: set MODEL first
-docker compose down -v
-$env:MODEL = "phi3.5:3.8b"
-docker compose up -d --build
+powershell -NoProfile -File load_test\reset_sut.ps1 -Model qwen2.5:7b
 ```
-
-Only stop or reset after the load generator has finished: a request in flight
-when the container stops gets no reply and no log line.
-
-`logs/requests.jsonl` is appended to and is **not** cleared by `down -v`. That
-is intended. Runs are told apart by the `X-Run-ID` field. Do not delete it
-between runs.
 
 ## 9. Order of work
 
-1. Smoke test first: from the JMeter machine, run
-   `.\run_model.ps1 -Label qwen7b -Smoke` (2 minutes, one run). Then reset
-   (step 8) so the service is empty for the real runs.
-2. Real runs: `.\run_model.ps1 -Label qwen7b` on the JMeter machine does
-   three 60-minute runs and waits for a reset between each. Reset this
-   machine when it prints that it is waiting.
-3. Check the numbers, switch model (step 8), repeat.
+All tests are started from the load generator (`SECOND_PC_SETUP.md` step 6):
+smoke test, then phases 1–4 (peak load, 3 × 15-minute runs per model), phase 5 (R3 at
+46 tickets/hour) and phase 6 (stress ramp). This machine only needs Ollama and Docker running.
 
 ## 10. During a run
 
@@ -142,10 +151,4 @@ between runs.
   models in Ollama). Anything competing for CPU skews the latency numbers.
 - Do not restart Docker or Ollama.
 - If the machine sleeps, the run is ruined: set sleep to Never and plug in
-  power before starting (`powercfg /change standby-timeout-ac 0`).
-
-## 11. After each model
-
-Commit and push `logs/requests.jsonl` so the SUT log is kept alongside the
-`.jtl` files from the JMeter machine. Every reported number must reconcile
-with these two sources.
+  power before starting (`powercfg /change standby-timeout-ac 0`). Disable the screensaver.
