@@ -1,0 +1,334 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261006232036
+Username: DESKTOP-8AEB6T7\admin
+RunAs User: DESKTOP-8AEB6T7\admin
+Configuration Name: 
+Machine: DESKTOP-8AEB6T7 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command $__claudeCodeScript = $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT; $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT = $null; Invoke-Expression -Command $__claudeCodeScript
+Process ID: 21856
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== Phase 4 : qwen2.5:7b as qwen7b-15m, runs 1..3, 900 s each, started 2026-10-06T23:20:36 ===
+[qwen7b-15m-run1] resetting SUT for qwen2.5:7b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+docker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [3/5] COPY requirements.txt .
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:879d5c64cf288f7108443e85cd30260e550477a4522c913f7e30f9678a4b478a done
+#11 exporting manifest list sha256:5b9eac0c42ae5cb294dd14b33b9327d87766cf005c977380a4ee876b0a73f1b4 done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=qwen2.5:7b total=0 2026-10-06T23:20:43
+[qwen7b-15m-run1] warming up model...
+[qwen7b-15m-run1] starting 2026-10-06T23:20:58 for 900 s
+summary =     19 in 00:14:58 =    0.0/s Avg:   945 Min:     7 Max:  4327 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 6 23:36:00 SGT (1791300960772)
+... end of run
+[qwen7b-15m-run1] finished 2026-10-06T23:36:02
+GET /search    n=12   err=0   (0.0%)  p50=9ms p95=24ms p99=24ms
+POST /tickets  n=6    err=0   (0.0%)  p50=2115ms p95=4327ms p99=4327ms
+GET /stats     n=1    err=0   (0.0%)  p50=9ms p95=9ms p99=9ms
+
+[qwen7b-15m-run1] JMeter requests: 19   SUT log lines for this run id: 19
+[qwen7b-15m-run1] cooling down 300 s
+
+[qwen7b-15m-run2] resetting SUT for qwen2.5:7b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25hdocker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:592f63f61d40439a9b4244049e50d98222bddc25cf0f6e6f2550fd7da581c0e6 0.0s done
+#11 exporting manifest list sha256:df1306a1c466553afdf590042cf4664084b939df4f7002d3776784eaa8158fe8 done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=qwen2.5:7b total=0 2026-10-06T23:41:09
+[qwen7b-15m-run2] warming up model...
+[qwen7b-15m-run2] starting 2026-10-06T23:41:20 for 900 s
+summary =     19 in 00:15:01 =    0.0/s Avg:   939 Min:     8 Max:  4506 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 6 23:56:22 SGT (1791302182458)
+... end of run
+[qwen7b-15m-run2] finished 2026-10-06T23:56:23
+GET /search    n=12   err=0   (0.0%)  p50=9ms p95=29ms p99=29ms
+POST /tickets  n=6    err=0   (0.0%)  p50=2144ms p95=4506ms p99=4506ms
+GET /stats     n=1    err=0   (0.0%)  p50=28ms p95=28ms p99=28ms
+
+[qwen7b-15m-run2] JMeter requests: 19   SUT log lines for this run id: 19
+[qwen7b-15m-run2] cooling down 300 s
+**********************
+Windows PowerShell transcript start
+Start time: 20261007011335
+Username: DESKTOP-8AEB6T7\admin
+RunAs User: DESKTOP-8AEB6T7\admin
+Configuration Name: 
+Machine: DESKTOP-8AEB6T7 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command $__claudeCodeScript = $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT; $env:CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT = $null; Invoke-Expression -Command $__claudeCodeScript
+Process ID: 2072
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== Phase 4 : qwen2.5:7b as qwen7b-15m, 23 tickets/hr, 46 searches/hr, runs 3..3, 900 s each, started 2026-10-07T01:13:35 ===
+[qwen7b-15m-run3] resetting SUT for qwen2.5:7b over SSH...
+docker.exe :  Container ict3113-p1-1-a1-triage-1 Stopping
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:39 char:1
++ & $Docker compose down -v 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Container ict3...age-1 Stopping :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ Container ict3113-p1-1-a1-triage-1 Stopped
+ Container ict3113-p1-1-a1-triage-1 Removing
+ Container ict3113-p1-1-a1-triage-1 Removed
+ Volume ict3113-p1-1-a1_tickets-data Removing
+ Network ict3113-p1-1-a1_default Removing
+ Volume ict3113-p1-1-a1_tickets-data Removed
+ Network ict3113-p1-1-a1_default Removed
+docker.exe :  Image ict3113-p1-1-a1-triage Building
+At C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test\reset_sut.ps1:54 char:1
++ & $Docker compose up -d --build 2>&1 | Out-Host
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Image ict3113-p1-1-a1-triage Building :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 482B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 82B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 235B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d
+#6 resolve docker.io/library/python:3.12-slim@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY classifier.py eval_config.json prompt_template.md app.py storage.py request_log.py ./
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:33bacf03bf4de01c6a198ce9592dbd25bb2b0badcc087501d9439e6733c5c9b1 done
+#11 exporting config sha256:0d7da748ffa9f05ece3c4fa430b8cf7cafcbbe128d19bb0dd6d3f41afd811d5e done
+#11 exporting attestation manifest sha256:a852d5ead87165278a2a0926ccb29a90f84cf59358ffc0383861ed5d3485b4f5 done
+#11 exporting manifest list sha256:c846a365ba0b7e03e703cb86690e4c078d85add1723ab4434ec8c5722b6ad4e9 done
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest
+#11 naming to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 unpacking to docker.io/library/ict3113-p1-1-a1-triage:latest done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image ict3113-p1-1-a1-triage Built
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Volume ict3113-p1-1-a1_tickets-data Creating
+ Network ict3113-p1-1-a1_default Creating
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Volume ict3113-p1-1-a1_tickets-data Created
+ Network ict3113-p1-1-a1_default Created
+ Network ict3113-p1-1-a1_default Created
+ Container ict3113-p1-1-a1-triage-1 Creating
+ Container ict3113-p1-1-a1-triage-1 Created
+ Container ict3113-p1-1-a1-triage-1 Starting
+ Container ict3113-p1-1-a1-triage-1 Started
+RESET OK model=qwen2.5:7b total=0 2026-10-07T01:13:41
+[qwen7b-15m-run3] warming up model...
+[qwen7b-15m-run3] starting 2026-10-07T01:13:53 for 900 s
+summary =     19 in 00:14:42 =    0.0/s Avg:   939 Min:     7 Max:  4420 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Oct 7 01:28:36 SGT (1791307716584)
+... end of run
+[qwen7b-15m-run3] finished 2026-10-07T01:28:37
+GET /search    n=12   err=0   (0.0%)  p50=9ms p95=26ms p99=26ms
+POST /tickets  n=6    err=0   (0.0%)  p50=2068ms p95=4420ms p99=4420ms
+GET /stats     n=1    err=0   (0.0%)  p50=8ms p95=8ms p99=8ms
+
+[qwen7b-15m-run3] JMeter requests: 19   SUT log lines for this run id: 19
+
+Done: qwen7b-15m x 1. Check results before switching model.
+=== Phase 4 qwen7b-15m runs finished 2026-10-07T01:28:38 ===
+
+=== Phase 4 qwen7b-15m complete. Summary: results\qwen7b-15m_summary.md ===
+**********************
+Windows PowerShell transcript end
+End time: 20261007012838
+**********************
