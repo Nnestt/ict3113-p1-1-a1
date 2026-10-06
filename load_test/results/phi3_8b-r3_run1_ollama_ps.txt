@@ -1,0 +1,2 @@
+NAME           ID              SIZE      PROCESSOR    CONTEXT    UNTIL               
+phi3.5:3.8b    61819fb370a3    3.9 GB    100% CPU     4096       29 minutes from now    
