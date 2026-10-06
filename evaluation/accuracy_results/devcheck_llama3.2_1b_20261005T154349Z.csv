@@ -1,0 +1,4 @@
+run_id,row,gold_label,predicted,correct,http_status,request_id,ticket_id,model,model_digest,client_ms,error
+devcheck_llama3.2_1b_20261005T154349Z,1000,Money transfer or service,Debt collection,False,200,devcheck_llama3.2_1b_20261005T154349Z_r1000,1,llama3.2:1b,baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878,1465.3,
+devcheck_llama3.2_1b_20261005T154349Z,1001,Money transfer or service,Bank account or service,False,200,devcheck_llama3.2_1b_20261005T154349Z_r1001,2,llama3.2:1b,baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878,532.0,
+devcheck_llama3.2_1b_20261005T154349Z,1002,Debt collection,Credit reporting,False,200,devcheck_llama3.2_1b_20261005T154349Z_r1002,3,llama3.2:1b,baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878,1964.5,

@@ -1,0 +1,31 @@
+{
+  "run_id": "devcheck_llama3.2_1b_20261005T154349Z",
+  "model": "llama3.2:1b",
+  "model_digest": "baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878",
+  "dev_check": true,
+  "started_utc": "2026-10-05T15:43:49+00:00",
+  "finished_utc": "2026-10-05T15:44:08+00:00",
+  "git_head": "df879e6",
+  "freeze_commit": "c51e33c",
+  "ollama_version": "0.35.0",
+  "size_vram": 0,
+  "tickets": 3,
+  "correct": 0,
+  "http_errors": 0,
+  "invalid": 0,
+  "stats_after": {
+    "total": 3,
+    "by_category": {
+      "Credit reporting": 1,
+      "Debt collection": 1,
+      "Mortgage": 0,
+      "Credit card": 0,
+      "Bank account or service": 1,
+      "Consumer loan": 0,
+      "Money transfer or service": 0,
+      "INVALID": 0
+    }
+  },
+  "log_lines_for_run": 3,
+  "reconciliation_problems": []
+}

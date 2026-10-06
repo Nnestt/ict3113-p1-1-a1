@@ -1,0 +1,5 @@
+model,model_digest,run_id,correct,total,accuracy,ci_low,ci_high,invalid,errors,R5_pass,R6_pass,worst_category,worst_rate
+llama3.2:1b,baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878,acc_llama3.2_1b_20261005T160744Z,38,175,0.2171,0.1625,0.284,2,0,False,False,Mortgage,0.0
+qwen2.5:1.5b,65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b,acc_qwen2.5_1.5b_20261005T161551Z,92,175,0.5257,0.452,0.5983,0,0,False,False,Bank account or service,0.2424
+phi3.5:3.8b,61819fb370a3c1a9be6694869331e5f85f867a079e9271d66cb223acb81d04ba,acc_phi3.5_3.8b_20261005T162247Z,133,175,0.76,0.6916,0.8173,0,0,False,False,Credit card,0.619
+qwen2.5:7b,845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e,acc_qwen2.5_7b_20261005T163749Z,135,175,0.7714,0.7038,0.8274,0,0,False,False,Money transfer or service,0.5625
