@@ -1,0 +1,986 @@
+2026-10-07 03:34:39,124 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Loading user properties from: C:\tools\apache-jmeter-5.6.3\bin\user.properties
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Loading system properties from: C:\tools\apache-jmeter-5.6.3\bin\system.properties
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: HOST=192.168.68.69
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: PORT=8000
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: RUN_ID=qwen7b-stress-run1
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: START_PER_MIN=0
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: END_PER_MIN=24
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: RAMP_MIN=15
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: DRAIN_MIN=10
+2026-10-07 03:34:39,135 INFO o.a.j.JMeter: Setting JMeter property: SEARCH_PER_MIN=4
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: Version 5.6.3
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: java.version=17.0.20.1
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: os.name=Windows 11
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: os.arch=amd64
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: os.version=10.0
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: file.encoding=Cp1252
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: java.awt.headless=true
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-10-07 03:34:39,139 INFO o.a.j.JMeter: Available Processors =12
+2026-10-07 03:34:39,144 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-10-07 03:34:39,144 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-10-07 03:34:39,144 INFO o.a.j.JMeter: JMeterHome=C:\tools\apache-jmeter-5.6.3
+2026-10-07 03:34:39,144 INFO o.a.j.JMeter: user.dir  =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-07 03:34:39,144 INFO o.a.j.JMeter: PWD       =C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test
+2026-10-07 03:34:39,145 INFO o.a.j.JMeter: IP: 192.168.68.64 Name: DESKTOP-8AEB6T7 FullName: host.docker.internal
+2026-10-07 03:34:39,153 INFO o.a.j.s.FileServer: Default base='C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test'
+2026-10-07 03:34:39,154 INFO o.a.j.s.FileServer: Set new base='C:\Users\admin\Documents\GitHub\ict3113-p1-1-a1\load_test'
+2026-10-07 03:34:39,248 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-10-07 03:34:39,261 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-10-07 03:34:39,263 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-10-07 03:34:39,265 INFO o.a.j.s.SaveService: Loading file: stress_ramp.jmx
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-10-07 03:34:39,305 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-10-07 03:34:39,311 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-10-07 03:34:39,320 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-10-07 03:34:39,320 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-10-07 03:34:39,320 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-10-07 03:34:39,323 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-10-07 03:34:39,323 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-10-07 03:34:39,456 INFO o.a.j.JMeter: Running test (1791315279456)
+2026-10-07 03:34:39,467 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Tickets ramp (POST /tickets)
+2026-10-07 03:34:39,467 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Tickets ramp (POST /tickets).
+2026-10-07 03:34:39,468 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-10-07 03:34:39,468 INFO o.a.j.t.o.OpenModelThreadGroup: Starting OpenModelThreadGroup#1 with schedule rate(0/min) random_arrivals(15 min) rate(24/min) pause(10 min)
+2026-10-07 03:34:39,520 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : Search constant (GET /search)
+2026-10-07 03:34:39,520 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Search constant (GET /search).
+2026-10-07 03:34:39,520 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-10-07 03:34:39,520 INFO o.a.j.t.o.OpenModelThreadGroup: Starting OpenModelThreadGroup#2 with schedule rate(4/min) random_arrivals(15 min) random_arrivals(10 min)
+2026-10-07 03:34:39,520 INFO o.a.j.t.o.OpenModelThreadGroup: Thread starting init
+2026-10-07 03:34:39,521 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-10-07 03:34:39,521 INFO o.a.j.t.o.OpenModelThreadGroup: Thread starting init
+2026-10-07 03:34:39,523 INFO o.a.j.t.o.PoissonArrivalsRamp: Generating 180 events, beginRate = 0.0 / sec, endRate = 0.4 / sec, duration = 900.0 sec
+2026-10-07 03:34:39,523 INFO o.a.j.t.o.PoissonArrivalsRamp: Generating 60 events, beginRate = 0.06666666666666667 / sec, endRate = 0.06666666666666667 / sec, duration = 900.0 sec
+2026-10-07 03:35:06,789 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-1
+2026-10-07 03:35:06,790 INFO o.a.j.s.FileServer: Stored: data/search_terms.csv
+2026-10-07 03:35:06,803 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = DESKTOP-8AEB6T7
+2026-10-07 03:35:06,805 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-10-07 03:35:06,806 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-10-07 03:35:06,806 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-10-07 03:35:06,806 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-10-07 03:35:06,806 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-10-07 03:35:06,888 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-1
+2026-10-07 03:35:06,888 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-1
+2026-10-07 03:35:08,811 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-2
+2026-10-07 03:35:08,824 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-2
+2026-10-07 03:35:08,824 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-2
+2026-10-07 03:35:23,793 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-3
+2026-10-07 03:35:23,805 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-3
+2026-10-07 03:35:23,805 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-3
+2026-10-07 03:35:24,886 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-4
+2026-10-07 03:35:24,898 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-4
+2026-10-07 03:35:24,898 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-4
+2026-10-07 03:35:30,395 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-5
+2026-10-07 03:35:30,409 INFO o.a.j.r.Summariser: summary +      5 in 00:00:51 =    0.1/s Avg:    14 Min:    11 Max:    23 Err:     0 (0.00%) Active: 1 Started: 5 Finished: 4
+2026-10-07 03:35:30,409 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-5
+2026-10-07 03:35:30,409 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-5
+2026-10-07 03:35:31,457 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-6
+2026-10-07 03:35:31,468 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-6
+2026-10-07 03:35:31,468 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-6
+2026-10-07 03:35:43,122 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-1
+2026-10-07 03:35:43,122 INFO o.a.j.s.FileServer: Stored: data/dev_tickets.csv
+2026-10-07 03:35:46,638 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-7
+2026-10-07 03:35:46,657 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-7
+2026-10-07 03:35:46,657 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-7
+2026-10-07 03:35:46,858 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-1
+2026-10-07 03:35:46,858 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-1
+2026-10-07 03:35:49,714 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-2
+2026-10-07 03:35:51,219 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-2
+2026-10-07 03:35:51,220 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-2
+2026-10-07 03:36:03,561 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-3
+2026-10-07 03:36:06,908 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-8
+2026-10-07 03:36:06,932 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-8
+2026-10-07 03:36:06,933 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-8
+2026-10-07 03:36:07,721 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-3
+2026-10-07 03:36:07,721 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-3
+2026-10-07 03:36:12,354 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-4
+2026-10-07 03:36:14,558 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-4
+2026-10-07 03:36:14,558 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-4
+2026-10-07 03:36:16,140 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-9
+2026-10-07 03:36:16,155 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-9
+2026-10-07 03:36:16,155 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-9
+2026-10-07 03:36:30,676 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-10
+2026-10-07 03:36:30,687 INFO o.a.j.r.Summariser: summary +      9 in 00:01:00 =    0.1/s Avg:  1263 Min:    10 Max:  4158 Err:     0 (0.00%) Active: 1 Started: 14 Finished: 13
+2026-10-07 03:36:30,688 INFO o.a.j.r.Summariser: summary =     14 in 00:01:51 =    0.1/s Avg:   817 Min:    10 Max:  4158 Err:     0 (0.00%)
+2026-10-07 03:36:30,688 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-10
+2026-10-07 03:36:30,688 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-10
+2026-10-07 03:36:37,156 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-11
+2026-10-07 03:36:37,168 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-11
+2026-10-07 03:36:37,168 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-11
+2026-10-07 03:36:47,902 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-12
+2026-10-07 03:36:47,915 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-12
+2026-10-07 03:36:47,915 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-12
+2026-10-07 03:36:57,190 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-13
+2026-10-07 03:36:57,203 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-13
+2026-10-07 03:36:57,203 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-13
+2026-10-07 03:36:59,978 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-14
+2026-10-07 03:36:59,989 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-14
+2026-10-07 03:36:59,989 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-14
+2026-10-07 03:37:00,115 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-5
+2026-10-07 03:37:04,395 INFO o.a.j.r.Summariser: summary +      5 in 00:00:34 =    0.1/s Avg:   864 Min:    10 Max:  4278 Err:     0 (0.00%) Active: 1 Started: 19 Finished: 18
+2026-10-07 03:37:04,395 INFO o.a.j.r.Summariser: summary =     19 in 00:02:25 =    0.1/s Avg:   829 Min:    10 Max:  4278 Err:     0 (0.00%)
+2026-10-07 03:37:04,395 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-5
+2026-10-07 03:37:04,395 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-5
+2026-10-07 03:37:04,447 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-15
+2026-10-07 03:37:04,460 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-15
+2026-10-07 03:37:04,460 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-15
+2026-10-07 03:37:10,245 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-6
+2026-10-07 03:37:11,223 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-16
+2026-10-07 03:37:11,246 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-16
+2026-10-07 03:37:11,246 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-16
+2026-10-07 03:37:11,950 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-6
+2026-10-07 03:37:11,950 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-6
+2026-10-07 03:37:15,386 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-7
+2026-10-07 03:37:16,228 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-17
+2026-10-07 03:37:16,252 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-17
+2026-10-07 03:37:16,252 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-17
+2026-10-07 03:37:19,806 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-8
+2026-10-07 03:37:22,697 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-7
+2026-10-07 03:37:22,697 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-7
+2026-10-07 03:37:30,485 INFO o.a.j.r.Summariser: summary +      6 in 00:00:26 =    0.2/s Avg:  3291 Min:    13 Max: 10678 Err:     0 (0.00%) Active: 1 Started: 25 Finished: 24
+2026-10-07 03:37:30,485 INFO o.a.j.r.Summariser: summary =     25 in 00:02:51 =    0.1/s Avg:  1420 Min:    10 Max: 10678 Err:     0 (0.00%)
+2026-10-07 03:37:30,485 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-8
+2026-10-07 03:37:30,485 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-8
+2026-10-07 03:37:35,517 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-9
+2026-10-07 03:37:38,569 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-9
+2026-10-07 03:37:38,570 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-9
+2026-10-07 03:37:44,160 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-10
+2026-10-07 03:37:47,469 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-11
+2026-10-07 03:37:49,068 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-10
+2026-10-07 03:37:49,068 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-10
+2026-10-07 03:37:55,022 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-11
+2026-10-07 03:37:55,022 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-11
+2026-10-07 03:38:03,862 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-18
+2026-10-07 03:38:03,874 INFO o.a.j.r.Summariser: summary +      4 in 00:00:33 =    0.1/s Avg:  3880 Min:    10 Max:  7551 Err:     0 (0.00%) Active: 1 Started: 29 Finished: 28
+2026-10-07 03:38:03,874 INFO o.a.j.r.Summariser: summary =     29 in 00:03:24 =    0.1/s Avg:  1759 Min:    10 Max: 10678 Err:     0 (0.00%)
+2026-10-07 03:38:03,874 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-18
+2026-10-07 03:38:03,874 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-18
+2026-10-07 03:38:04,665 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-19
+2026-10-07 03:38:04,677 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-19
+2026-10-07 03:38:04,677 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-19
+2026-10-07 03:38:05,127 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-20
+2026-10-07 03:38:05,140 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-20
+2026-10-07 03:38:05,141 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-20
+2026-10-07 03:38:08,685 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-21
+2026-10-07 03:38:08,699 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-21
+2026-10-07 03:38:08,699 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-21
+2026-10-07 03:38:22,179 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-22
+2026-10-07 03:38:22,191 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-22
+2026-10-07 03:38:22,191 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-22
+2026-10-07 03:38:23,244 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-12
+2026-10-07 03:38:24,303 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-13
+2026-10-07 03:38:26,030 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-12
+2026-10-07 03:38:26,030 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-12
+2026-10-07 03:38:27,125 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-23
+2026-10-07 03:38:27,141 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-23
+2026-10-07 03:38:27,141 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-23
+2026-10-07 03:38:27,804 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-13
+2026-10-07 03:38:27,804 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-13
+2026-10-07 03:38:39,465 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-24
+2026-10-07 03:38:39,492 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-24
+2026-10-07 03:38:39,492 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-24
+2026-10-07 03:38:42,534 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-14
+2026-10-07 03:38:44,132 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-14
+2026-10-07 03:38:44,132 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-14
+2026-10-07 03:38:44,229 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-15
+2026-10-07 03:38:46,861 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-15
+2026-10-07 03:38:46,862 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-15
+2026-10-07 03:39:23,573 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-16
+2026-10-07 03:39:26,721 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-16
+2026-10-07 03:39:26,721 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-16
+2026-10-07 03:39:38,189 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-17
+2026-10-07 03:39:38,482 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-18
+2026-10-07 03:39:41,018 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-17
+2026-10-07 03:39:41,019 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-17
+2026-10-07 03:39:43,192 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-18
+2026-10-07 03:39:43,192 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-18
+2026-10-07 03:39:45,808 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-19
+2026-10-07 03:39:49,372 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-19
+2026-10-07 03:39:49,372 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-19
+2026-10-07 03:39:50,086 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-25
+2026-10-07 03:39:50,111 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-25
+2026-10-07 03:39:50,111 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-25
+2026-10-07 03:39:50,884 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-20
+2026-10-07 03:39:54,114 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-20
+2026-10-07 03:39:54,114 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-20
+2026-10-07 03:39:55,824 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-21
+2026-10-07 03:39:56,473 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-26
+2026-10-07 03:39:56,499 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-26
+2026-10-07 03:39:56,499 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-26
+2026-10-07 03:40:03,253 INFO o.a.j.r.Summariser: summary +     18 in 00:01:59 =    0.2/s Avg:  1975 Min:    11 Max:  7428 Err:     0 (0.00%) Active: 1 Started: 47 Finished: 46
+2026-10-07 03:40:03,253 INFO o.a.j.r.Summariser: summary =     47 in 00:05:24 =    0.1/s Avg:  1842 Min:    10 Max: 10678 Err:     0 (0.00%)
+2026-10-07 03:40:03,253 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-21
+2026-10-07 03:40:03,253 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-21
+2026-10-07 03:40:05,278 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-22
+2026-10-07 03:40:14,784 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-22
+2026-10-07 03:40:14,784 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-22
+2026-10-07 03:40:15,785 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-23
+2026-10-07 03:40:18,494 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-24
+2026-10-07 03:40:26,736 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-23
+2026-10-07 03:40:26,737 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-23
+2026-10-07 03:40:30,229 INFO o.a.j.r.Summariser: summary +      3 in 00:00:27 =    0.1/s Avg: 10730 Min:  9506 Max: 11733 Err:     0 (0.00%) Active: 1 Started: 50 Finished: 49
+2026-10-07 03:40:30,229 INFO o.a.j.r.Summariser: summary =     50 in 00:05:51 =    0.1/s Avg:  2375 Min:    10 Max: 11733 Err:     0 (0.00%)
+2026-10-07 03:40:30,229 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-24
+2026-10-07 03:40:30,229 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-24
+2026-10-07 03:40:31,644 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-25
+2026-10-07 03:40:34,264 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-25
+2026-10-07 03:40:34,264 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-25
+2026-10-07 03:40:35,643 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-26
+2026-10-07 03:40:36,646 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-27
+2026-10-07 03:40:37,997 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-26
+2026-10-07 03:40:37,997 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-26
+2026-10-07 03:40:40,495 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-28
+2026-10-07 03:40:42,796 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-29
+2026-10-07 03:40:45,309 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-27
+2026-10-07 03:40:45,309 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-27
+2026-10-07 03:40:46,778 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-27
+2026-10-07 03:40:46,798 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-27
+2026-10-07 03:40:46,798 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-27
+2026-10-07 03:40:53,282 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-30
+2026-10-07 03:40:57,006 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-28
+2026-10-07 03:40:57,006 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-28
+2026-10-07 03:40:58,225 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-31
+2026-10-07 03:40:59,090 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-32
+2026-10-07 03:40:59,641 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-28
+2026-10-07 03:40:59,668 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-28
+2026-10-07 03:40:59,668 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-28
+2026-10-07 03:41:00,839 INFO o.a.j.r.Summariser: summary +      7 in 00:00:31 =    0.2/s Avg:  6889 Min:    19 Max: 18041 Err:     0 (0.00%) Active: 4 Started: 60 Finished: 56
+2026-10-07 03:41:00,839 INFO o.a.j.r.Summariser: summary =     57 in 00:06:21 =    0.1/s Avg:  2930 Min:    10 Max: 18041 Err:     0 (0.00%)
+2026-10-07 03:41:00,839 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-29
+2026-10-07 03:41:00,839 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-29
+2026-10-07 03:41:06,119 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-33
+2026-10-07 03:41:09,751 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-30
+2026-10-07 03:41:09,751 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-30
+2026-10-07 03:41:13,997 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-31
+2026-10-07 03:41:13,997 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-31
+2026-10-07 03:41:18,471 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-34
+2026-10-07 03:41:20,895 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-32
+2026-10-07 03:41:20,896 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-32
+2026-10-07 03:41:23,707 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-33
+2026-10-07 03:41:23,707 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-33
+2026-10-07 03:41:26,397 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-34
+2026-10-07 03:41:26,397 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-34
+2026-10-07 03:41:26,452 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-35
+2026-10-07 03:41:26,729 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-36
+2026-10-07 03:41:28,537 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-37
+2026-10-07 03:41:29,506 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-38
+2026-10-07 03:41:29,763 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-39
+2026-10-07 03:41:31,255 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-40
+2026-10-07 03:41:31,428 INFO o.a.j.r.Summariser: summary +      6 in 00:00:31 =    0.2/s Avg: 14088 Min:  4975 Max: 21805 Err:     0 (0.00%) Active: 6 Started: 68 Finished: 62
+2026-10-07 03:41:31,428 INFO o.a.j.r.Summariser: summary =     63 in 00:06:52 =    0.2/s Avg:  3992 Min:    10 Max: 21805 Err:     0 (0.00%)
+2026-10-07 03:41:31,428 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-35
+2026-10-07 03:41:31,428 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-35
+2026-10-07 03:41:33,602 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-29
+2026-10-07 03:41:33,623 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-29
+2026-10-07 03:41:33,623 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-29
+2026-10-07 03:41:35,211 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-36
+2026-10-07 03:41:35,211 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-36
+2026-10-07 03:41:39,154 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-41
+2026-10-07 03:41:40,480 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-30
+2026-10-07 03:41:40,505 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-30
+2026-10-07 03:41:40,505 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-30
+2026-10-07 03:41:43,236 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-37
+2026-10-07 03:41:43,236 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-37
+2026-10-07 03:41:46,252 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-42
+2026-10-07 03:41:47,709 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-31
+2026-10-07 03:41:47,740 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-31
+2026-10-07 03:41:47,740 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-31
+2026-10-07 03:41:51,098 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-38
+2026-10-07 03:41:51,098 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-38
+2026-10-07 03:41:53,897 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-43
+2026-10-07 03:41:57,544 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-39
+2026-10-07 03:41:57,544 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-39
+2026-10-07 03:42:04,627 INFO o.a.j.r.Summariser: summary +      8 in 00:00:33 =    0.2/s Avg: 13249 Min:    20 Max: 33370 Err:     0 (0.00%) Active: 4 Started: 74 Finished: 70
+2026-10-07 03:42:04,627 INFO o.a.j.r.Summariser: summary =     71 in 00:07:25 =    0.2/s Avg:  5035 Min:    10 Max: 33370 Err:     0 (0.00%)
+2026-10-07 03:42:04,627 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-40
+2026-10-07 03:42:04,627 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-40
+2026-10-07 03:42:05,189 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-44
+2026-10-07 03:42:06,147 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-45
+2026-10-07 03:42:06,462 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-32
+2026-10-07 03:42:06,479 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-32
+2026-10-07 03:42:06,479 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-32
+2026-10-07 03:42:07,961 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-46
+2026-10-07 03:42:08,324 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-41
+2026-10-07 03:42:08,324 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-41
+2026-10-07 03:42:13,719 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-47
+2026-10-07 03:42:16,644 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-42
+2026-10-07 03:42:16,644 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-42
+2026-10-07 03:42:22,098 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-43
+2026-10-07 03:42:22,098 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-43
+2026-10-07 03:42:28,094 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-48
+2026-10-07 03:42:30,308 INFO o.a.j.r.Summariser: summary +      5 in 00:00:26 =    0.2/s Avg: 22579 Min:    17 Max: 30391 Err:     0 (0.00%) Active: 5 Started: 80 Finished: 75
+2026-10-07 03:42:30,308 INFO o.a.j.r.Summariser: summary =     76 in 00:07:51 =    0.2/s Avg:  6189 Min:    10 Max: 33370 Err:     0 (0.00%)
+2026-10-07 03:42:30,308 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-44
+2026-10-07 03:42:30,308 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-44
+2026-10-07 03:42:34,496 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-33
+2026-10-07 03:42:34,523 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-33
+2026-10-07 03:42:34,523 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-33
+2026-10-07 03:42:35,558 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-49
+2026-10-07 03:42:37,172 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-45
+2026-10-07 03:42:37,172 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-45
+2026-10-07 03:42:42,396 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-50
+2026-10-07 03:42:45,086 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-46
+2026-10-07 03:42:45,086 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-46
+2026-10-07 03:42:45,734 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-51
+2026-10-07 03:42:47,365 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-52
+2026-10-07 03:42:51,272 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-47
+2026-10-07 03:42:51,272 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-47
+2026-10-07 03:42:55,449 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-48
+2026-10-07 03:42:55,449 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-48
+2026-10-07 03:42:57,572 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-53
+2026-10-07 03:42:58,288 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-34
+2026-10-07 03:42:58,320 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-34
+2026-10-07 03:42:58,320 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-34
+2026-10-07 03:42:58,877 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-54
+2026-10-07 03:42:59,693 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-49
+2026-10-07 03:42:59,694 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-49
+2026-10-07 03:43:04,784 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-55
+2026-10-07 03:43:05,075 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-35
+2026-10-07 03:43:05,104 INFO o.a.j.r.Summariser: summary +      8 in 00:00:35 =    0.2/s Avg: 19659 Min:    26 Max: 37551 Err:     0 (0.00%) Active: 7 Started: 90 Finished: 83
+2026-10-07 03:43:05,104 INFO o.a.j.r.Summariser: summary =     84 in 00:08:26 =    0.2/s Avg:  7472 Min:    10 Max: 37551 Err:     0 (0.00%)
+2026-10-07 03:43:05,104 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-35
+2026-10-07 03:43:05,104 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-35
+2026-10-07 03:43:05,751 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-56
+2026-10-07 03:43:06,391 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-36
+2026-10-07 03:43:06,429 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-36
+2026-10-07 03:43:06,429 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-36
+2026-10-07 03:43:08,175 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-50
+2026-10-07 03:43:08,175 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-50
+2026-10-07 03:43:10,559 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-57
+2026-10-07 03:43:12,246 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-51
+2026-10-07 03:43:12,246 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-51
+2026-10-07 03:43:18,398 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-52
+2026-10-07 03:43:18,398 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-52
+2026-10-07 03:43:18,459 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-58
+2026-10-07 03:43:19,152 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-59
+2026-10-07 03:43:22,347 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-60
+2026-10-07 03:43:23,367 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-37
+2026-10-07 03:43:23,391 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-37
+2026-10-07 03:43:23,391 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-37
+2026-10-07 03:43:25,612 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-53
+2026-10-07 03:43:25,612 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-53
+2026-10-07 03:43:29,879 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-61
+2026-10-07 03:43:30,275 INFO o.a.j.r.Summariser: summary +      7 in 00:00:25 =    0.3/s Avg: 20402 Min:    24 Max: 31397 Err:     0 (0.00%) Active: 8 Started: 98 Finished: 90
+2026-10-07 03:43:30,275 INFO o.a.j.r.Summariser: summary =     91 in 00:08:51 =    0.2/s Avg:  8467 Min:    10 Max: 37551 Err:     0 (0.00%)
+2026-10-07 03:43:30,275 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-54
+2026-10-07 03:43:30,275 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-54
+2026-10-07 03:43:34,671 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-62
+2026-10-07 03:43:36,581 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-55
+2026-10-07 03:43:36,581 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-55
+2026-10-07 03:43:43,288 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-63
+2026-10-07 03:43:46,132 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-64
+2026-10-07 03:43:46,430 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-56
+2026-10-07 03:43:46,431 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-56
+2026-10-07 03:43:47,327 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-38
+2026-10-07 03:43:47,351 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-38
+2026-10-07 03:43:47,351 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-38
+2026-10-07 03:43:50,199 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-65
+2026-10-07 03:43:51,050 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-66
+2026-10-07 03:43:52,519 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-57
+2026-10-07 03:43:52,519 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-57
+2026-10-07 03:43:52,805 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-67
+2026-10-07 03:43:53,113 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-68
+2026-10-07 03:43:54,298 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-39
+2026-10-07 03:43:54,331 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-39
+2026-10-07 03:43:54,331 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-39
+2026-10-07 03:44:00,096 INFO o.a.j.r.Summariser: summary +      6 in 00:00:30 =    0.2/s Avg: 26020 Min:    23 Max: 41959 Err:     0 (0.00%) Active: 11 Started: 107 Finished: 96
+2026-10-07 03:44:00,097 INFO o.a.j.r.Summariser: summary =     97 in 00:09:21 =    0.2/s Avg:  9553 Min:    10 Max: 41959 Err:     0 (0.00%)
+2026-10-07 03:44:00,097 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-58
+2026-10-07 03:44:00,097 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-58
+2026-10-07 03:44:04,619 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-69
+2026-10-07 03:44:06,520 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-70
+2026-10-07 03:44:06,689 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-59
+2026-10-07 03:44:06,689 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-59
+2026-10-07 03:44:08,929 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-71
+2026-10-07 03:44:09,917 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-40
+2026-10-07 03:44:09,945 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-40
+2026-10-07 03:44:09,945 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-40
+2026-10-07 03:44:14,011 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-60
+2026-10-07 03:44:14,012 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-60
+2026-10-07 03:44:15,659 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-72
+2026-10-07 03:44:23,714 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-61
+2026-10-07 03:44:23,714 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-61
+2026-10-07 03:44:24,829 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-73
+2026-10-07 03:44:27,046 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-74
+2026-10-07 03:44:27,912 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-75
+2026-10-07 03:44:28,657 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-76
+2026-10-07 03:44:29,353 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-62
+2026-10-07 03:44:29,353 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-62
+2026-10-07 03:44:30,867 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-77
+2026-10-07 03:44:33,887 INFO o.a.j.r.Summariser: summary +      6 in 00:00:34 =    0.2/s Avg: 43056 Min:    27 Max: 54680 Err:     0 (0.00%) Active: 15 Started: 117 Finished: 102
+2026-10-07 03:44:33,887 INFO o.a.j.r.Summariser: summary =    103 in 00:09:54 =    0.2/s Avg: 11504 Min:    10 Max: 54680 Err:     0 (0.00%)
+2026-10-07 03:44:33,887 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-63
+2026-10-07 03:44:33,887 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-63
+2026-10-07 03:44:38,491 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-78
+2026-10-07 03:44:39,331 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-79
+2026-10-07 03:44:41,117 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-64
+2026-10-07 03:44:41,117 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-64
+2026-10-07 03:44:43,735 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-80
+2026-10-07 03:44:48,204 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-81
+2026-10-07 03:44:50,332 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-65
+2026-10-07 03:44:50,332 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-65
+2026-10-07 03:44:51,950 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-82
+2026-10-07 03:44:52,273 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-83
+2026-10-07 03:44:53,004 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-66
+2026-10-07 03:44:53,004 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-66
+2026-10-07 03:44:59,419 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-41
+2026-10-07 03:44:59,460 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-41
+2026-10-07 03:44:59,460 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-41
+2026-10-07 03:45:00,465 INFO o.a.j.r.Summariser: summary +      5 in 00:00:27 =    0.2/s Avg: 48953 Min:    40 Max: 67659 Err:     0 (0.00%) Active: 17 Started: 124 Finished: 107
+2026-10-07 03:45:00,465 INFO o.a.j.r.Summariser: summary =    108 in 00:10:21 =    0.2/s Avg: 13238 Min:    10 Max: 67659 Err:     0 (0.00%)
+2026-10-07 03:45:00,465 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-67
+2026-10-07 03:45:00,465 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-67
+2026-10-07 03:45:01,813 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-42
+2026-10-07 03:45:01,836 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-42
+2026-10-07 03:45:01,836 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-42
+2026-10-07 03:45:02,001 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-84
+2026-10-07 03:45:02,757 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-68
+2026-10-07 03:45:02,757 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-68
+2026-10-07 03:45:03,983 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-85
+2026-10-07 03:45:04,068 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-86
+2026-10-07 03:45:05,315 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-69
+2026-10-07 03:45:05,315 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-69
+2026-10-07 03:45:10,254 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-87
+2026-10-07 03:45:13,704 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-70
+2026-10-07 03:45:13,704 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-70
+2026-10-07 03:45:18,344 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-88
+2026-10-07 03:45:19,830 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-89
+2026-10-07 03:45:20,574 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-90
+2026-10-07 03:45:21,733 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-91
+2026-10-07 03:45:23,762 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-92
+2026-10-07 03:45:25,063 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-71
+2026-10-07 03:45:25,063 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-71
+2026-10-07 03:45:30,275 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-93
+2026-10-07 03:45:31,275 INFO o.a.j.r.Summariser: summary +      6 in 00:00:31 =    0.2/s Avg: 58215 Min:    22 Max: 76133 Err:     0 (0.00%) Active: 22 Started: 135 Finished: 113
+2026-10-07 03:45:31,276 INFO o.a.j.r.Summariser: summary =    114 in 00:10:52 =    0.2/s Avg: 15605 Min:    10 Max: 76133 Err:     0 (0.00%)
+2026-10-07 03:45:31,276 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-72
+2026-10-07 03:45:31,276 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-72
+2026-10-07 03:45:31,453 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-43
+2026-10-07 03:45:31,481 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-43
+2026-10-07 03:45:31,481 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-43
+2026-10-07 03:45:37,354 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-44
+2026-10-07 03:45:37,383 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-44
+2026-10-07 03:45:37,383 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-44
+2026-10-07 03:45:40,927 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-94
+2026-10-07 03:45:42,340 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-73
+2026-10-07 03:45:42,340 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-73
+2026-10-07 03:45:43,467 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-95
+2026-10-07 03:45:45,399 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-74
+2026-10-07 03:45:45,399 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-74
+2026-10-07 03:45:46,146 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-96
+2026-10-07 03:45:48,163 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-45
+2026-10-07 03:45:48,187 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-45
+2026-10-07 03:45:48,187 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-45
+2026-10-07 03:45:50,092 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-97
+2026-10-07 03:45:51,565 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-75
+2026-10-07 03:45:51,565 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-75
+2026-10-07 03:45:57,192 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-98
+2026-10-07 03:45:58,717 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-76
+2026-10-07 03:45:58,717 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-76
+2026-10-07 03:46:02,103 INFO o.a.j.r.Summariser: summary +      8 in 00:00:31 =    0.3/s Avg: 52610 Min:    23 Max: 91235 Err:     0 (0.00%) Active: 22 Started: 143 Finished: 121
+2026-10-07 03:46:02,103 INFO o.a.j.r.Summariser: summary =    122 in 00:11:23 =    0.2/s Avg: 18032 Min:    10 Max: 91235 Err:     0 (0.00%)
+2026-10-07 03:46:02,103 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-77
+2026-10-07 03:46:02,103 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-77
+2026-10-07 03:46:03,027 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-99
+2026-10-07 03:46:05,985 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-78
+2026-10-07 03:46:05,985 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-78
+2026-10-07 03:46:08,465 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-100
+2026-10-07 03:46:09,344 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-101
+2026-10-07 03:46:10,563 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-102
+2026-10-07 03:46:10,792 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-79
+2026-10-07 03:46:10,792 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-79
+2026-10-07 03:46:11,470 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-103
+2026-10-07 03:46:12,017 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-104
+2026-10-07 03:46:14,055 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-46
+2026-10-07 03:46:14,098 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-46
+2026-10-07 03:46:14,098 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-46
+2026-10-07 03:46:15,666 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-105
+2026-10-07 03:46:18,769 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-106
+2026-10-07 03:46:20,707 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-107
+2026-10-07 03:46:22,006 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-80
+2026-10-07 03:46:22,006 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-80
+2026-10-07 03:46:26,240 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-108
+2026-10-07 03:46:26,349 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-109
+2026-10-07 03:46:28,858 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-81
+2026-10-07 03:46:28,858 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-81
+2026-10-07 03:46:29,729 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-47
+2026-10-07 03:46:29,756 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-47
+2026-10-07 03:46:29,756 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-47
+2026-10-07 03:46:29,904 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-110
+2026-10-07 03:46:33,902 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-111
+2026-10-07 03:46:33,904 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-112
+2026-10-07 03:46:34,349 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-113
+2026-10-07 03:46:35,241 INFO o.a.j.r.Summariser: summary +      7 in 00:00:33 =    0.2/s Avg: 68747 Min:    26 Max: 103289 Err:     0 (0.00%) Active: 32 Started: 160 Finished: 128
+2026-10-07 03:46:35,241 INFO o.a.j.r.Summariser: summary =    129 in 00:11:56 =    0.2/s Avg: 20784 Min:    10 Max: 103289 Err:     0 (0.00%)
+2026-10-07 03:46:35,241 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-82
+2026-10-07 03:46:35,241 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-82
+2026-10-07 03:46:37,214 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-48
+2026-10-07 03:46:37,243 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-48
+2026-10-07 03:46:37,243 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-48
+2026-10-07 03:46:37,913 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-114
+2026-10-07 03:46:39,807 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-83
+2026-10-07 03:46:39,807 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-83
+2026-10-07 03:46:41,575 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-115
+2026-10-07 03:46:44,565 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-84
+2026-10-07 03:46:44,565 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-84
+2026-10-07 03:46:46,307 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-116
+2026-10-07 03:46:46,987 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-85
+2026-10-07 03:46:46,987 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-85
+2026-10-07 03:46:47,807 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-117
+2026-10-07 03:46:50,425 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-118
+2026-10-07 03:46:51,121 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-86
+2026-10-07 03:46:51,121 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-86
+2026-10-07 03:46:51,609 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-119
+2026-10-07 03:46:53,319 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-87
+2026-10-07 03:46:53,319 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-87
+2026-10-07 03:46:54,394 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-120
+2026-10-07 03:46:57,584 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-88
+2026-10-07 03:46:57,584 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-88
+2026-10-07 03:46:59,364 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-121
+2026-10-07 03:47:01,447 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-122
+2026-10-07 03:47:07,740 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-89
+2026-10-07 03:47:07,740 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-89
+2026-10-07 03:47:07,742 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-123
+2026-10-07 03:47:09,596 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-124
+2026-10-07 03:47:11,782 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-125
+2026-10-07 03:47:14,746 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-49
+2026-10-07 03:47:14,769 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-90
+2026-10-07 03:47:14,769 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-90
+2026-10-07 03:47:14,771 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-49
+2026-10-07 03:47:14,771 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-49
+2026-10-07 03:47:15,997 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-126
+2026-10-07 03:47:16,095 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-127
+2026-10-07 03:47:17,982 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-128
+2026-10-07 03:47:19,145 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-129
+2026-10-07 03:47:20,647 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-130
+2026-10-07 03:47:21,575 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-131
+2026-10-07 03:47:22,507 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-132
+2026-10-07 03:47:24,313 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-91
+2026-10-07 03:47:24,313 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-91
+2026-10-07 03:47:24,784 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-133
+2026-10-07 03:47:25,443 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-50
+2026-10-07 03:47:25,843 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-51
+2026-10-07 03:47:28,189 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-134
+2026-10-07 03:47:28,744 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-135
+2026-10-07 03:47:28,835 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-92
+2026-10-07 03:47:28,835 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-92
+2026-10-07 03:47:30,734 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-52
+2026-10-07 03:47:32,193 INFO o.a.j.r.Summariser: summary +     13 in 00:00:57 =    0.2/s Avg: 93398 Min:    24 Max: 125071 Err:     0 (0.00%) Active: 46 Started: 187 Finished: 141
+2026-10-07 03:47:32,193 INFO o.a.j.r.Summariser: summary =    142 in 00:12:53 =    0.2/s Avg: 27431 Min:    10 Max: 125071 Err:     0 (0.00%)
+2026-10-07 03:47:32,193 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-93
+2026-10-07 03:47:32,193 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-93
+2026-10-07 03:47:35,004 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-94
+2026-10-07 03:47:35,004 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-94
+2026-10-07 03:47:35,018 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-50
+2026-10-07 03:47:35,018 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-50
+2026-10-07 03:47:35,026 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-51
+2026-10-07 03:47:35,026 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-51
+2026-10-07 03:47:35,292 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-136
+2026-10-07 03:47:35,496 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-137
+2026-10-07 03:47:35,613 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-138
+2026-10-07 03:47:35,750 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-139
+2026-10-07 03:47:38,434 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-95
+2026-10-07 03:47:38,435 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-95
+2026-10-07 03:47:41,156 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-140
+2026-10-07 03:47:45,023 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-141
+2026-10-07 03:47:45,859 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-142
+2026-10-07 03:47:45,893 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-143
+2026-10-07 03:47:46,673 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-96
+2026-10-07 03:47:46,673 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-96
+2026-10-07 03:47:46,691 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-52
+2026-10-07 03:47:46,691 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-52
+2026-10-07 03:47:49,345 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-144
+2026-10-07 03:47:51,427 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-145
+2026-10-07 03:47:53,017 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-97
+2026-10-07 03:47:53,017 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-97
+2026-10-07 03:47:53,119 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-146
+2026-10-07 03:47:53,134 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-147
+2026-10-07 03:47:54,872 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-148
+2026-10-07 03:47:55,289 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-53
+2026-10-07 03:47:57,542 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-149
+2026-10-07 03:47:58,849 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-150
+2026-10-07 03:48:04,524 INFO o.a.j.r.Summariser: summary +      8 in 00:00:32 =    0.2/s Avg: 79317 Min:  9182 Max: 127331 Err:     0 (0.00%) Active: 54 Started: 203 Finished: 149
+2026-10-07 03:48:04,524 INFO o.a.j.r.Summariser: summary =    150 in 00:13:25 =    0.2/s Avg: 30199 Min:    10 Max: 127331 Err:     0 (0.00%)
+2026-10-07 03:48:04,524 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-98
+2026-10-07 03:48:04,524 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-98
+2026-10-07 03:48:06,124 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-151
+2026-10-07 03:48:06,933 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-152
+2026-10-07 03:48:09,982 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-99
+2026-10-07 03:48:09,982 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-99
+2026-10-07 03:48:10,624 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-54
+2026-10-07 03:48:13,763 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-100
+2026-10-07 03:48:13,763 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-100
+2026-10-07 03:48:16,283 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-153
+2026-10-07 03:48:22,376 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-154
+2026-10-07 03:48:22,821 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-101
+2026-10-07 03:48:22,821 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-101
+2026-10-07 03:48:28,907 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-155
+2026-10-07 03:48:33,570 INFO o.a.j.r.Summariser: summary +      4 in 00:00:29 =    0.1/s Avg: 132183 Min: 125297 Max: 143005 Err:     0 (0.00%) Active: 56 Started: 209 Finished: 153
+2026-10-07 03:48:33,570 INFO o.a.j.r.Summariser: summary =    154 in 00:13:54 =    0.2/s Avg: 32848 Min:    10 Max: 143005 Err:     0 (0.00%)
+2026-10-07 03:48:33,570 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-102
+2026-10-07 03:48:33,570 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-102
+2026-10-07 03:48:35,137 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-156
+2026-10-07 03:48:38,717 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-55
+2026-10-07 03:48:41,889 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-157
+2026-10-07 03:48:43,768 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-158
+2026-10-07 03:48:43,884 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-159
+2026-10-07 03:48:45,761 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-103
+2026-10-07 03:48:45,761 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-103
+2026-10-07 03:48:46,825 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-160
+2026-10-07 03:48:48,338 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-161
+2026-10-07 03:48:53,085 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-104
+2026-10-07 03:48:53,085 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-104
+2026-10-07 03:48:53,947 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-56
+2026-10-07 03:48:54,051 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-162
+2026-10-07 03:48:54,727 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-105
+2026-10-07 03:48:54,727 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-105
+2026-10-07 03:48:56,584 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-163
+2026-10-07 03:48:57,671 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-164
+2026-10-07 03:49:00,293 INFO o.a.j.r.Summariser: summary +      4 in 00:00:27 =    0.1/s Avg: 158984 Min: 154290 Max: 161522 Err:     0 (0.00%) Active: 63 Started: 220 Finished: 157
+2026-10-07 03:49:00,293 INFO o.a.j.r.Summariser: summary =    158 in 00:14:21 =    0.2/s Avg: 36041 Min:    10 Max: 161522 Err:     0 (0.00%)
+2026-10-07 03:49:00,293 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-106
+2026-10-07 03:49:00,293 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-106
+2026-10-07 03:49:03,471 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-107
+2026-10-07 03:49:03,472 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-107
+2026-10-07 03:49:06,734 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-165
+2026-10-07 03:49:06,833 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-166
+2026-10-07 03:49:06,851 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-57
+2026-10-07 03:49:08,669 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-108
+2026-10-07 03:49:08,669 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-108
+2026-10-07 03:49:10,550 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-167
+2026-10-07 03:49:11,707 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-109
+2026-10-07 03:49:11,707 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-109
+2026-10-07 03:49:11,731 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-53
+2026-10-07 03:49:11,731 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-53
+2026-10-07 03:49:11,843 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-168
+2026-10-07 03:49:15,237 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-169
+2026-10-07 03:49:15,313 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-110
+2026-10-07 03:49:15,313 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-110
+2026-10-07 03:49:22,004 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-112
+2026-10-07 03:49:22,004 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-112
+2026-10-07 03:49:22,248 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-170
+2026-10-07 03:49:22,838 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-171
+2026-10-07 03:49:24,006 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-172
+2026-10-07 03:49:24,693 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-173
+2026-10-07 03:49:26,611 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-58
+2026-10-07 03:49:27,470 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-174
+2026-10-07 03:49:28,000 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-59
+2026-10-07 03:49:31,685 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-175
+2026-10-07 03:49:32,118 INFO o.a.j.r.Summariser: summary +      7 in 00:00:32 =    0.2/s Avg: 154102 Min: 76441 Max: 178215 Err:     0 (0.00%) Active: 70 Started: 234 Finished: 164
+2026-10-07 03:49:32,118 INFO o.a.j.r.Summariser: summary =    165 in 00:14:53 =    0.2/s Avg: 41050 Min:    10 Max: 178215 Err:     0 (0.00%)
+2026-10-07 03:49:32,118 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-111
+2026-10-07 03:49:32,118 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-111
+2026-10-07 03:49:32,238 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-176
+2026-10-07 03:49:33,498 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-177
+2026-10-07 03:49:33,639 INFO o.a.j.t.o.PoissonArrivalsRamp: Generating 40 events, beginRate = 0.06666666666666667 / sec, endRate = 0.06666666666666667 / sec, duration = 600.0 sec
+2026-10-07 03:49:33,639 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-60
+2026-10-07 03:49:37,757 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-178
+2026-10-07 03:49:38,827 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-113
+2026-10-07 03:49:38,827 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-113
+2026-10-07 03:49:38,841 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-54
+2026-10-07 03:49:38,841 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-54
+2026-10-07 03:49:38,862 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-179
+2026-10-07 03:49:38,956 INFO o.a.j.t.o.EvenArrivalsRamp: Generating 0 events, beginRate = 0.0 / sec, endRate = 0.0 / sec, duration = 600.0 sec
+2026-10-07 03:49:38,956 INFO o.a.j.t.o.OpenModelThreadGroup: There will be no more events, so will wait for 600 sec till the end of the schedule
+2026-10-07 03:49:38,956 INFO o.a.j.t.JMeterThread: Thread started: Tickets ramp (POST /tickets) 1-180
+2026-10-07 03:49:39,900 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-61
+2026-10-07 03:49:47,759 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-114
+2026-10-07 03:49:47,759 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-114
+2026-10-07 03:49:55,473 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-115
+2026-10-07 03:49:55,473 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-115
+2026-10-07 03:49:56,505 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-62
+2026-10-07 03:49:59,467 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-116
+2026-10-07 03:49:59,467 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-116
+2026-10-07 03:50:01,417 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-63
+2026-10-07 03:50:03,903 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-64
+2026-10-07 03:50:05,217 INFO o.a.j.r.Summariser: summary +      6 in 00:00:33 =    0.2/s Avg: 174500 Min: 88217 Max: 197409 Err:     0 (0.00%) Active: 74 Started: 244 Finished: 170
+2026-10-07 03:50:05,217 INFO o.a.j.r.Summariser: summary =    171 in 00:15:26 =    0.2/s Avg: 45732 Min:    10 Max: 197409 Err:     0 (0.00%)
+2026-10-07 03:50:05,217 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-117
+2026-10-07 03:50:05,217 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-117
+2026-10-07 03:50:05,241 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-55
+2026-10-07 03:50:05,241 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-55
+2026-10-07 03:50:09,369 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-118
+2026-10-07 03:50:09,369 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-118
+2026-10-07 03:50:18,466 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-119
+2026-10-07 03:50:18,466 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-119
+2026-10-07 03:50:21,098 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-120
+2026-10-07 03:50:21,098 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-120
+2026-10-07 03:50:23,776 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-121
+2026-10-07 03:50:23,777 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-121
+2026-10-07 03:50:33,099 INFO o.a.j.r.Summariser: summary +      6 in 00:00:28 =    0.2/s Avg: 185847 Min: 86523 Max: 211651 Err:     0 (0.00%) Active: 68 Started: 244 Finished: 176
+2026-10-07 03:50:33,100 INFO o.a.j.r.Summariser: summary =    177 in 00:15:54 =    0.2/s Avg: 50482 Min:    10 Max: 211651 Err:     0 (0.00%)
+2026-10-07 03:50:33,100 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-122
+2026-10-07 03:50:33,100 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-122
+2026-10-07 03:50:33,111 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-56
+2026-10-07 03:50:33,111 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-56
+2026-10-07 03:50:36,789 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-123
+2026-10-07 03:50:36,789 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-123
+2026-10-07 03:50:43,018 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-124
+2026-10-07 03:50:43,018 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-124
+2026-10-07 03:50:44,411 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-65
+2026-10-07 03:50:51,244 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-125
+2026-10-07 03:50:51,244 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-125
+2026-10-07 03:50:58,058 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-126
+2026-10-07 03:50:58,058 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-126
+2026-10-07 03:51:05,928 INFO o.a.j.r.Summariser: summary +      6 in 00:00:33 =    0.2/s Avg: 198830 Min: 99163 Max: 229832 Err:     0 (0.00%) Active: 63 Started: 245 Finished: 182
+2026-10-07 03:51:05,928 INFO o.a.j.r.Summariser: summary =    183 in 00:16:26 =    0.2/s Avg: 55346 Min:    10 Max: 229832 Err:     0 (0.00%)
+2026-10-07 03:51:05,928 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-127
+2026-10-07 03:51:05,928 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-127
+2026-10-07 03:51:05,938 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-57
+2026-10-07 03:51:05,938 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-57
+2026-10-07 03:51:12,955 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-128
+2026-10-07 03:51:12,955 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-128
+2026-10-07 03:51:18,344 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-129
+2026-10-07 03:51:18,344 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-129
+2026-10-07 03:51:20,904 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-130
+2026-10-07 03:51:20,904 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-130
+2026-10-07 03:51:23,529 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-66
+2026-10-07 03:51:25,743 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-131
+2026-10-07 03:51:25,744 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-131
+2026-10-07 03:51:26,114 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-67
+2026-10-07 03:51:29,885 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-132
+2026-10-07 03:51:29,885 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-132
+2026-10-07 03:51:33,230 INFO o.a.j.r.Summariser: summary +      7 in 00:00:27 =    0.3/s Avg: 224786 Min: 119087 Max: 248446 Err:     0 (0.00%) Active: 58 Started: 247 Finished: 189
+2026-10-07 03:51:33,230 INFO o.a.j.r.Summariser: summary =    190 in 00:16:54 =    0.2/s Avg: 61588 Min:    10 Max: 248446 Err:     0 (0.00%)
+2026-10-07 03:51:33,231 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-133
+2026-10-07 03:51:33,231 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-133
+2026-10-07 03:51:38,421 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-134
+2026-10-07 03:51:38,421 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-134
+2026-10-07 03:51:38,437 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-58
+2026-10-07 03:51:38,437 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-58
+2026-10-07 03:51:43,225 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-135
+2026-10-07 03:51:43,225 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-135
+2026-10-07 03:51:43,235 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-59
+2026-10-07 03:51:43,235 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-59
+2026-10-07 03:51:48,025 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-136
+2026-10-07 03:51:48,025 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-136
+2026-10-07 03:51:53,944 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-137
+2026-10-07 03:51:53,944 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-137
+2026-10-07 03:52:01,703 INFO o.a.j.r.Summariser: summary +      7 in 00:00:28 =    0.2/s Avg: 221291 Min: 131826 Max: 266090 Err:     0 (0.00%) Active: 51 Started: 247 Finished: 196
+2026-10-07 03:52:01,703 INFO o.a.j.r.Summariser: summary =    197 in 00:17:22 =    0.2/s Avg: 67263 Min:    10 Max: 266090 Err:     0 (0.00%)
+2026-10-07 03:52:01,703 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-138
+2026-10-07 03:52:01,703 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-138
+2026-10-07 03:52:01,714 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-60
+2026-10-07 03:52:01,714 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-60
+2026-10-07 03:52:06,411 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-139
+2026-10-07 03:52:06,411 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-139
+2026-10-07 03:52:13,201 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-140
+2026-10-07 03:52:13,201 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-140
+2026-10-07 03:52:21,208 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-68
+2026-10-07 03:52:26,205 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-141
+2026-10-07 03:52:26,205 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-141
+2026-10-07 03:52:26,219 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-61
+2026-10-07 03:52:26,219 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-61
+2026-10-07 03:52:26,225 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-62
+2026-10-07 03:52:26,225 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-62
+2026-10-07 03:52:26,237 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-63
+2026-10-07 03:52:26,237 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-63
+2026-10-07 03:52:26,251 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-64
+2026-10-07 03:52:26,251 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-65
+2026-10-07 03:52:26,251 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-64
+2026-10-07 03:52:26,251 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-65
+2026-10-07 03:52:26,255 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-66
+2026-10-07 03:52:26,255 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-66
+2026-10-07 03:52:26,269 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-67
+2026-10-07 03:52:26,269 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-67
+2026-10-07 03:52:26,269 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-68
+2026-10-07 03:52:26,269 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-68
+2026-10-07 03:52:28,713 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-142
+2026-10-07 03:52:28,713 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-142
+2026-10-07 03:52:28,800 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-69
+2026-10-07 03:52:28,823 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-69
+2026-10-07 03:52:28,823 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-69
+2026-10-07 03:52:32,600 INFO o.a.j.r.Summariser: summary +     15 in 00:00:31 =    0.5/s Avg: 158301 Min:    22 Max: 286706 Err:     0 (0.00%) Active: 38 Started: 249 Finished: 211
+2026-10-07 03:52:32,600 INFO o.a.j.r.Summariser: summary =    212 in 00:17:53 =    0.2/s Avg: 73704 Min:    10 Max: 286706 Err:     0 (0.00%)
+2026-10-07 03:52:32,600 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-143
+2026-10-07 03:52:32,600 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-143
+2026-10-07 03:52:35,830 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-144
+2026-10-07 03:52:35,830 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-144
+2026-10-07 03:52:40,968 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-145
+2026-10-07 03:52:40,968 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-145
+2026-10-07 03:52:43,842 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-70
+2026-10-07 03:52:43,872 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-70
+2026-10-07 03:52:43,872 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-70
+2026-10-07 03:52:44,199 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-146
+2026-10-07 03:52:44,199 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-146
+2026-10-07 03:52:47,331 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-147
+2026-10-07 03:52:47,331 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-147
+2026-10-07 03:52:53,156 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-148
+2026-10-07 03:52:53,156 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-148
+2026-10-07 03:52:56,978 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-71
+2026-10-07 03:52:57,017 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-71
+2026-10-07 03:52:57,017 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-71
+2026-10-07 03:52:57,548 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-149
+2026-10-07 03:52:57,548 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-149
+2026-10-07 03:52:58,860 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-150
+2026-10-07 03:52:58,860 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-150
+2026-10-07 03:53:06,137 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-151
+2026-10-07 03:53:06,137 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-151
+2026-10-07 03:53:06,938 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-152
+2026-10-07 03:53:06,938 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-152
+2026-10-07 03:53:15,390 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-72
+2026-10-07 03:53:15,445 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-72
+2026-10-07 03:53:15,445 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-72
+2026-10-07 03:53:16,293 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-153
+2026-10-07 03:53:16,293 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-153
+2026-10-07 03:53:22,381 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-154
+2026-10-07 03:53:22,381 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-154
+2026-10-07 03:53:23,755 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-73
+2026-10-07 03:53:23,802 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-73
+2026-10-07 03:53:23,802 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-73
+2026-10-07 03:53:28,917 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-155
+2026-10-07 03:53:28,918 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-155
+2026-10-07 03:53:32,652 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-74
+2026-10-07 03:53:32,681 INFO o.a.j.r.Summariser: summary +     17 in 00:01:00 =    0.3/s Avg: 209402 Min:    28 Max: 300012 Err:     7 (41.18%) Active: 26 Started: 254 Finished: 228
+2026-10-07 03:53:32,681 INFO o.a.j.r.Summariser: summary =    229 in 00:18:53 =    0.2/s Avg: 83778 Min:    10 Max: 300012 Err:     7 (3.06%)
+2026-10-07 03:53:32,681 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-74
+2026-10-07 03:53:32,681 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-74
+2026-10-07 03:53:35,142 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-156
+2026-10-07 03:53:35,142 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-156
+2026-10-07 03:53:36,064 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-75
+2026-10-07 03:53:36,085 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-75
+2026-10-07 03:53:36,085 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-75
+2026-10-07 03:53:41,903 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-157
+2026-10-07 03:53:41,903 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-157
+2026-10-07 03:53:43,773 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-158
+2026-10-07 03:53:43,773 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-158
+2026-10-07 03:53:43,888 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-159
+2026-10-07 03:53:43,888 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-159
+2026-10-07 03:53:46,835 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-160
+2026-10-07 03:53:46,835 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-160
+2026-10-07 03:53:47,703 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-76
+2026-10-07 03:53:47,744 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-76
+2026-10-07 03:53:47,744 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-76
+2026-10-07 03:53:48,343 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-161
+2026-10-07 03:53:48,343 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-161
+2026-10-07 03:53:54,055 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-162
+2026-10-07 03:53:54,055 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-162
+2026-10-07 03:53:56,588 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-163
+2026-10-07 03:53:56,588 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-163
+2026-10-07 03:53:57,676 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-164
+2026-10-07 03:53:57,676 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-164
+2026-10-07 03:54:06,738 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-165
+2026-10-07 03:54:06,738 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-165
+2026-10-07 03:54:06,838 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-166
+2026-10-07 03:54:06,838 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-166
+2026-10-07 03:54:10,556 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-167
+2026-10-07 03:54:10,556 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-167
+2026-10-07 03:54:11,853 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-168
+2026-10-07 03:54:11,853 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-168
+2026-10-07 03:54:15,241 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-169
+2026-10-07 03:54:15,241 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-169
+2026-10-07 03:54:15,669 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-77
+2026-10-07 03:54:15,728 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-77
+2026-10-07 03:54:15,728 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-77
+2026-10-07 03:54:22,252 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-170
+2026-10-07 03:54:22,252 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-170
+2026-10-07 03:54:22,857 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-171
+2026-10-07 03:54:22,857 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-171
+2026-10-07 03:54:24,013 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-172
+2026-10-07 03:54:24,013 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-172
+2026-10-07 03:54:24,701 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-173
+2026-10-07 03:54:24,701 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-173
+2026-10-07 03:54:27,473 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-174
+2026-10-07 03:54:27,473 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-174
+2026-10-07 03:54:31,690 INFO o.a.j.r.Summariser: summary +     23 in 00:00:59 =    0.4/s Avg: 260879 Min:    21 Max: 300019 Err:    20 (86.96%) Active: 6 Started: 257 Finished: 251
+2026-10-07 03:54:31,690 INFO o.a.j.r.Summariser: summary =    252 in 00:19:52 =    0.2/s Avg: 99942 Min:    10 Max: 300019 Err:    27 (10.71%)
+2026-10-07 03:54:31,690 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-175
+2026-10-07 03:54:31,690 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-175
+2026-10-07 03:54:32,242 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-176
+2026-10-07 03:54:32,242 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-176
+2026-10-07 03:54:32,336 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-78
+2026-10-07 03:54:32,362 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-78
+2026-10-07 03:54:32,362 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-78
+2026-10-07 03:54:33,508 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-177
+2026-10-07 03:54:33,508 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-177
+2026-10-07 03:54:34,271 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-79
+2026-10-07 03:54:34,297 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-79
+2026-10-07 03:54:34,297 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-79
+2026-10-07 03:54:37,776 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-178
+2026-10-07 03:54:37,776 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-178
+2026-10-07 03:54:38,866 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-179
+2026-10-07 03:54:38,866 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-179
+2026-10-07 03:54:38,962 INFO o.a.j.t.JMeterThread: Thread is done: Tickets ramp (POST /tickets) 1-180
+2026-10-07 03:54:38,962 INFO o.a.j.t.JMeterThread: Thread finished: Tickets ramp (POST /tickets) 1-180
+2026-10-07 03:54:55,171 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-80
+2026-10-07 03:54:55,213 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-80
+2026-10-07 03:54:55,213 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-80
+2026-10-07 03:54:58,217 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-81
+2026-10-07 03:54:58,245 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-81
+2026-10-07 03:54:58,245 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-81
+2026-10-07 03:54:58,492 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-82
+2026-10-07 03:54:58,514 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-82
+2026-10-07 03:54:58,514 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-82
+2026-10-07 03:55:13,341 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-83
+2026-10-07 03:55:13,369 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-83
+2026-10-07 03:55:13,369 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-83
+2026-10-07 03:55:29,895 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-84
+2026-10-07 03:55:29,939 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-84
+2026-10-07 03:55:29,939 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-84
+2026-10-07 03:55:37,772 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-85
+2026-10-07 03:55:37,830 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-85
+2026-10-07 03:55:37,830 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-85
+2026-10-07 03:55:49,635 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-86
+2026-10-07 03:55:49,667 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-86
+2026-10-07 03:55:49,667 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-86
+2026-10-07 03:55:57,141 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-87
+2026-10-07 03:55:57,169 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-87
+2026-10-07 03:55:57,169 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-87
+2026-10-07 03:56:07,803 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-88
+2026-10-07 03:56:07,832 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-88
+2026-10-07 03:56:07,833 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-88
+2026-10-07 03:56:16,106 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-89
+2026-10-07 03:56:16,130 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-89
+2026-10-07 03:56:16,130 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-89
+2026-10-07 03:56:42,352 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-90
+2026-10-07 03:56:42,370 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-90
+2026-10-07 03:56:42,370 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-90
+2026-10-07 03:56:58,839 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-91
+2026-10-07 03:56:58,876 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-91
+2026-10-07 03:56:58,876 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-91
+2026-10-07 03:57:03,500 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-92
+2026-10-07 03:57:03,518 INFO o.a.j.r.Summariser: summary +     20 in 00:02:32 =    0.1/s Avg: 75024 Min:    17 Max: 300018 Err:     5 (25.00%) Active: 1 Started: 272 Finished: 271
+2026-10-07 03:57:03,518 INFO o.a.j.r.Summariser: summary =    272 in 00:22:24 =    0.2/s Avg: 98110 Min:    10 Max: 300019 Err:    32 (11.76%)
+2026-10-07 03:57:03,518 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-92
+2026-10-07 03:57:03,518 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-92
+2026-10-07 03:57:39,442 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-93
+2026-10-07 03:57:39,460 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-93
+2026-10-07 03:57:39,460 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-93
+2026-10-07 03:57:47,403 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-94
+2026-10-07 03:57:47,422 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-94
+2026-10-07 03:57:47,422 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-94
+2026-10-07 03:58:18,874 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-95
+2026-10-07 03:58:18,893 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-95
+2026-10-07 03:58:18,893 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-95
+2026-10-07 03:58:29,680 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-96
+2026-10-07 03:58:29,691 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-96
+2026-10-07 03:58:29,691 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-96
+2026-10-07 03:58:38,829 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-97
+2026-10-07 03:58:38,844 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-97
+2026-10-07 03:58:38,844 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-97
+2026-10-07 03:58:42,500 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-98
+2026-10-07 03:58:42,510 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-98
+2026-10-07 03:58:42,510 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-98
+2026-10-07 03:58:45,294 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-99
+2026-10-07 03:58:45,308 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-99
+2026-10-07 03:58:45,308 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-99
+2026-10-07 03:59:09,107 INFO o.a.j.t.o.OpenModelThreadGroup: There will be no more events, so will wait for 30 sec till the end of the schedule
+2026-10-07 03:59:09,107 INFO o.a.j.t.JMeterThread: Thread started: Search constant (GET /search) 2-100
+2026-10-07 03:59:09,128 INFO o.a.j.t.JMeterThread: Thread is done: Search constant (GET /search) 2-100
+2026-10-07 03:59:09,128 INFO o.a.j.t.JMeterThread: Thread finished: Search constant (GET /search) 2-100
+2026-10-07 03:59:39,324 INFO o.a.j.t.o.OpenModelThreadGroup: There will be no more events, will shutdown the thread pool
+2026-10-07 03:59:39,324 INFO o.a.j.t.o.OpenModelThreadGroup: There will be no more events, will shutdown the thread pool
+2026-10-07 03:59:39,324 INFO o.a.j.t.o.OpenModelThreadGroup: Thread starting done
+2026-10-07 03:59:39,324 INFO o.a.j.t.o.OpenModelThreadGroup: Thread starting done
+2026-10-07 03:59:39,324 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-10-07 03:59:39,324 INFO o.a.j.s.FileServer: Close: data/search_terms.csv
+2026-10-07 03:59:39,324 INFO o.a.j.s.FileServer: Close: data/dev_tickets.csv
+2026-10-07 03:59:39,326 INFO o.a.j.r.Summariser: summary +      8 in 00:02:36 =    0.1/s Avg:    15 Min:    10 Max:    20 Err:     0 (0.00%) Active: 0 Started: 280 Finished: 280
+2026-10-07 03:59:39,326 INFO o.a.j.r.Summariser: summary =    280 in 00:25:00 =    0.2/s Avg: 95307 Min:    10 Max: 300019 Err:    32 (11.43%)

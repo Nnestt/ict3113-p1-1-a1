@@ -1,0 +1,8 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1791307769739,28,GET /search,200,OK,Search (GET /search) 2-1,text,true,,393,224,4,7,http://192.168.68.69:8000/search?q=account,28,0,14
+1791307787326,10,GET /stats,200,OK,Stats (GET /stats) 3-1,text,true,,363,213,1,6,http://192.168.68.69:8000/stats,10,0,2
+1791307799618,1040,POST /tickets,200,OK,Tickets (POST /tickets) 1-2,text,true,,276,506,2,5,http://192.168.68.69:8000/tickets,1040,0,7
+1791307802358,10,GET /search,200,OK,Search (GET /search) 2-2,text,true,,219,224,3,4,http://192.168.68.69:8000/search?q=payment,10,0,3
+1791307837929,2739,POST /tickets,200,OK,Tickets (POST /tickets) 1-3,text,true,,267,1337,1,3,http://192.168.68.69:8000/tickets,2739,0,3
+1791307856540,11,GET /search,200,OK,Search (GET /search) 2-3,text,true,,741,221,2,2,http://192.168.68.69:8000/search?q=bank,11,0,2
+1791307864379,11,GET /search,200,OK,Search (GET /search) 2-4,text,true,,216,221,1,1,http://192.168.68.69:8000/search?q=card,11,0,3
