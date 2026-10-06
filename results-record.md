@@ -21,7 +21,7 @@
 - **Inference device:** CPU only. Before every run the script checks that `ollama ps` shows the pinned model at `100% CPU` and aborts otherwise. The output is saved per run as `load_test/results/<label>_run<N>_ollama_ps.txt`.
 - **Load generator separate from the SUT:** yes, separate physical machines.
 - **The AMD Ryzen 5 7600 machine (now the load generator) has a discrete GPU** (AMD Radeon RX 7800 XT, 16 GB VRAM). This no longer matters for CPU-only compliance since Ollama does not run on this machine anymore (it is not the SUT), but is noted for completeness. When it was briefly the SUT, the GPU was explicitly hidden (`ROCR_VISIBLE_DEVICES=-1`, `HIP_VISIBLE_DEVICES=-1`, `GGML_VK_VISIBLE_DEVICES=-1`) so inference ran on CPU only, confirmed via `ollama ps` (`100% CPU`) and the Ollama server log (`inference compute id=cpu library=cpu`).
-- **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) now matches the system under test, since the swap put that machine in the SUT role. Confirm whether this machine also has a GPU that needs hiding before trusting further CPU-only runs on it (not yet checked as of this note).
+- **Note on the prediction record:** its stated environment (Core Ultra 7 155H, 31.37 GB) now matches the system under test, since the swap put that machine in the SUT role. CPU-only inference on it is confirmed for every reported run: `ollama ps` showed the pinned model at `100% CPU` before each run (saved as `load_test/results/<label>_run<N>_ollama_ps.txt`), and the scripts abort otherwise.
 
 ## Load Test Protocol
 
@@ -283,27 +283,54 @@ Every golden-set ticket through `POST /tickets` per model. Overall and per-categ
 
 | Model | Overall | Min category | Meets R5 (≥ 80%) | Meets R6 (every category ≥ 65%) |
 |---|---:|---:|---|---|
-| `llama3.2:1b` | TODO | TODO | TODO | TODO |
-| `qwen2.5:1.5b` | TODO | TODO | TODO | TODO |
-| `phi3.5:3.8b` | TODO | TODO | TODO | TODO |
-| `qwen2.5:7b` | TODO | TODO | TODO | TODO |
+| `llama3.2:1b` | 21.7% (38/175) | 0% (Mortgage, Credit card, Consumer loan, Money transfer) | No | No |
+| `qwen2.5:1.5b` | 52.6% (92/175) | 24.2% (Bank account or service, 8/33) | No | No |
+| `phi3.5:3.8b` | 76.0% (133/175) | 61.9% (Credit card, 13/21) | No | No |
+| `qwen2.5:7b` | 77.1% (135/175) | 56.3% (Money transfer or service, 9/16) | No | No |
 
-Confusion matrices and where each model goes wrong: TODO.
+**No candidate meets R5 or R6.** The two larger models are close to each other (two tickets apart overall) and 3–4 points short of 80%. `llama3.2:1b` also returned 2 `INVALID` answers; no model had HTTP errors.
+
+**Source (Izzul's accuracy experiment, copied here unchanged):** `evaluation/accuracy_results/accuracy_summary.csv`, `accuracy_per_category.csv`, `confusion_<model>.csv`, and the per-run files `acc_<model>_20261005T*.csv` with their `_summary.json` (each reconciles 175/175 with the service log; `size_vram` 0, so CPU only). Run IDs: `acc_llama3.2_1b_20261005T160744Z`, `acc_qwen2.5_1.5b_20261005T161551Z`, `acc_phi3.5_3.8b_20261005T162247Z`, `acc_qwen2.5_7b_20261005T163749Z`. The `devcheck_` file is a pipeline check, not a result.
+
+**Per-category accuracy:**
+
+| Category (n) | `llama3.2:1b` | `qwen2.5:1.5b` | `phi3.5:3.8b` | `qwen2.5:7b` |
+|---|---:|---:|---:|---:|
+| Credit reporting (36) | 89% | 86% | 75% | 92% |
+| Debt collection (24) | 12% | 42% | 75% | 79% |
+| Mortgage (22) | 0% | 45% | 82% | 73% |
+| Credit card (21) | 0% | 57% | **62%** | 76% |
+| Bank account or service (33) | 9% | 24% | 82% | 76% |
+| Consumer loan (23) | 0% | 65% | 78% | 74% |
+| Money transfer or service (16) | 0% | 38% | 75% | **56%** |
+
+Bold: the category that fails R6 (< 65%) for the two models that come closest.
+
+**Where each model goes wrong (largest off-diagonal cells of the confusion matrix, gold → predicted):**
+- `llama3.2:1b`: labels almost everything Credit reporting. Bank account → Credit reporting 24, Debt collection → Credit reporting 20, Credit card → Credit reporting 17, Mortgage → Credit reporting 16.
+- `qwen2.5:1.5b`: over-uses Credit card. Bank account → Credit card 16, Debt collection → Credit card 6, Mortgage → Consumer loan 5.
+- `phi3.5:3.8b`: errors are spread thin. Credit reporting → Debt collection 5, Credit card → Bank account 5, Mortgage → Consumer loan 4, Money transfer → Bank account 3.
+- `qwen2.5:7b`: Money transfer → Bank account 5, Mortgage → Consumer loan 3, Debt collection ↔ Credit reporting 3 each way.
+- Across the stronger models the recurring confusions are Money transfer / Credit card → Bank account, Mortgage → Consumer loan, and Debt collection ↔ Credit reporting.
+
+**Latency in the accuracy files is not used for performance results.** The accuracy run (2026-10-05) predates the 2026-10-06 machine-role swap, and its client times do not match the current SUT (for example `llama3.2:1b` median 2,552 ms there against 846–917 ms POST p50 in the load tests), so it ran on different hardware. Accuracy does not depend on hardware; latency does. All latency figures in this record come from the load tests on the current SUT.
 
 ## Predictions vs Measurements
 
 Predictions are copied from [prediction-record.md](prediction-record.md) without change; only the measured column and the verdict are filled here. Incorrect predictions stay in the record.
 
+"Warm latency" is measured as POST `/tickets` p50 in the 15-minute peak-load runs on the current SUT, where requests arrive minutes apart and do not overlap. These runs reuse the same six short tickets, so they likely understate latency for typical tickets (see Deviations and Limitations). Verdicts are left for Mikhail.
+
 | # | Prediction | Measured | Verdict |
 |---|---|---|---|
-| 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | TODO | TODO |
-| 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | TODO | TODO |
-| 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | TODO | TODO |
-| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | TODO | TODO |
-| 5 | `qwen2.5:7b` most accurate and slowest | TODO | TODO |
-| 6 | `llama3.2:1b` fastest and least accurate | TODO | TODO |
+| 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | 21.7% accuracy (38/175). Warm latency: POST p50 875 ms at peak load (mean of 3 runs, 846–917 ms). | TODO |
+| 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | 52.6% accuracy (92/175). Warm latency: POST p50 487 ms (463–512 ms). | TODO |
+| 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | 76.0% accuracy (133/175). Warm latency: POST p50 1,431 ms (1,368–1,502 ms). | TODO |
+| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | 77.1% accuracy (135/175). Warm latency: POST p50 2,109 ms (2,068–2,144 ms); 3,689 ms mean p50 over the 12-ticket R3 runs; 5.8 s mean compute per ticket over 180 dataset tickets in the stress test. | TODO |
+| 5 | `qwen2.5:7b` most accurate and slowest | Most accurate: 77.1%, just ahead of `phi3.5:3.8b` at 76.0% (two tickets). Slowest: POST p50 2,109 ms against 1,431 ms for `phi3.5:3.8b`. | TODO |
+| 6 | `llama3.2:1b` fastest and least accurate | Least accurate: 21.7%. Not fastest: `qwen2.5:1.5b` is faster (POST p50 487 ms against 875 ms; also faster in the superseded 60-minute runs, 678 ms against 1,001 ms). | TODO |
 | 7 | CPU inference is the primary bottleneck as load rises | Stress test: Ollama inference is the bottleneck (capacity ≈ 620/hr = 3,600 / 5.8 s compute per ticket, one request at a time), but total CPU plateaus at 54–59%, not 100%; memory, service and network are not limiting. See Stress Test. | TODO |
-| 8 | Hardest categories: consumer loan, debt collection, credit card, bank account or service, money transfer or service | TODO | TODO |
+| 8 | Hardest categories: consumer loan, debt collection, credit card, bank account or service, money transfer or service | Lowest categories for the two strongest models: Money transfer 56% and Mortgage 73% (`qwen2.5:7b`); Credit card 62% and Credit reporting 75% (`phi3.5:3.8b`). Recurring confusions: Money transfer / Credit card → Bank account, Mortgage → Consumer loan, Debt collection ↔ Credit reporting. Mortgage, predicted to be easy, is confused with Consumer loan by three of four models; Credit reporting, predicted easy, is the best category for three models but `phi3.5:3.8b` gets only 75%. | TODO |
 | 9 | All four models exceed 46 classifications/hour | `phi3.5:3.8b` and `qwen2.5:7b` sustained 46/hr offered with 0 errors (48/hr achieved, 3 runs each); `qwen2.5:7b` capacity ≈ 600–640/hr in the stress test. `llama3.2:1b` and `qwen2.5:1.5b` were not run at 46/hr (excluded on accuracy), but are faster than both at peak load. | TODO |
 
 ## Reconciliation Checklist
@@ -329,7 +356,7 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 - **Every run sends the same tickets.** The JMeter CSV Data Set reads `load_test/data/dev_tickets.csv` from the top in every run, so each 15-minute run, for every model, sends the same first 6 narratives (rows 1000 to 1005) in a different order. The 60-minute runs likewise all sent the first 23. These 6 average 621 characters, against 896 for all 825 rows (median 791, 90th percentile 1,633), and the first 23 average 814. Effects: (1) POST latency is understated relative to the full ticket-length distribution, because shorter narratives classify faster; this is the main reason the 15-minute numbers are lower than the 60-minute ones; (2) the three runs per model repeat the same inputs, so the spread across runs reflects run-to-run noise in the system, not variation in ticket mix; (3) every model received identical input, so the comparison between models is controlled. The team chose to keep this protocol for all four models and report the limitation rather than re-run. A fix for Assignment 2 is a per-run shuffled ticket file seeded by run number.
 - **`GET /stats` may not be exercised.** At 1 per hour, a 900 s run sends 0 or 1 stats requests.
 - **Mid-study SUT hardware change.** `qwen2.5:7b` run 1 (23 POST requests, 0 errors, p50 2044 ms, p95 4632 ms, p99 5073 ms) and a partial, aborted run 2 were measured with the AMD Ryzen 5 7600 (6-core) as the system under test. The p50 was far faster than predicted (12 s) for a 7B model on CPU, raising concern that this machine does not represent the client's "commodity CPU server" constraint. The team stopped testing and swapped machine roles: the system under test is now the Intel Core Ultra 7 155H machine (previously the load generator), and the AMD Ryzen 5 7600 machine is now the load generator. The raw `.jtl` and log files from the discarded runs were deleted from the repository rather than kept; this note is the only remaining record of that data and the reason it is not used. All runs for every model were then measured fresh on the new SUT.
-- TODO: anything else that could make the measurements unrepresentative (restarts, interruptions, runs repeated).
+- **Interruptions and repeats:** none beyond those listed above (the Phase 4 pause, the branch switch during `qwen7b-15m-run1`, and the smoke runs that are excluded). No reported run was repeated or discarded.
 
 ---
 
