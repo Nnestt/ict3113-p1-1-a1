@@ -31,7 +31,7 @@
 - **Automation:** `load_test/run_phase.ps1 -Phase <1-4>` on the load generator. It calls `load_test/run_model.ps1`, which before each run resets the SUT over SSH with `load_test/reset_sut.ps1` (`docker compose down -v`, empty `logs/requests.jsonl`, unload all models, `docker compose up -d --build` with `MODEL` pinned), waits for `/stats` total = 0, sends one warm-up request tagged `warmup-<RUN_ID>`, checks `ollama ps`, runs JMeter, then copies the SUT request log back. 300 s cooldown between runs.
 - **Narratives:** 825 team rows from `load_test/data/dev_tickets.csv`. **Search terms:** `load_test/data/search_terms.csv`.
 - **Files per run:** `load_test/results/<label>_run<N>.jtl`, `load_test/logs/<label>_run<N>_jmeter.log`, `load_test/logs/<label>_run<N>_requests.jsonl`, `load_test/results/<label>_run<N>_ollama_ps.txt`. Phase transcript: `load_test/logs/<label>_phase.log`.
-- **Smoke tests** (`smoke1`, `smoke-qwen7b-run1`, `smoke-llama1b-15m-run1`) were pipeline checks, not results, and are excluded.
+- **Smoke tests** (`smoke1`, `smoke-qwen7b-run1`, `smoke-llama1b-15m-run1`, `smoke-phi3_8b-r3-run1`, `smoke-qwen7b-stress-run1` (aborted at setup), `smoke-qwen7b-stress-run2` (showed the end-of-schedule `Socket closed` artefact that led to the drain period), `smoke-qwen7b-stress-run3`) were pipeline checks, not results, and are excluded.
 
 | Phase | Model | Label | Run IDs |
 |---|---|---|---|
