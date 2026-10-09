@@ -35,7 +35,7 @@ The scripts find the JDK themselves; set `JAVA_HOME` only if it is installed som
 ## 2. Get the repository
 
 ```powershell
-git clone <repo-url>
+git clone https://github.com/Nnestt/ict3113-p1-1-a1.git
 cd ict3113-p1-1-a1\load_test
 ```
 
@@ -147,7 +147,7 @@ next run number. For phase 5, `-Only phi3_8b-r3` or `-Only qwen7b-r3` runs one m
 - Do not use either machine for anything else.
 - Do not switch git branches on this machine: GitHub Desktop stashes untracked files, which can
   remove the test plan or data before the next run reads them.
-- Keep this machine awake and the Claude Code / PowerShell session open until the phase prints
+- Keep this machine awake and the PowerShell session open until the phase prints
   `Phase N complete`.
 
 ## 9. After a phase

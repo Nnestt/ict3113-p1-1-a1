@@ -12,13 +12,11 @@ Both machines are on the same Wi-Fi network (a wired LAN would be better; Wi-Fi
 jitter can show up in the p95/p99 numbers, so note it in the test-environment
 description).
 
-## Instructions for the AI agent doing this setup
+## Before you start
 
-Do the steps below in order, verify each one, and report anything that fails
-instead of working around it. Do not edit service code, the prompt, or
-`eval_config.json` (they are frozen). Use PowerShell. Steps 5 and 6 need an
-Administrator PowerShell; ask the user to run those commands if you do not
-have admin rights.
+Do the steps below in order and check each one before moving on. Do not edit
+service code, the prompt, or `eval_config.json` (they are frozen). Use
+PowerShell. Steps 5 and 6 need an Administrator PowerShell.
 
 ## 1. Prerequisites
 
@@ -102,9 +100,9 @@ load generator's public key to `C:\ProgramData\ssh\administrators_authorized_key
 ipconfig
 ```
 
-The Wi-Fi IPv4 address must be `192.168.68.69`. If it differs, tell the user:
-the JMeter machine needs the new address (`-Target` in `run_model.ps1`). To
-keep it stable, reserve the address for this machine in the router (DHCP
+The Wi-Fi IPv4 address must be `192.168.68.69`. If it differs, the
+JMeter machine needs the new address (`-Target` in `run_model.ps1`). To keep
+it stable, reserve the address for this machine in the router (DHCP
 reservation).
 
 ## 7. Start the service with one model

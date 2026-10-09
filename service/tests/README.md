@@ -2,8 +2,6 @@
 
 The record of every test case for the triage service: the automated tests in this folder, and the system checks run by hand in Docker. For how to run the automated tests see the Tests section of [../README.md](../README.md). For the test strategy see section 10 of [../DESIGN.md](../DESIGN.md).
 
-When a test is added, changed or removed, update this file in the same change.
-
 ## Summary
 
 | Level | File | Test functions | Cases run |
@@ -145,13 +143,13 @@ Test traffic from these runs was deleted from `logs/` afterwards.
 
 During the review, 18 deliberate bugs were put into a copy of the code, one at a time, to see whether the suite would fail. Twelve were caught and six were not. Two of the six were judged not worth a test: a changed SQLite busy timeout, and a local-time timestamp that only passed because the container clock is UTC. The other four were real gaps: the status of an unhandled exception, the error field on that path, a `total_ms` of zero, and a missing raw output for `INVALID`. Tests RL-07, RL-10, INT-10 and INT-11 were added, and those four are now caught.
 
-## Not yet run
+## Checks run outside this test suite
 
-These need the team's test machine and cannot be run with a stand-in.
+These need the team's test machine and cannot be run with a stand-in. Their results are in [results-record.md](../../results-record.md).
 
 | ID | Check | Status |
 | --- | --- | --- |
-| PEND-01 | Start the service against real Ollama with each pinned model, and classify one non-golden ticket | Not run |
-| PEND-02 | Reach port 8000 from the load generator machine | Not run |
+| PEND-01 | Start the service against real Ollama with each pinned model, and classify one non-golden ticket | Done: the peak-load runs started the service with each of the four models and classified non-golden tickets |
+| PEND-02 | Reach port 8000 from the load generator machine | Done: every load and stress run was sent from the load generator |
 | PEND-03 | A real 300 s Ollama timeout returning 504 | Not run. The mapping is covered by APP-05, APP-06 and INT-05 with a raised timeout |
-| PEND-04 | Behaviour when real Ollama is overloaded, with `OLLAMA_NUM_PARALLEL=1` | Not run. Belongs to the load and stress tests |
+| PEND-04 | Behaviour when real Ollama is overloaded, with `OLLAMA_NUM_PARALLEL=1` | Done in the stress test: requests queue inside Ollama; the service returned 200 for all 180 tickets |

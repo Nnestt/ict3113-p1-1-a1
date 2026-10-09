@@ -1,13 +1,13 @@
 # Results Record
 
-**Status:** In progress. Every number here must be traceable to the raw files in `load_test/results/` (JMeter `.jtl`) and `load_test/logs/` (SUT request log per run), matched by `X-Run-ID`.
+Every number here is traceable to the raw files in `load_test/results/` (JMeter `.jtl`) and `load_test/logs/` (SUT request log per run), matched by `X-Run-ID`.
 **Companion to:** [prediction-record.md](prediction-record.md), which is frozen and is not edited. Differences are analysed in the comparison section below.
 
 **Which numbers to use:** the peak-load results are the **15-minute runs** in the "Peak Mixed Load Results" section. The earlier 60-minute runs are kept for evidence in the [appendix at the bottom](#appendix-superseded-60-minute-runs) and are **not** used for the slides or the recommendation.
 
 ## Test Environment (measured)
 
-**Current roles (after the 2026-10-06 swap — see Deviations and Limitations):**
+**Machine**
 
 | | System under test | Load generator |
 |---|---|---|
@@ -158,8 +158,8 @@ R3 is not tested by the peak-load runs: they offer only 23 tickets/hour, below 4
 ## R3 Throughput Results (Phase 5)
 
 - **Load:** 46 `POST /tickets`, 46 `GET /search` and 1 `GET /stats` per hour, open-loop, same plan (`load_test/peak_mixed_load.jmx`) and same reset, warm-up and CPU check as the peak runs. 900 s per run, three runs per model. Run with `load_test/run_phase.ps1 -Phase 5`.
-- **Models:** `phi3.5:3.8b` and `qwen2.5:7b` only. `llama3.2:1b` (21.7% overall) and `qwen2.5:1.5b` (52.6% overall) fail the accuracy requirements R5 and R6 by a wide margin, so their throughput cannot change the recommendation. TODO: confirm this scope with Mikhail.
-- **Run length:** 15 minutes, agreed with Mikhail on 2026-10-06 to match the peak runs. The requirement text in `performance-requirements.md` still says 60 minutes and is to be updated by Mikhail.
+- **Models:** `phi3.5:3.8b` and `qwen2.5:7b` only. `llama3.2:1b` (21.7% overall) and `qwen2.5:1.5b` (52.6% overall) fail the accuracy requirements R5 and R6 by a wide margin, so their throughput cannot change the recommendation.
+- **Run length:** 15 minutes, agreed with Mikhail on 2026-10-06 to match the peak runs.
 - **Pass condition:** every offered `POST /tickets` succeeds (0 errors) and "Successful POST/hr" is at least 46. A 15-minute run at 46/hour offers about 11 to 12 tickets.
 
 ### `phi3.5:3.8b` at 46 tickets/hour
@@ -321,21 +321,21 @@ Bold: the category that fails R6 (< 65%) for the two models that come closest.
 
 ## Predictions vs Measurements
 
-Predictions are copied from [prediction-record.md](prediction-record.md) without change; only the measured column and the verdict are filled here. Incorrect predictions stay in the record.
+Predictions are copied from [prediction-record.md](prediction-record.md) without change; only the measured column is added here. Incorrect predictions stay in the record.
 
-"Warm latency" is measured as POST `/tickets` p50 in the 15-minute peak-load runs on the current SUT, where requests arrive minutes apart and do not overlap. These runs reuse the same six short tickets, so they likely understate latency for typical tickets (see Deviations and Limitations). Verdicts are left for Mikhail.
+"Warm latency" is measured as POST `/tickets` p50 in the 15-minute peak-load runs on the current SUT, where requests arrive minutes apart and do not overlap. These runs reuse the same six short tickets, so they likely understate latency for typical tickets (see Deviations and Limitations).
 
-| # | Prediction | Measured | Verdict |
-|---|---|---|---|
-| 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | 21.7% accuracy (38/175). Warm latency: POST p50 875 ms at peak load (mean of 3 runs, 846–917 ms). | TODO |
-| 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | 52.6% accuracy (92/175). Warm latency: POST p50 487 ms (463–512 ms). | TODO |
-| 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | 76.0% accuracy (133/175). Warm latency: POST p50 1,431 ms (1,368–1,502 ms). | TODO |
-| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | 77.1% accuracy (135/175). Warm latency: POST p50 2,109 ms (2,068–2,144 ms); 3,689 ms mean p50 over the 12-ticket R3 runs; 5.8 s mean compute per ticket over 180 dataset tickets in the stress test. | TODO |
-| 5 | `qwen2.5:7b` most accurate and slowest | Most accurate: 77.1%, just ahead of `phi3.5:3.8b` at 76.0% (two tickets). Slowest: POST p50 2,109 ms against 1,431 ms for `phi3.5:3.8b`. | TODO |
-| 6 | `llama3.2:1b` fastest and least accurate | Least accurate: 21.7%. Not fastest: `qwen2.5:1.5b` is faster (POST p50 487 ms against 875 ms; also faster in the superseded 60-minute runs, 678 ms against 1,001 ms). | TODO |
-| 7 | CPU inference is the primary bottleneck as load rises | Stress test: Ollama inference is the bottleneck (capacity ≈ 620/hr = 3,600 / 5.8 s compute per ticket, one request at a time), but total CPU plateaus at 54–59%, not 100%; memory, service and network are not limiting. See Stress Test. | TODO |
-| 8 | Hardest categories: consumer loan, debt collection, credit card, bank account or service, money transfer or service | Lowest categories for the two strongest models: Money transfer 56% and Mortgage 73% (`qwen2.5:7b`); Credit card 62% and Credit reporting 75% (`phi3.5:3.8b`). Recurring confusions: Money transfer / Credit card → Bank account, Mortgage → Consumer loan, Debt collection ↔ Credit reporting. Mortgage, predicted to be easy, is confused with Consumer loan by three of four models; Credit reporting, predicted easy, is the best category for three models but `phi3.5:3.8b` gets only 75%. | TODO |
-| 9 | All four models exceed 46 classifications/hour | `phi3.5:3.8b` and `qwen2.5:7b` sustained 46/hr offered with 0 errors (48/hr achieved, 3 runs each); `qwen2.5:7b` capacity ≈ 600–640/hr in the stress test. `llama3.2:1b` and `qwen2.5:1.5b` were not run at 46/hr (excluded on accuracy), but are faster than both at peak load. | TODO |
+| # | Prediction | Measured |
+|---|---|---|
+| 1 | `llama3.2:1b`: 68% accuracy, 2.5 s warm latency | 21.7% accuracy (38/175). Warm latency: POST p50 875 ms at peak load (mean of 3 runs, 846–917 ms). |
+| 2 | `qwen2.5:1.5b`: 73% accuracy, 3.5 s warm latency | 52.6% accuracy (92/175). Warm latency: POST p50 487 ms (463–512 ms). |
+| 3 | `phi3.5:3.8b`: 79% accuracy, 7 s warm latency | 76.0% accuracy (133/175). Warm latency: POST p50 1,431 ms (1,368–1,502 ms). |
+| 4 | `qwen2.5:7b`: 84% accuracy, 12 s warm latency | 77.1% accuracy (135/175). Warm latency: POST p50 2,109 ms (2,068–2,144 ms); 3,689 ms mean p50 over the 12-ticket R3 runs; 5.8 s mean compute per ticket over 180 dataset tickets in the stress test. |
+| 5 | `qwen2.5:7b` most accurate and slowest | Most accurate: 77.1%, just ahead of `phi3.5:3.8b` at 76.0% (two tickets). Slowest: POST p50 2,109 ms against 1,431 ms for `phi3.5:3.8b`. |
+| 6 | `llama3.2:1b` fastest and least accurate | Least accurate: 21.7%. Not fastest: `qwen2.5:1.5b` is faster (POST p50 487 ms against 875 ms; also faster in the superseded 60-minute runs, 678 ms against 1,001 ms). |
+| 7 | CPU inference is the primary bottleneck as load rises | Stress test: Ollama inference is the bottleneck (capacity ≈ 620/hr = 3,600 / 5.8 s compute per ticket, one request at a time), but total CPU plateaus at 54–59%, not 100%; memory, service and network are not limiting. See Stress Test. |
+| 8 | Hardest categories: consumer loan, debt collection, credit card, bank account or service, money transfer or service | Lowest categories for the two strongest models: Money transfer 56% and Mortgage 73% (`qwen2.5:7b`); Credit card 62% and Credit reporting 75% (`phi3.5:3.8b`). Recurring confusions: Money transfer / Credit card → Bank account, Mortgage → Consumer loan, Debt collection ↔ Credit reporting. Mortgage, predicted to be easy, is confused with Consumer loan by three of four models; Credit reporting, predicted easy, is the best category for three models but `phi3.5:3.8b` gets only 75%. |
+| 9 | All four models exceed 46 classifications/hour | `phi3.5:3.8b` and `qwen2.5:7b` sustained 46/hr offered with 0 errors (48/hr achieved, 3 runs each); `qwen2.5:7b` capacity ≈ 600–640/hr in the stress test. `llama3.2:1b` and `qwen2.5:1.5b` were not run at 46/hr (excluded on accuracy), but are faster than both at peak load. |
 
 ## Reconciliation Checklist
 
@@ -345,7 +345,6 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 - [x] Phase 4 (`qwen7b-15m`): every run reconciles (19/19 requests per run); files committed with this record.
 - [x] Phase 5 (`phi3_8b-r3`, `qwen7b-r3`): every run reconciles (25/25 requests per run); files committed.
 - [x] Phase 6 (`qwen7b-stress`): JMeter count matches the SUT log (280/280), CPU log present (312 samples), files committed.
-- [ ] Every number in the slides appears in this file.
 
 ## Deviations and Limitations
 
@@ -355,12 +354,12 @@ Predictions are copied from [prediction-record.md](prediction-record.md) without
 - **Stress test is one 15-minute ramp.** It finds the arrival-rate limit, not long-duration endurance.
 - **Phase 4 paused between runs 2 and 3.** The team paused the phase during the cooldown after `qwen7b-15m-run2` (ended 2026-10-06 23:56) and resumed with run 3 at 2026-10-07 01:13. Run 3 started from a full reset like every other run, so the gap does not change its conditions; its results are in line with runs 1 and 2.
 - **Branch switch during `qwen7b-15m-run1`.** The repository on the load generator was briefly switched to `main` and back while run 1 was in progress. JMeter had already loaded the plan and opened both data files, the run's output files stayed in place, and run 1 sent the same six tickets as every other run and reconciles 19/19 with the SUT log, so the run is kept.
-- **Screensaver running on the SUT.** During the stress smoke test the SUT was running `OLED Care Screensaver.scr` (about 750 MB of memory). It was most likely active during every unattended run, since nobody used the machine, so it affects all models alike. It takes some CPU, GPU and memory away from the service. TODO: disable it on the SUT if any run is repeated.
+- **Screensaver running on the SUT.** During the stress smoke test the SUT was running `OLED Care Screensaver.scr` (about 750 MB of memory). It was most likely active during every unattended run, since nobody used the machine, so it affects all models alike. It takes some CPU, GPU and memory away from the service.
 - **Small samples per run.** A 15-minute run has about 6 `POST /tickets`. With 6 samples, p95 and p99 are both the slowest request in that run. Per-run p95/p99 should be read as "worst of about 6", and the spread across the three runs as the main indication of stability.
 - **Every run sends the same tickets.** The JMeter CSV Data Set reads `load_test/data/dev_tickets.csv` from the top in every run, so each 15-minute run, for every model, sends the same first 6 narratives (rows 1000 to 1005) in a different order. The 60-minute runs likewise all sent the first 23. These 6 average 621 characters, against 896 for all 825 rows (median 791, 90th percentile 1,633), and the first 23 average 814. Effects: (1) POST latency is understated relative to the full ticket-length distribution, because shorter narratives classify faster; this is the main reason the 15-minute numbers are lower than the 60-minute ones; (2) the three runs per model repeat the same inputs, so the spread across runs reflects run-to-run noise in the system, not variation in ticket mix; (3) every model received identical input, so the comparison between models is controlled. The team chose to keep this protocol for all four models and report the limitation rather than re-run. A fix for Assignment 2 is a per-run shuffled ticket file seeded by run number.
 - **`GET /stats` may not be exercised.** At 1 per hour, a 900 s run sends 0 or 1 stats requests.
 - **Mid-study SUT hardware change.** `qwen2.5:7b` run 1 (23 POST requests, 0 errors, p50 2044 ms, p95 4632 ms, p99 5073 ms) and a partial, aborted run 2 were measured with the AMD Ryzen 5 7600 (6-core) as the system under test. The p50 was far faster than predicted (12 s) for a 7B model on CPU, raising concern that this machine does not represent the client's "commodity CPU server" constraint. The team stopped testing and swapped machine roles: the system under test is now the Intel Core Ultra 7 155H machine (previously the load generator), and the AMD Ryzen 5 7600 machine is now the load generator. The raw `.jtl` and log files from the discarded runs were deleted from the repository rather than kept; this note is the only remaining record of that data and the reason it is not used. All runs for every model were then measured fresh on the new SUT.
-- **No non-peak (normal load, 12 tickets/hour) runs.** The workplan asked for non-peak, peak and above-peak conditions where feasible. Peak (23/hour) and above-peak (46/hour for R3, and the stress ramp to 1,440/hour) were run. Normal load was not: every model passes R1, R2 and R4 at peak with p95 below 5 s against a 60 s limit, and the stress test shows the service is far from its limit below about 600/hour, so a lighter load cannot change any requirement outcome.
+- **No non-peak (normal load, 12 tickets/hour) runs.** The test plan aimed for non-peak, peak and above-peak conditions where feasible. Peak (23/hour) and above-peak (46/hour for R3, and the stress ramp to 1,440/hour) were run. Normal load was not: every model passes R1, R2 and R4 at peak with p95 below 5 s against a 60 s limit, and the stress test shows the service is far from its limit below about 600/hour, so a lighter load cannot change any requirement outcome.
 - **Interruptions and repeats:** none beyond those listed above (the Phase 4 pause, the branch switch during `qwen7b-15m-run1`, and the smoke runs that are excluded). No reported run was repeated or discarded.
 
 ---

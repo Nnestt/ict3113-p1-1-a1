@@ -58,24 +58,3 @@ No extra packages are needed; it uses Python's standard library only.
 python classifier.py --model qwen2.5:1.5b "My bank froze my account and kept my paycheck."
 python smoke_test.py
 ```
-
-## For the triage service (YP)
-
-Copy `classifier.py`, `eval_config.json` and `prompt_template.md` into the service. Don't copy `data.py`: the service must never read the CSV.
-
-```python
-import classifier
-
-MODEL = os.environ["MODEL"]          # set in docker-compose.yml, e.g. qwen2.5:7b
-assert MODEL in classifier.MODELS    # only pinned models are allowed
-
-result = classifier.classify(narrative, MODEL)
-result["label"]            # store and return this
-result["wall_ms"]          # model-call time, for the request log
-result["raw_output"]       # log this so INVALID results can be traced
-classifier.MODELS[MODEL]   # the model digest, for the request log
-```
-
-Inside Docker, set `OLLAMA_URL=http://host.docker.internal:11434` if Ollama runs on the host machine.
-
-Run one model at a time. To switch: change `MODEL`, reset storage, restart, then send one warm-up request before measuring.

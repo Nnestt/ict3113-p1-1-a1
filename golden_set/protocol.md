@@ -38,7 +38,7 @@ Fill `label` on all 175 rows using exactly one allowed label. Set `uncertain` to
 
 After saving both originals, join by row ID and verify exactly two ratings per selected ID. Report exact matches divided by 175 and nominal Cohen's kappa, including the contingency counts and calculation method. Determine the review cases only after both originals are saved. Review **every** disagreement and every row either marked uncertain, even if the labels match. For each case, record a concise summary of the resolution that explains the final label and any material uncertainty in `resolution.csv`. If the two labels cannot be reconciled, record a blind provisional judgement from the narrative and protocol before consulting the original labels; record its contribution and the final decision.
 
-If Ernest and YP cannot agree after discussion, a third isolated reviewer, Mikhail, reads only the narrative and protocol and records a blind provisional label and rationale. After the three discuss the case, the final label is the majority of their final votes. If all three votes differ, pause that row for the user's decision before exporting the complete set. Record all votes and Mikhail's blind judgment without changing the original sheets.
+If Ernest and YP cannot agree after discussion, a third isolated reviewer, Mikhail, reads only the narrative and protocol and records a blind provisional label and rationale. After the three discuss the case, the final label is the majority of their final votes.
 
 If a new rule affects other selected rows, identify and review them consistently in the resolution CSV. Preserve original sheets for the original agreement result. Export exactly one final `row,gold_label` for every selected ID.
 ## Dated revision: 29 September 2026.

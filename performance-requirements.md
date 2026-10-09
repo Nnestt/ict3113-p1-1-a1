@@ -22,9 +22,7 @@ Peak mixed load:
 | R5 | Overall accuracy           | Frozen golden set             | ≥80%                                |
 | R6 | Per-category accuracy      | Frozen golden set             | Every category ≥65%                 |
 
-## Justification
-
-# Requirement Justifications
+## Requirement Justifications
 
 ## R1 Ticket Classification Response Time
 
@@ -84,7 +82,7 @@ The peak mixed workload consists of approximately:
 
 The ticket arrival rate is based on the annual complaint-volume benchmark and a two-times peak multiplier. The search rate assumes two searches per submitted complaint. The statistics rate assumes approximately one statistics request for every 20 submitted complaints.
 
-The peak multiplier, search ratio and statistics ratio are modelling assumptions because no public hourly or endpoint-level usage data were available. These assumptions will be tested through sensitivity and stress testing.
+The peak multiplier, search ratio and statistics ratio are modelling assumptions because no public hourly or endpoint-level usage data were available. The stress test examined loads well above these rates; see [results-record.md](results-record.md).
 
 ## Interpretation
 

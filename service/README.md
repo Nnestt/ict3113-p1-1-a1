@@ -6,13 +6,7 @@ How it works and why (architecture, request flows, how to read the log for bottl
 
 ## Scope
 
-| This service owns | Not this service |
-| --- | --- |
-| The HTTP API (three endpoints) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen; the service holds unchanged copies) |
-| Ticket storage (SQLite) | The golden set and labels (`golden_set/`, Ernest) |
-| Request logging | The JMeter test plans, `.jtl` files and load/stress analysis (Lutfi) |
-| The Docker image and Compose file | The workload model, requirements and prediction record (Mikhail) |
-| The startup model/digest check | Ollama itself and its host settings |
+The service covers the HTTP API (three endpoints), ticket storage (SQLite), request logging, the Docker image and Compose file, and the startup model/digest check. The prompt, generation settings and answer parser are frozen in `evaluation/`; the service holds unchanged copies. Ollama itself and its host settings are outside the service.
 
 ## Files
 
@@ -137,7 +131,7 @@ Request headers (both optional): `X-Request-ID` is echoed back in the response h
 - One Uvicorn worker process. The endpoints are plain `def`, so they run on the default 40-thread pool. A slow classification does not block `/search` or `/stats` while fewer than 40 classifications are in flight. Once 40 are in flight, every request, including `/search` and `/stats`, waits for a free thread (measured with a stand-in Ollama: with 45 concurrent 8 s classifications, a search waited about 6.5 s; with 20 it took about 5 ms).
 - No cache, no queue, no retries, no limit on `/search` results.
 - The Ollama call timeout is 300 s (`request_timeout_seconds` in `eval_config.json`). After that the request returns 504.
-- `OLLAMA_NUM_PARALLEL` is an environment variable of the Ollama process on the **host**, not of this service. The team runs Ollama with it set to 1 and must record the value used for each run.
+- `OLLAMA_NUM_PARALLEL` is an environment variable of the Ollama process on the **host**, not of this service. The reported runs used 1 (see [results-record.md](../results-record.md)).
 - If the client gives up early, the service does not notice: the Ollama call finishes, the ticket is stored and the log line shows status 200 with the full `total_ms`.
 - Each request opens its own SQLite connection (30 s busy timeout).
 
@@ -174,7 +168,7 @@ Then run the tests whenever you need them (about two seconds):
 .venv\Scripts\python -m pytest service/tests -v
 ```
 
-In Git Bash write the path as `.venv/Scripts/python`; on Linux or macOS it is `.venv/bin/python`. `.venv/` is git-ignored. The Docker command runs the tests on Python 3.12, the version the service image uses, so run it once before a final hand-in.
+In Git Bash write the path as `.venv/Scripts/python`; on Linux or macOS it is `.venv/bin/python`. `.venv/` is git-ignored. The Docker command runs the tests on Python 3.12, the version the service image uses.
 
 Every test case is listed in [tests/README.md](tests/README.md). In short:
 

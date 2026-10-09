@@ -1,6 +1,6 @@
 # Triage service: design
 
-This document is for a teammate who did not write the service and needs to load-test it, explain its performance results and draw the architecture slide. For how to start it, switch model, reset storage and run the tests, see [README.md](README.md). This document explains how the service works and why. It describes the code as it is. A statement that was not checked against the code or a run is marked "not verified".
+For how to start it, switch model, reset storage and run the tests, see [README.md](README.md). This document explains how the service works and why. It describes the code as it is. A statement that was not checked against the code or a run is marked "not verified".
 
 ## 1. Purpose and scope
 
@@ -8,13 +8,7 @@ A financial company wants complaint tickets sorted automatically into 7 categori
 
 It is a deliberately plain baseline: synchronous, no cache, no queue, no retries, no optimisation. The team measures it with JMeter and recommends a model. Optimising it is the next assignment.
 
-| This service owns | Not this service |
-| --- | --- |
-| The HTTP API (`POST /tickets`, `GET /search`, `GET /stats`) | The prompt, generation settings and answer parser (`evaluation/`, Izzul, frozen; the service holds unchanged copies) |
-| Ticket storage (SQLite) | The golden set and labels (`golden_set/`, Ernest) |
-| Request logging | JMeter plans, `.jtl` files and load analysis (Lutfi) |
-| The Docker image and `docker-compose.yml` | Workload model, requirements and prediction record (Mikhail) |
-| The startup model and digest check | Ollama itself and its host settings (for example `OLLAMA_NUM_PARALLEL`) |
+The service covers the HTTP API (`POST /tickets`, `GET /search`, `GET /stats`), ticket storage (SQLite), request logging, the Docker image and `docker-compose.yml`, and the startup model and digest check. The prompt, generation settings and answer parser are frozen in `evaluation/`; the service holds unchanged copies. Ollama itself and its host settings (for example `OLLAMA_NUM_PARALLEL`) are outside the service.
 
 ## 2. System context
 
@@ -353,7 +347,7 @@ Measured in Docker with a stand-in Ollama. The stand-in answers every call in pa
 | 100 concurrent POSTs with no delay, plus 200 sequential searches | All 300 returned 200. No `database is locked`. Every log line was valid JSON with a unique `request_id` |
 | Inserts that finish together | When 20 to 40 tickets completed at the same moment, `total_ms - model_ms` reached about 0.5 to 0.93 s. That is time waiting for SQLite's single writer |
 
-Expected from the design, to be confirmed by the load and stress tests with real Ollama:
+Expected from the design (the measured behaviour with real Ollama is in the Stress Test section of [results-record.md](../results-record.md)):
 
 - With `OLLAMA_NUM_PARALLEL=1`, concurrent classifications queue inside Ollama and `model_ms` grows with queue depth. Roughly, a request with `n` generations ahead of it waits `n` times the compute time of one.
 - The 300 s timeout counts time queued inside Ollama. A request behind about `300 / seconds per classification` others gets a 504 from queueing alone (for example about 37 others at 8 s each).
@@ -364,7 +358,7 @@ Notes:
 
 - Two queues exist in series: the thread pool in front, Ollama's own queue behind. The log tells them apart (section 6.7).
 - Each waiting `/tickets` request holds an open client connection, a worker thread and an Ollama call. The service has no limit on how many requests it accepts.
-- At the workload model's peak (23 tickets and 46 searches per hour) the pool is nowhere near full. The 40-thread limit matters for the stress test.
+- At the workload model's peak (23 tickets and 46 searches per hour) the pool is nowhere near full. The 40-thread limit matters only at stress-test rates.
 
 ### 6.5 `GET /search` while a classification is in flight
 
