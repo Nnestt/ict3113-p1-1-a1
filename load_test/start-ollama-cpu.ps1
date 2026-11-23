@@ -19,6 +19,9 @@ $env:OLLAMA_VULKAN = "0"
 $env:OLLAMA_IGPU_ENABLE = "0"
 $env:OLLAMA_NUM_PARALLEL = "1"
 $env:OLLAMA_KEEP_ALIVE = "5m"
+# A2: two models resident at once (the cascade's small and large model). Set explicitly so it is recorded;
+# held constant for every A2 configuration, single models included (brief: no changes between configurations).
+$env:OLLAMA_MAX_LOADED_MODELS = "2"
 Remove-Item Env:OLLAMA_HOST -ErrorAction SilentlyContinue
 $log = "$env:USERPROFILE\ollama_serve.log"
 Start-Process "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" -ArgumentList "serve" -WindowStyle Hidden -RedirectStandardError $log -RedirectStandardOutput "$env:USERPROFILE\ollama_serve.out"

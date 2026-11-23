@@ -2,7 +2,14 @@ services:
   triage:
     build: ./service
     environment:
-      MODEL: ${MODEL:?Set MODEL to a pinned model, e.g. MODEL=qwen2.5:7b docker compose up -d --build}
+      # Single model: MODEL=qwen2.5:7b. Cascade: TRIAGE_MODE=cascade SMALL_MODEL=... LARGE_MODEL=... CASCADE_SETTING=S1.
+      # The app refuses to start with one clear STARTUP ERROR line if these are missing or wrong (a2/CONTRACTS.md).
+      TRIAGE_MODE: ${TRIAGE_MODE:-single}
+      TRIAGE_CONFIG: ${TRIAGE_CONFIG:-}
+      MODEL: ${MODEL:-}
+      SMALL_MODEL: ${SMALL_MODEL:-}
+      LARGE_MODEL: ${LARGE_MODEL:-}
+      CASCADE_SETTING: ${CASCADE_SETTING:-}
       OLLAMA_URL: http://host.docker.internal:11434
     ports:
       - "8000:8000"
