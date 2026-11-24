@@ -1,0 +1,8 @@
+{
+  "single-7b": {"mode": "single", "model": "qwen2.5:7b"},
+  "single-phi": {"mode": "single", "model": "phi3.5:3.8b"},
+  "single-1.5b": {"mode": "single", "model": "qwen2.5:1.5b"},
+  "single-llama": {"mode": "single", "model": "llama3.2:1b"},
+  "cascade-S1": {"mode": "cascade", "small": "qwen2.5:1.5b", "large": "qwen2.5:7b", "setting": "S1"},
+  "cascade-S2": {"mode": "cascade", "small": "qwen2.5:1.5b", "large": "qwen2.5:7b", "setting": "S2"}
+}

@@ -1,0 +1,17 @@
+A2 memory check: qwen2.5:1.5b + qwen2.5:7b resident together. 2026-11-24 01:19:19 +08:00
+Total RAM 31.37 GB
+Ollama restarted; free RAM before loading: 11.06 GB
+  WARM OK qwen2.5:1.5b in 3,524 ms (load 2,339 ms): Credit reporting
+  WARM OK qwen2.5:7b in 15,408 ms (load 8,911 ms): Credit reporting
+  WARM OK qwen2.5:1.5b in 309 ms (load 5 ms): Debt collection
+  WARM OK qwen2.5:7b in 1,195 ms (load 4 ms): Debt collection
+  WARM OK qwen2.5:1.5b in 323 ms (load 6 ms): Mortgage
+  WARM OK qwen2.5:7b in 1,197 ms (load 4 ms): Mortgage
+
+ollama ps:
+NAME            ID              SIZE      PROCESSOR    CONTEXT    UNTIL               
+qwen2.5:7b      845dbda0ea48    5.1 GB    100% CPU     4096       29 minutes from now    
+qwen2.5:1.5b    65ec06548149    1.2 GB    100% CPU     4096       29 minutes from now    
+Free RAM with both loaded: 5.38 GB
+
+PASS: both models listed by ollama ps (the WARM OK lines show load ~0 ms after each model's first call)
