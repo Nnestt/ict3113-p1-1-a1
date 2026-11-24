@@ -1,9 +1,9 @@
 {
-  "rule": "Keep the small model's label if it is in the setting's accept list; otherwise (including INVALID or a failed small-model call) escalate to the large model, whose label is final. Accept list = labels whose small-model precision on the TUNING set is >= tau over at least min_n predictions. See a2/escalation_rule.md.",
+  "rule": "Keep the small model's label if it is in the setting's accept list; otherwise (including INVALID or a failed small-model call) escalate to the large model, whose label is final. Accept list = the labels whose small-model precision on the TUNING set is >= tau over at least min_n predictions (a2/design/design_tables.md). Full rule: a2/escalation_rule.md.",
   "small_model": "qwen2.5:1.5b",
   "large_model": "qwen2.5:7b",
   "settings": {
-    "S1": {"tau": 0.70, "min_n": 5, "accept": ["Credit reporting", "Mortgage"]},
-    "S2": {"tau": 0.60, "min_n": 5, "accept": ["Credit reporting", "Debt collection", "Mortgage"]}
+    "S1": {"tau": 0.75, "min_n": 4, "accept": ["Bank account or service", "Mortgage"]},
+    "S2": {"tau": 0.60, "min_n": 4, "accept": ["Bank account or service", "Credit reporting", "Debt collection", "Mortgage"]}
   }
 }
