@@ -54,7 +54,7 @@ A stage `*_load_ms` above a few hundred ms during a measured run means Ollama re
 ## Run IDs and files
 | What | Run ID | Files |
 |---|---|---|
-| Accuracy test | `acc_<config>` | `a2/results/acc_<config>.csv`, `a2/results/acc_<config>_summary.json`, `a2/results/acc_<config>_requests.jsonl` |
+| Accuracy test | `acc_<config>` | `a2/results/accuracy_results/acc_<config>.csv`, `a2/results/accuracy_results/acc_<config>_summary.json`, `a2/results/accuracy_results/acc_<config>_requests.jsonl` |
 | Speed run | `a2_<config>_run<N>` | in `load_test/results/`: `<runId>.jtl`, `<runId>_ollama_ps_pre.txt`, `<runId>_ollama_ps_post.txt`, `<runId>_stats_pre.json`, `<runId>_stats_post.json`; in `load_test/logs/`: `<runId>_requests.jsonl`, `<runId>_jmeter.log` |
 | Pilot | `pilot_<config>` | same names, under `load_test/pilot/` |
 | Warm-up | `warmup-<runId>` (X-Run-ID only) | lines in the same request log; excluded from every figure |
@@ -72,7 +72,7 @@ A stage `*_load_ms` above a few hundred ms during a measured run means Ollama re
 
 All row files come from `load_test/data/dev_tickets.csv` (rows outside the golden set) and are checked with `assert_not_golden()`. None of them share a row.
 
-## Accuracy CSV (`a2/results/acc_<config>.csv`)
+## Accuracy CSV (`a2/results/accuracy_results/acc_<config>.csv`)
 A1 columns `run_id,row,gold_label,predicted,correct,http_status,request_id,ticket_id,model,model_digest,client_ms,error`, then `config,escalated,escalation_reason,final_model,small_label,large_label`, copied from the service log line with the same `request_id`.
 
 ## Speed parameters (`a2/speed_params.json`, written by `a2/measure_s.ps1`)

@@ -1,0 +1,39 @@
+{
+  "run_id": "acc_cascade-S2",
+  "config": "cascade-S2",
+  "models": {
+    "qwen2.5:1.5b": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+    "qwen2.5:7b": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e"
+  },
+  "rows_file": "a2\\split\\test_rows.csv",
+  "dev_check": false,
+  "started_utc": "2026-11-24T14:38:12+00:00",
+  "finished_utc": "2026-11-24T14:47:12+00:00",
+  "git_head": "472b845",
+  "freeze_commit": "c51e33c",
+  "ollama_version": "0.35.1",
+  "size_vram": {
+    "qwen2.5:1.5b": 0,
+    "qwen2.5:7b": 0
+  },
+  "tickets": 87,
+  "correct": 59,
+  "escalated": 40,
+  "http_errors": 0,
+  "invalid": 0,
+  "stats_after": {
+    "total": 87,
+    "by_category": {
+      "Credit reporting": 36,
+      "Debt collection": 7,
+      "Mortgage": 8,
+      "Credit card": 8,
+      "Bank account or service": 14,
+      "Consumer loan": 7,
+      "Money transfer or service": 7,
+      "INVALID": 0
+    }
+  },
+  "log_lines_for_run": 87,
+  "reconciliation_problems": []
+}
