@@ -11,7 +11,7 @@
 # Output in evaluation/accuracy_results/: <run_id>.csv (one row per ticket) and <run_id>_summary.json.
 #
 # Assignment 2: --config runs named configurations from a2/configs.json (single models or the cascade) on the
-# rows listed in --rows (default: the test set), and writes to a2/results/ (see a2/CONTRACTS.md):
+# rows listed in --rows (default: the test set), and writes to a2/results/accuracy_results/ (see a2/CONTRACTS.md):
 #   python evaluation/run_accuracy.py --config single-7b single-phi single-1.5b single-llama cascade-S1 cascade-S2
 #   python evaluation/run_accuracy.py --config cascade-S1 --rows a2/split/test_rows.csv
 #   python evaluation/run_accuracy.py --config cascade-S1 --dev-check 3        # pipeline test, non-golden rows
@@ -56,7 +56,7 @@ def http(method, path, body=None, headers=None, timeout=30):
 
 
 A2_CONFIGS = json.loads((ROOT / "a2" / "configs.json").read_text(encoding="utf-8"))
-A2_OUT_DIR = ROOT / "a2" / "results"
+A2_OUT_DIR = ROOT / "a2" / "results" / "accuracy_results"
 A2_DEFAULT_ROWS = ROOT / "a2" / "split" / "test_rows.csv"
 A2_FIELDS = FIELDS + ["config", "escalated", "escalation_reason", "final_model", "small_label", "large_label"]
 

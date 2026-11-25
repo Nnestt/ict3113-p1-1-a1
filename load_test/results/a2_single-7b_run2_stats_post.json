@@ -1,0 +1,13 @@
+{
+    "total":  34,
+    "by_category":  {
+                        "Credit reporting":  9,
+                        "Debt collection":  5,
+                        "Mortgage":  4,
+                        "Credit card":  4,
+                        "Bank account or service":  5,
+                        "Consumer loan":  3,
+                        "Money transfer or service":  4,
+                        "INVALID":  0
+                    }
+}

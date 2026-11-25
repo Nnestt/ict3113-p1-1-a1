@@ -1,0 +1,37 @@
+{
+  "run_id": "acc_single-phi",
+  "config": "single-phi",
+  "models": {
+    "phi3.5:3.8b": "61819fb370a3c1a9be6694869331e5f85f867a079e9271d66cb223acb81d04ba"
+  },
+  "rows_file": "a2\\split\\test_rows.csv",
+  "dev_check": false,
+  "started_utc": "2026-11-24T14:08:40+00:00",
+  "finished_utc": "2026-11-24T14:17:25+00:00",
+  "git_head": "472b845",
+  "freeze_commit": "c51e33c",
+  "ollama_version": "0.35.1",
+  "size_vram": {
+    "phi3.5:3.8b": 0
+  },
+  "tickets": 87,
+  "correct": 69,
+  "escalated": 0,
+  "http_errors": 0,
+  "invalid": 0,
+  "stats_after": {
+    "total": 87,
+    "by_category": {
+      "Credit reporting": 17,
+      "Debt collection": 13,
+      "Mortgage": 8,
+      "Credit card": 9,
+      "Bank account or service": 19,
+      "Consumer loan": 12,
+      "Money transfer or service": 9,
+      "INVALID": 0
+    }
+  },
+  "log_lines_for_run": 87,
+  "reconciliation_problems": []
+}

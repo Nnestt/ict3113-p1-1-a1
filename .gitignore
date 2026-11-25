@@ -9,3 +9,6 @@ golden_set/ict3113_tickets.csv
 
 jmeter.log
 load_test/jmeter.log
+
+# runtime request log (regenerated every run; keep dir via .gitkeep)
+logs/requests.jsonl
